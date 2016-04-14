@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.hp.firstapp2.AddEvent"
+    tools:showIn="@layout/activity_add_event">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Koniec"
+        android:id="@+id/textView"
+        android:textSize="30dp"
+        android:layout_below="@+id/editText5"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="42dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:ems="10"
+        android:id="@+id/editText"
+        android:width="100dp"
+        android:textSize="20dp"
+        android:layout_alignBottom="@+id/labelStart"
+        android:layout_centerHorizontal="true"
+        android:text="Data" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:ems="10"
+        android:id="@+id/editText2"
+        android:width="100dp"
+        android:textSize="20dp"
+        android:text="Data"
+        android:layout_alignBottom="@+id/textView"
+        android:layout_alignStart="@+id/editText" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="time"
+        android:ems="10"
+        android:id="@+id/editText3"
+        android:layout_alignBottom="@+id/editText"
+        android:layout_toEndOf="@+id/editText"
+        android:text="Czas" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="time"
+        android:ems="10"
+        android:id="@+id/editText4"
+        android:text="Czas"
+        android:layout_alignBottom="@+id/textView"
+        android:layout_toEndOf="@+id/editText2" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPostalAddress"
+        android:ems="10"
+        android:id="@+id/editText5"
+        android:layout_below="@+id/editText"
+        android:layout_alignStart="@+id/editText"
+        android:text="Lokalizacja" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPostalAddress"
+        android:ems="10"
+        android:id="@+id/Lokalizacja"
+        android:text="Lokalizacja"
+        android:layout_below="@+id/editText2"
+        android:layout_alignStart="@+id/editText2" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dodaj osoby"
+        android:id="@+id/buttonDodajOsoby"
+        android:textSize="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="51dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Powiadomienia"
+        android:id="@+id/textViewPowiadomienia"
+        android:textSize="20dp"
+        android:layout_below="@+id/Lokalizacja"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textTripName"
+        android:width="200dp"
+        android:layout_centerHorizontal="true"
+        android:text="Nazwa" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start"
+        android:id="@+id/labelStart"
+        android:textSize="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/textTripName"
+        android:layout_alignParentStart="true"/>
+
+</RelativeLayout>
