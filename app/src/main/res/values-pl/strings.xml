@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <string name="app_name">Check-in</string>
+        <string name="action_settings">Ustawienia</string>
+        <string name="action_change_language">Zmiana języka</string>
+        <string name="title_activity_add_event">Dodaj nową podróż</string>
+        <string name="title_activity_my_history">Historia</string>
+        <string name="title_activity_coming_trips">Nadchodzące podróże </string>
+        <string name="log_in">Zaloguj się do Check-in za pomocą</string>
+        <string name="lang_pl">Język polski</string>
+        <string name="lang_en">Język angielski</string>
+        <string name="event_name">Nazwa</string>
+        <string name="event_start">Start:</string>
+        <string name="event_end">Koniec:</string>
+        <string name="event_date">Data</string>
+        <string name="event_time">Czas</string>
+        <string name="event_localization">Lokalizacja</string>
+        <string name="event_radius">Promień tolerancji</string>
+        <string name="event_notification">Powiadomienia</string>
+        <string name="event_notification_start">Start</string>
+        <string name="event_notification_end">Koniec</string>
+        <string name="event_automatic_notification">Powiadamiaj automatycznie</string>
+        <string name="event_list_of_people">Lista osób</string>
+        <string name="title_coming_trips">Twoje nadchodzące podróże</string>
+        <string name="day">Dzień</string>
+        <string name="week">Tydzień</string>
+        <string name="month">Miesiąc</string>
+        <string name="title_history">Historia Twoich podróży </string>
+        <string name="actual_event">Aktualna podróż</string>
+        <string name="actual_event_estimated_time">przewidywany czas:</string>
+        <string name="title_activity_edit_event">Edytuj podróż</string>
+        <string name="title_activity_menu">Menu główne</string>
+        <string name="title_activity_add_people">Dodaj wybrane</string>
+        <string name="title_activity_back">Wróć</string>
+    </resources>

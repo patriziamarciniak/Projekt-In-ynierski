@@ -15,7 +15,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Koniec"
+        android:text="@string/event_end"
         android:id="@+id/textView"
         android:textSize="30dp"
         android:layout_below="@+id/editText5"
@@ -32,7 +32,7 @@
         android:textSize="20dp"
         android:layout_alignBottom="@+id/labelStart"
         android:layout_centerHorizontal="true"
-        android:text="Data" />
+        android:text="@string/event_date" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -42,7 +42,7 @@
         android:id="@+id/editText2"
         android:width="100dp"
         android:textSize="20dp"
-        android:text="Data"
+        android:text="@string/event_date"
         android:layout_alignBottom="@+id/textView"
         android:layout_alignStart="@+id/editText" />
 
@@ -54,7 +54,7 @@
         android:id="@+id/editText3"
         android:layout_alignBottom="@+id/editText"
         android:layout_toEndOf="@+id/editText"
-        android:text="Czas" />
+        android:text="@string/event_time" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -62,7 +62,7 @@
         android:inputType="time"
         android:ems="10"
         android:id="@+id/editText4"
-        android:text="Czas"
+        android:text="@string/event_time"
         android:layout_alignBottom="@+id/textView"
         android:layout_toEndOf="@+id/editText2" />
 
@@ -74,7 +74,7 @@
         android:id="@+id/editText5"
         android:layout_below="@+id/editText"
         android:layout_alignStart="@+id/editText"
-        android:text="Lokalizacja" />
+        android:text="@string/event_localization" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -82,14 +82,14 @@
         android:inputType="textPostalAddress"
         android:ems="10"
         android:id="@+id/Lokalizacja"
-        android:text="Lokalizacja"
+        android:text="@string/event_localization"
         android:layout_below="@+id/editText2"
         android:layout_alignStart="@+id/editText2" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Dodaj osoby"
+        android:text="@string/event_list_of_people"
         android:id="@+id/buttonDodajOsoby"
         android:textSize="20dp"
         android:layout_alignParentBottom="true"
@@ -99,7 +99,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Powiadomienia"
+        android:text="@string/event_notification"
         android:id="@+id/textViewPowiadomienia"
         android:textSize="20dp"
         android:layout_below="@+id/Lokalizacja"
@@ -112,12 +112,12 @@
         android:id="@+id/textTripName"
         android:width="200dp"
         android:layout_centerHorizontal="true"
-        android:text="Nazwa" />
+        android:text="@string/event_name" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start"
+        android:text="@string/event_start"
         android:id="@+id/labelStart"
         android:textSize="30dp"
         android:layout_marginTop="10dp"
