@@ -46,6 +46,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.hp.firstapp2.MainActivity" />
         </activity>
+        <activity
+            android:name=".EventAdded"
+            android:label="@string/title_activity_event_added"
+            android:parentActivityName=".AddEvent"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.hp.firstapp2.AddEvent" />
+        </activity>
     </application>
 
 </manifest>

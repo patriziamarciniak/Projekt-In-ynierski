@@ -6,11 +6,19 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
+import com.example.hp.sqlite.dao.ContactsDAO;
+import com.example.hp.sqlite.dao.DBHelper;
+import com.example.hp.sqlite.dao.EventDAO;
+import com.example.hp.sqlite.model.Contacts;
+import com.example.hp.sqlite.model.Event;
+
+import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,6 +41,36 @@ public class MainActivity extends AppCompatActivity {
         config.locale = locale;
         context.getApplicationContext().getResources().updateConfiguration(config, null);
 
+// ////////////////////////DataBase checking////////////////////
+
+//        ContactsDAO dbContact = new ContactsDAO(context);
+//        EventDAO db = new EventDAO(context);
+
+//        Log.d("Insert: ", "Inserting ..");
+//        dbContact.createContacts("9100000000","Ravi","Black");
+//        db.createEvent("dd","ee","bb","bb",true,true,true,true,8,"aa",12,1233445566788999L);
+
+//        Log.d("Reading: ", "Reading all contacts..");
+//        List<Contacts> contacts = dbContact.getAllContacts();
+//        List<Event> events = db.getAllEvents();
+
+//        for (Event cn : events) {
+//            db.deleteEvent(cn);
+//        }
+//        events = db.getAllEvents();
+//
+//        for (Event cn : events) {
+//            String log = "Id: " + cn.getId() + " ,Name: " + cn.getDataEnd() + " ,Radius: " + cn.getRadius();
+//            // Writing Contacts to log
+//            Log.d("Name: ", log);
+//        }
+//
+//        for (Contacts cn : contacts) {
+//            String log = "Id: " + cn.getId() + " ,Name: " + cn.getName() ;
+////             Writing Contacts to log
+//            Log.d("Name: ", log);
+//        }
+
 
         btnMyHistory = (Button) findViewById(R.id.button3);
         btnMyHistory.setOnClickListener(new View.OnClickListener() {
@@ -48,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
             public void onClick(View arg0) {
                 Intent nextScreen = new Intent(getApplicationContext(), ComingTrips.class);
+//                Intent nextScreen = new Intent(getApplicationContext(), AddContacts.class);
                 startActivity(nextScreen);
             }
         });

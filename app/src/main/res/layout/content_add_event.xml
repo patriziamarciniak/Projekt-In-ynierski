@@ -10,50 +10,55 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.hp.firstapp2.AddEvent"
-    tools:showIn="@layout/activity_add_event">
+    tools:showIn="@layout/activity_add_event"
+    android:id="@+id/m">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/event_end"
-        android:id="@+id/textView"
+        android:id="@+id/label_event_end"
         android:textSize="30dp"
-        android:layout_below="@+id/editText5"
+        android:layout_below="@+id/text_localization_start"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="42dp" />
+         />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="date"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/text_date_start"
         android:width="100dp"
         android:textSize="20dp"
-        android:layout_alignBottom="@+id/labelStart"
+        android:layout_alignBottom="@+id/label_start"
         android:layout_centerHorizontal="true"
-        android:text="@string/event_date" />
+        android:text="@string/event_date"
+        />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="date"
         android:ems="10"
-        android:id="@+id/editText2"
+        android:id="@+id/text_date_end"
         android:width="100dp"
         android:textSize="20dp"
         android:text="@string/event_date"
-        android:layout_alignBottom="@+id/textView"
-        android:layout_alignStart="@+id/editText" />
+        android:layout_alignBottom="@+id/label_event_end"
+        android:layout_alignStart="@+id/text_date_start"
+        android:layout_alignLeft="@+id/text_date_start" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="time"
         android:ems="10"
-        android:id="@+id/editText3"
-        android:layout_alignBottom="@+id/editText"
-        android:layout_toEndOf="@+id/editText"
+        android:id="@+id/text_time_start"
+        android:layout_alignBottom="@+id/text_date_start"
+        android:layout_toEndOf="@+id/text_date_start"
+        android:layout_toRightOf="@+id/text_date_start"
         android:text="@string/event_time" />
 
     <EditText
@@ -61,19 +66,21 @@
         android:layout_height="wrap_content"
         android:inputType="time"
         android:ems="10"
-        android:id="@+id/editText4"
+        android:id="@+id/text_time_end"
         android:text="@string/event_time"
-        android:layout_alignBottom="@+id/textView"
-        android:layout_toEndOf="@+id/editText2" />
+        android:layout_alignBottom="@+id/label_event_end"
+        android:layout_toEndOf="@+id/text_date_end"
+        android:layout_toRightOf="@+id/text_date_end" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPostalAddress"
         android:ems="10"
-        android:id="@+id/editText5"
-        android:layout_below="@+id/editText"
-        android:layout_alignStart="@+id/editText"
+        android:id="@+id/text_localization_start"
+        android:layout_below="@+id/text_date_start"
+        android:layout_alignStart="@+id/text_date_start"
+        android:layout_alignLeft="@+id/text_date_start"
         android:text="@string/event_localization" />
 
     <EditText
@@ -81,47 +88,132 @@
         android:layout_height="wrap_content"
         android:inputType="textPostalAddress"
         android:ems="10"
-        android:id="@+id/Lokalizacja"
+        android:id="@+id/text_localization_end"
         android:text="@string/event_localization"
-        android:layout_below="@+id/editText2"
-        android:layout_alignStart="@+id/editText2" />
+        android:layout_below="@+id/text_date_end"
+        android:layout_alignStart="@+id/text_date_end"
+        android:layout_alignLeft="@+id/text_date_end" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/event_list_of_people"
-        android:id="@+id/buttonDodajOsoby"
+        android:id="@+id/btn_add_people"
         android:textSize="20dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="51dp" />
+        android:layout_alignTop="@+id/btn_event_repetition"
+        android:layout_alignRight="@+id/text_default_radius"
+        android:layout_alignEnd="@+id/text_default_radius" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/event_notification"
-        android:id="@+id/textViewPowiadomienia"
+        android:id="@+id/label_notification"
         android:textSize="20dp"
-        android:layout_below="@+id/Lokalizacja"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="20dp" />
+        />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textTripName"
+        android:id="@+id/text_trip_name"
         android:width="200dp"
-        android:layout_centerHorizontal="true"
-        android:text="@string/event_name" />
+        android:text="@string/event_name"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/event_start"
-        android:id="@+id/labelStart"
+        android:id="@+id/label_start"
         android:textSize="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/textTripName"
-        android:layout_alignParentStart="true"/>
+        android:layout_below="@+id/text_trip_name"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/event_notification_start"
+        android:id="@+id/checkBox_notification_start"
+        android:checked="false"
+        android:textSize="30dp"
+        android:layout_below="@+id/label_notification"
+        android:layout_alignRight="@+id/btn_event_repetition"
+        android:layout_alignEnd="@+id/btn_event_repetition" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/event_notification_end"
+        android:id="@+id/checkBox_notification_end"
+        android:checked="true"
+        android:textSize="30dp"
+        android:layout_alignTop="@+id/checkBox_notification_start"
+        android:layout_alignRight="@+id/checkBox_automatic_notification"
+        android:layout_alignEnd="@+id/checkBox_automatic_notification" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/event_automatic_notification"
+        android:id="@+id/checkBox_automatic_notification"
+        android:textSize="25dp"
+        android:checked="true"
+        android:layout_below="@+id/checkBox_notification_start"
+        android:layout_alignLeft="@+id/checkBox_notification_start"
+        android:layout_alignStart="@+id/checkBox_notification_start" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/event_radius"
+        android:id="@+id/label_event_radius"
+        android:textSize="20dp"
+        android:layout_alignBottom="@+id/text_default_radius"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="time"
+        android:ems="10"
+        android:id="@+id/text_default_radius"
+        android:text="@string/event_default_radius"
+        android:layout_below="@+id/text_localization_end"
+        android:layout_alignRight="@+id/text_time_end"
+        android:layout_alignEnd="@+id/text_time_end"
+        android:layout_toRightOf="@+id/text_date_end"
+        android:layout_toEndOf="@+id/text_date_end" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/event_repetition"
+        android:id="@+id/btn_event_repetition"
+        android:layout_below="@+id/checkBox_automatic_notification"
+        android:layout_toLeftOf="@+id/text_localization_end"
+        android:layout_toStartOf="@+id/text_localization_end"
+        android:layout_marginTop="34dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/event_add"
+        android:id="@+id/btn_event_add"
+        android:background="@color/colorAccent"
+        android:textSize="30dp"
+        android:padding="5dp"
+        android:layout_below="@+id/btn_add_people"
+        android:layout_centerHorizontal="true" />
+
 
 </RelativeLayout>
