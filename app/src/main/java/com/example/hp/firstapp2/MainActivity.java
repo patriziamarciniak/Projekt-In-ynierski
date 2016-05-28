@@ -44,11 +44,11 @@ public class MainActivity extends AppCompatActivity {
 // ////////////////////////DataBase checking////////////////////
 
 //        ContactsDAO dbContact = new ContactsDAO(context);
-//        EventDAO db = new EventDAO(context);
+ //       EventDAO db = new EventDAO(context);
 
 //        Log.d("Insert: ", "Inserting ..");
 //        dbContact.createContacts("9100000000","Ravi","Black");
-//        db.createEvent("dd","ee","bb","bb",true,true,true,true,8,"aa",12,1233445566788999L);
+  //      db.createEvent("dd","ee","bb","bb",true,true,true,true,8,"aa",12,1233445566788999L);
 
 //        Log.d("Reading: ", "Reading all contacts..");
 //        List<Contacts> contacts = dbContact.getAllContacts();

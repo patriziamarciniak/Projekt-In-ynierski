@@ -54,8 +54,8 @@ public class ComingTrips extends AppCompatActivity {
 
         @Override
         protected List<Event> doInBackground(Void... arg0) {
-            List<Event> employeeList = eventDAO.getAllEvents();
-            return employeeList;
+            List<Event> eventsList = eventDAO.getAllEvents();
+            return eventsList;
         }
 
         @Override

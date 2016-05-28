@@ -21,7 +21,7 @@
     <string name="event_localization">Localization</string>
     <string name="event_automatic_notification">Automatic notification</string>
     <string name="event_list_of_people">List of people</string>
-    <string name="event_repetition">Repeat</string>
+    <string name="event_repetition">Repeat:</string>
     <string name="event_add">Add event</string>
     <string name="event_added">Event added:</string>
     <string name="event_edit">Edit event</string>
@@ -42,4 +42,14 @@
     <string name="title_activity_list_item_contacts">ListItemContacts</string>
     <string name="title_activity_list_item_event">ListItemEvent</string>
     <string name="title_activity_event_added">EventAdded</string>
+    <string-array name="radius_spinner">
+        <item>200m</item>
+        <item>500m</item>
+        <item>1km</item>
+        <item>2km</item>
+        <item>5km</item>
+    </string-array>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

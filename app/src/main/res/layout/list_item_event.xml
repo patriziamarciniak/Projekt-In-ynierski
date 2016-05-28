@@ -1,127 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="5dp"
+    android:layout_margin="50dp"
 
-    <TableRow
-        android:id="@+id/tableRow1"
+    android:background="#6d93ed">
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="loc"
+        android:id="@+id/txt_localisation"
+        android:layout_alignParentTop="true"
+        android:textSize="30dp"
         android:padding="5dp"
-        android:gravity="center_horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="loc"
-            android:id="@+id/txt_localisation"
-            android:padding="5dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/event_radius"
-            android:id="@+id/textView"
-            android:layout_column="3" />
+        android:textAlignment="center" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="radius"
-            android:id="@+id/txt_radius"
-            android:padding="5dp"
-            android:layout_column="4" />
-    </TableRow>
-
-    <TableRow
-        android:id="@+id/tableRow2"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="data end"
+        android:id="@+id/txt_data_end"
         android:padding="5dp"
-        android:gravity="center_horizontal"
-        android:layout_gravity="center">
+        android:layout_alignBottom="@id/txt_localisation"
+        android:layout_toEndOf="@id/txt_localisation"
+        android:layout_toRightOf="@id/txt_localisation"
+        android:textSize="30dp"
+/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="hitory"
-            android:id="@+id/txt_history"
-            android:padding="5dp"
-            android:visibility="invisible" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="data start"
-            android:id="@+id/txt_data_start"
-            android:padding="5dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="time start"
-            android:id="@+id/txt_time_start"
-            android:padding="5dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="data end"
-            android:id="@+id/txt_data_end"
-            android:padding="5dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="time end"
-            android:id="@+id/txt_time_end"
-            android:padding="5dp" />
-
-    </TableRow>
-
-    <TableRow
-        android:id="@+id/tableRow3"
-        android:layout_width="wrap_content"
+    <TextView
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:text="time end"
+        android:id="@+id/txt_time_end"
         android:padding="5dp"
-        android:gravity="center_horizontal">
+android:layout_alignBottom="@id/txt_localisation"
+        android:layout_toEndOf="@id/txt_data_end"
+        android:layout_toRightOf="@id/txt_data_end"
+        android:textSize="30dp"
+
+                />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/event_radius"
+        android:id="@+id/textView"
+        android:layout_column="3" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="radius"
+        android:id="@+id/txt_radius"
+        android:padding="5dp"
+        android:layout_column="4" />
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="auto not"
-            android:id="@+id/txt_auto_notifications"
-            android:layout_gravity="right|top"
-            android:padding="5dp"
-            android:visibility="invisible" />
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="hitory"
+        android:id="@+id/txt_history"
+        android:padding="5dp"
+        android:visibility="invisible" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="notif start"
-            android:id="@+id/txt_notifications_start"
-            android:padding="5dp"
-            android:visibility="invisible" />
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="data start"
+        android:id="@+id/txt_added_data_start"
+        android:padding="5dp"
+        android:visibility="invisible" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="not end"
-            android:id="@+id/txt_notifications_end"
-            android:padding="5dp"
-            android:visibility="invisible" />
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="time start"
+        android:id="@+id/txt_time_start"
+        android:padding="5dp"
+        android:visibility="invisible"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="repetition"
-            android:id="@+id/txt_repetition"
-            android:layout_gravity="left|bottom"
-            android:padding="5dp"
-            android:visibility="invisible" />
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="auto not"
+        android:id="@+id/txt_auto_notifications"
+        android:layout_gravity="right|top"
+        android:padding="5dp"
+        android:visibility="invisible" />
 
-    </TableRow>
-</TableLayout>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="notif start"
+        android:id="@+id/txt_notifications_start"
+        android:padding="5dp"
+        android:visibility="invisible" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="not end"
+        android:id="@+id/txt_notifications_end"
+        android:padding="5dp"
+        android:visibility="invisible" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="repetition"
+        android:id="@+id/txt_repetition"
+        android:layout_gravity="left|bottom"
+        android:padding="5dp"
+        android:visibility="invisible"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>
+
 
 

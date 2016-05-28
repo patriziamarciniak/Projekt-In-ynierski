@@ -110,8 +110,11 @@ public class EventDAO {
     }
 
     public int countEvents() {
-        Cursor cursor = mDatabase.query(DBHelper.TABLE_EVENTS, mAllColumns,
-                null, null, null, null, null);
+
+        Cursor cursor = mDatabase.query(DBHelper.TABLE_EVENTS, mAllColumns, null, null, null, null, null);
+        if (cursor == null){
+            return 0;
+        }
         cursor.moveToLast();
         return cursor.getPosition();
     }
@@ -128,6 +131,13 @@ public class EventDAO {
         return event;
     }
 
+    public Event getLastEvent(){
+        Cursor cursor = mDatabase.query(DBHelper.TABLE_EVENTS, mAllColumns, null, null, null, null, null);
+        cursor.moveToLast();
+        Event event = cursorToEvent(cursor);
+        return event;
+    }
+
     protected Event cursorToEvent(Cursor cursor) {
         Event event = new Event();
         event.setId(cursor.getLong(0));
@@ -138,7 +148,7 @@ public class EventDAO {
         event.setHistory(cursor.getInt(5) > 0);
         event.setNotificationsStart(cursor.getInt(6) > 0);
         event.setNotificationsEnd(cursor.getInt(7) > 0);
-        event.setAutoNotifications(cursor.getInt(7) > 0);
+        event.setAutoNotifications(cursor.getInt(8) > 0);
         event.setRadius(cursor.getInt(9));
         event.setLocalisation(cursor.getString(10));
         event.setRepetition(cursor.getInt(11));

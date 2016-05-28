@@ -11,9 +11,7 @@ import android.widget.TextView;
 
 import com.example.hp.firstapp2.R;
 
-import com.example.hp.sqlite.model.Contacts;
 import com.example.hp.sqlite.model.Event;
-import com.example.hp.sqlite.model.Attendance;
 
 public class ListEventsAdapter extends BaseAdapter {
 
@@ -49,7 +47,7 @@ public class ListEventsAdapter extends BaseAdapter {
         if(v == null) {
             v = mInflater.inflate(R.layout.list_item_event, parent, false);
             holder = new ViewHolder();
-            holder.txtDataStart = (TextView) v.findViewById(R.id.txt_data_start);
+            holder.txtDataStart = (TextView) v.findViewById(R.id.txt_added_data_start);
             holder.txtTimeStart = (TextView) v.findViewById(R.id.txt_time_start);
             holder.txtDataEnd = (TextView) v.findViewById(R.id.txt_data_end);
             holder.txtTimeEnd = (TextView) v.findViewById(R.id.txt_time_end);

@@ -22,7 +22,7 @@
         <string name="event_notification_end">Koniec</string>
         <string name="event_automatic_notification">Powiadamiaj automatycznie</string>
         <string name="event_list_of_people">Lista osób</string>
-        <string name="event_repetition">Powtarzaj</string>
+        <string name="event_repetition">Powtarzaj:</string>
         <string name="event_add">Dodaj wydarzenie</string>
         <string name="event_added">Podróż dodana:</string>
         <string name="event_edit">Edytuj podróż</string>
@@ -38,4 +38,11 @@
         <string name="title_activity_menu">Menu główne</string>
         <string name="title_activity_add_people">Dodaj wybrane</string>
         <string name="title_activity_back">Wróć</string>
+        <string-array name="radius_spinner">
+                <item>200m</item>
+                <item>500m</item>
+                <item>1km</item>
+                <item>2km</item>
+                <item>5km</item>
+        </string-array>
     </resources>
