@@ -1,0 +1,58 @@
+[
+    {
+        "merged": "C:\\Users\\Natalia\\Desktop\\Projektinzynierski\\nowy inz\\Projekt-Inzynierski-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_add_event.xml",
+        "source": "C:\\Users\\Natalia\\Desktop\\Projektinzynierski\\nowy inz\\Projekt-Inzynierski-master\\app\\src\\main\\res\\layout\\activity_add_event.xml"
+    },
+    {
+        "merged": "C:\\Users\\Natalia\\Desktop\\Projektinzynierski\\nowy inz\\Projekt-Inzynierski-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\gps.xml",
+        "source": "C:\\Users\\Natalia\\Desktop\\Projektinzynierski\\nowy inz\\Projekt-Inzynierski-master\\app\\src\\main\\res\\layout\\gps.xml"
+    },
+    {
+        "merged": "C:\\Users\\Natalia\\Desktop\\Projektinzynierski\\nowy inz\\Projekt-Inzynierski-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\event_info.xml",
+        "source": "C:\\Users\\Natalia\\Desktop\\Projektinzynierski\\nowy inz\\Projekt-Inzynierski-master\\app\\src\\main\\res\\layout\\event_info.xml"
+    },
+    {
+        "merged": "C:\\Users\\Natalia\\Desktop\\Projektinzynierski\\nowy inz\\Projekt-Inzynierski-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_my_history.xml",
+        "source": "C:\\Users\\Natalia\\Desktop\\Projektinzynierski\\nowy inz\\Projekt-Inzynierski-master\\app\\src\\main\\res\\layout\\activity_my_history.xml"
+    },
+    {
+        "merged": "C:\\Users\\Natalia\\Desktop\\Projektinzynierski\\nowy inz\\Projekt-Inzynierski-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\content_main.xml",
+        "source": "C:\\Users\\Natalia\\Desktop\\Projektinzynierski\\nowy inz\\Projekt-Inzynierski-master\\app\\src\\main\\res\\layout\\content_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\Natalia\\Desktop\\Projektinzynierski\\nowy inz\\Projekt-Inzynierski-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_event_added.xml",
+        "source": "C:\\Users\\Natalia\\Desktop\\Projektinzynierski\\nowy inz\\Projekt-Inzynierski-master\\app\\src\\main\\res\\layout\\activity_event_added.xml"
+    },
+    {
+        "merged": "C:\\Users\\Natalia\\Desktop\\Projektinzynierski\\nowy inz\\Projekt-Inzynierski-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\content_my_history.xml",
+        "source": "C:\\Users\\Natalia\\Desktop\\Projektinzynierski\\nowy inz\\Projekt-Inzynierski-master\\app\\src\\main\\res\\layout\\content_my_history.xml"
+    },
+    {
+        "merged": "C:\\Users\\Natalia\\Desktop\\Projektinzynierski\\nowy inz\\Projekt-Inzynierski-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\content_add_event.xml",
+        "source": "C:\\Users\\Natalia\\Desktop\\Projektinzynierski\\nowy inz\\Projekt-Inzynierski-master\\app\\src\\main\\res\\layout\\content_add_event.xml"
+    },
+    {
+        "merged": "C:\\Users\\Natalia\\Desktop\\Projektinzynierski\\nowy inz\\Projekt-Inzynierski-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_coming_trips.xml",
+        "source": "C:\\Users\\Natalia\\Desktop\\Projektinzynierski\\nowy inz\\Projekt-Inzynierski-master\\app\\src\\main\\res\\layout\\activity_coming_trips.xml"
+    },
+    {
+        "merged": "C:\\Users\\Natalia\\Desktop\\Projektinzynierski\\nowy inz\\Projekt-Inzynierski-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\content_coming_trips.xml",
+        "source": "C:\\Users\\Natalia\\Desktop\\Projektinzynierski\\nowy inz\\Projekt-Inzynierski-master\\app\\src\\main\\res\\layout\\content_coming_trips.xml"
+    },
+    {
+        "merged": "C:\\Users\\Natalia\\Desktop\\Projektinzynierski\\nowy inz\\Projekt-Inzynierski-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\list_item_event.xml",
+        "source": "C:\\Users\\Natalia\\Desktop\\Projektinzynierski\\nowy inz\\Projekt-Inzynierski-master\\app\\src\\main\\res\\layout\\list_item_event.xml"
+    },
+    {
+        "merged": "C:\\Users\\Natalia\\Desktop\\Projektinzynierski\\nowy inz\\Projekt-Inzynierski-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\list_item_contact.xml",
+        "source": "C:\\Users\\Natalia\\Desktop\\Projektinzynierski\\nowy inz\\Projekt-Inzynierski-master\\app\\src\\main\\res\\layout\\list_item_contact.xml"
+    },
+    {
+        "merged": "C:\\Users\\Natalia\\Desktop\\Projektinzynierski\\nowy inz\\Projekt-Inzynierski-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\content_event_added.xml",
+        "source": "C:\\Users\\Natalia\\Desktop\\Projektinzynierski\\nowy inz\\Projekt-Inzynierski-master\\app\\src\\main\\res\\layout\\content_event_added.xml"
+    },
+    {
+        "merged": "C:\\Users\\Natalia\\Desktop\\Projektinzynierski\\nowy inz\\Projekt-Inzynierski-master\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_main.xml",
+        "source": "C:\\Users\\Natalia\\Desktop\\Projektinzynierski\\nowy inz\\Projekt-Inzynierski-master\\app\\src\\main\\res\\layout\\activity_main.xml"
+    }
+]

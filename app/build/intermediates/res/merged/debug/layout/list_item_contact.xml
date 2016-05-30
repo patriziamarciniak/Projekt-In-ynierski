@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="136dp"
+        android:layout_height="43dp"
+        android:text="Imie"
+        android:id="@+id/txt_name" />
+
+    <TextView
+        android:layout_width="109dp"
+        android:layout_height="43dp"
+        android:text="nazwisko"
+        android:id="@+id/txt_last_name" />
+
+    <TextView
+        android:layout_width="90dp"
+        android:layout_height="43dp"
+        android:text="telefon"
+        android:id="@+id/txt_phone_number" />
+</LinearLayout>

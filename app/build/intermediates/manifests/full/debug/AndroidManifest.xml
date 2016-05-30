@@ -1,17 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.hp.firstapp2">
+    package="com.example.hp.firstapp2"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="16"
+        android:targetSdkVersion="23" />
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.hp.firstapp2.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,46 +28,42 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AddEvent"
+            android:name="com.example.hp.firstapp2.AddEvent"
             android:label="@string/title_activity_add_event"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName="com.example.hp.firstapp2.MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.hp.firstapp2.MainActivity" />
         </activity>
         <activity
-            android:name=".MyHistory"
+            android:name="com.example.hp.firstapp2.MyHistory"
             android:label="@string/title_activity_my_history"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:parentActivityName="com.example.hp.firstapp2.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.hp.firstapp2.MainActivity" />
         </activity>
         <activity
-            android:name=".ComingTrips"
+            android:name="com.example.hp.firstapp2.ComingTrips"
             android:label="@string/title_activity_coming_trips"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:parentActivityName="com.example.hp.firstapp2.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.hp.firstapp2.MainActivity" />
         </activity>
         <activity
-            android:name=".EventAdded"
+            android:name="com.example.hp.firstapp2.EventAdded"
             android:label="@string/title_activity_event_added"
-            android:parentActivityName=".AddEvent"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:parentActivityName="com.example.hp.firstapp2.AddEvent"
+            android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.hp.firstapp2.AddEvent" />
         </activity>
     </application>
-
-<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-
-<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
 </manifest>
