@@ -111,4 +111,10 @@ public class ListEventsAdapter extends BaseAdapter {
 
     }
 
+
+    public void remove(Event employee) {
+        mItems.remove(employee);
+        notifyDataSetChanged();
+     //   super.remove(employee);
+    }
 }

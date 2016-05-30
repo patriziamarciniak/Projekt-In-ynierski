@@ -17,7 +17,11 @@
     <string name="event_notification_start">Start</string>
     <string name="event_notification_end">End</string>
     <string name="event_date">Date</string>
+    <string name="event_date_start">Start date</string>
+    <string name="event_date_end">End date</string>
     <string name="event_time">Time</string>
+    <string name="event_time_start">Start time</string>
+    <string name="event_time_end">End time</string>
     <string name="event_localization">Localization</string>
     <string name="event_automatic_notification">Automatic notification</string>
     <string name="event_list_of_people">List of people</string>
@@ -42,6 +46,8 @@
     <string name="title_activity_list_item_contacts">ListItemContacts</string>
     <string name="title_activity_list_item_event">ListItemEvent</string>
     <string name="title_activity_event_added">EventAdded</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
     <string-array name="radius_spinner">
         <item>200m</item>
         <item>500m</item>
@@ -49,7 +55,4 @@
         <item>2km</item>
         <item>5km</item>
     </string-array>
-
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

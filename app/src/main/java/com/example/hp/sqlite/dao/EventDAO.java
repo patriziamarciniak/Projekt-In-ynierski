@@ -127,6 +127,7 @@ public class EventDAO {
             cursor.moveToFirst();
         }
 
+        cursor.close();
         Event event = cursorToEvent(cursor);
         return event;
     }

@@ -13,6 +13,10 @@
         <string name="event_start">Start:</string>
         <string name="event_end">Koniec:</string>
         <string name="event_date">Data</string>
+        <string name="event_date_start">Data startu:</string>
+        <string name="event_date_end">Koniec:</string>
+        <string name="event_time_start">Czas startu:</string>
+        <string name="event_time_end">Koniec:</string>
         <string name="event_time">Czas</string>
         <string name="event_localization">Lokalizacja</string>
         <string name="event_radius">Promień tolerancji:</string>
@@ -38,6 +42,8 @@
         <string name="title_activity_menu">Menu główne</string>
         <string name="title_activity_add_people">Dodaj wybrane</string>
         <string name="title_activity_back">Wróć</string>
+        <string name="yes">Tak</string>
+        <string name="no">Nie</string>
         <string-array name="radius_spinner">
                 <item>200m</item>
                 <item>500m</item>

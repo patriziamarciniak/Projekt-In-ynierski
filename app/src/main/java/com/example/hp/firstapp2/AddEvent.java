@@ -2,18 +2,14 @@ package com.example.hp.firstapp2;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.example.hp.sqlite.dao.EventDAO;
 
@@ -24,6 +20,8 @@ public class AddEvent extends AppCompatActivity {
     CheckBox notificationStart, notificationEnd, notificationAutomatic;
     Integer cyclicEvent;
     EventDAO db;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,15 +41,7 @@ public class AddEvent extends AppCompatActivity {
         cyclicEvent = 0;
         db = new EventDAO(this);
 
-        radius = (Spinner) findViewById(R.id.spinner_radius);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.radius_spinner, android.R.layout.simple_spinner_dropdown_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        radius.setAdapter(adapter);
-
-
-
-        Button btnAddEvent = (Button) findViewById(R.id.btn_event_add);
+        Button btnAddEvent = (Button) findViewById(R.id.btn_add_event);
 
         btnAddEvent.setOnClickListener(new View.OnClickListener() {
 
@@ -75,7 +65,61 @@ public class AddEvent extends AppCompatActivity {
                 Intent nextScreen = new Intent(getApplicationContext(), EventAdded.class);
                 startActivity(nextScreen);
             }
+
         });
+
+        radius = (Spinner) findViewById(R.id.spinner_radius);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.radius_spinner, android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        radius.setAdapter(adapter);
+
+
+        dateStart.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                dateStart.setText(" ");
+                return false;
+            }
+        });
+
+        dateEnd.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                dateEnd.setText(" ");
+                return false;
+            }
+        });
+
+        timeStart.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                timeStart.setText(" ");
+                return false;
+            }
+        });
+        timeEnd.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                timeEnd.setText(" ");
+                return false;
+            }
+        });
+        localizationEnd.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                localizationEnd.setText(" ");
+                return false;
+            }
+        });
+        localizationStart.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                localizationStart.setText(" ");
+                return false;
+            }
+        });
+
     }
 
     private int getRadius(String selected){

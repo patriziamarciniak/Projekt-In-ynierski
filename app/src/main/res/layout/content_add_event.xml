@@ -25,6 +25,7 @@
          />
 
     <EditText
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="date"
@@ -96,19 +97,6 @@
         android:layout_alignRight="@+id/text_time_end"
         android:layout_alignEnd="@+id/text_time_end" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/event_list_of_people"
-        android:id="@+id/btn_add_people"
-        android:textSize="20dp"
-        android:textStyle="normal"
-        android:layout_marginBottom="5dp"
-        android:layout_above="@+id/btn_event_add"
-        android:layout_alignLeft="@+id/btn_event_add"
-        android:layout_alignStart="@+id/btn_event_add"
-        android:layout_alignRight="@+id/btn_event_add"
-        android:layout_alignEnd="@+id/btn_event_add" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -118,7 +106,8 @@
         android:textSize="24dp"
         android:layout_below="@+id/spinner_radius"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="7dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -136,8 +125,9 @@
         android:id="@+id/checkBox_notification_start"
         android:checked="false"
         android:textSize="30dp"
-        android:layout_below="@+id/label_notification"
-        android:layout_toLeftOf="@+id/spinner_radius" />
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="7dp"
+        android:layout_below="@+id/label_notification" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -146,9 +136,11 @@
         android:id="@+id/checkBox_notification_end"
         android:checked="true"
         android:textSize="30dp"
-        android:layout_alignTop="@+id/checkBox_notification_start"
-        android:layout_alignRight="@+id/checkBox_automatic_notification"
-        android:layout_alignEnd="@+id/checkBox_automatic_notification" />
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/text_trip_name"
+        android:layout_alignEnd="@+id/text_trip_name"
+        android:layout_below="@+id/label_notification"
+        android:layout_marginBottom="7dp" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -177,15 +169,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/event_add"
-        android:id="@+id/btn_event_add"
+        android:id="@+id/btn_add_event"
         android:background="@color/colorAccent"
         android:textSize="30dp"
         android:padding="5dp"
         android:textStyle="normal"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/textView3"
-        android:layout_toEndOf="@+id/textView3"
-        android:layout_marginBottom="5dp" />
+        android:layout_marginBottom="5dp"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/event_list_of_people"
+        android:id="@+id/btn_add_people"
+        android:textSize="20dp"
+        android:textStyle="normal"
+        android:layout_marginBottom="5dp"
+        android:layout_above="@+id/btn_add_event"
+        android:layout_alignLeft="@+id/btn_add_event"
+        android:layout_alignStart="@+id/btn_add_event"
+        android:layout_alignRight="@+id/btn_add_event"
+        android:layout_alignEnd="@+id/btn_add_event" />
 
     <Spinner
         android:layout_width="wrap_content"
@@ -193,18 +198,22 @@
         android:id="@+id/spinner_radius"
         android:spinnerMode="dropdown"
         android:layout_below="@+id/text_localization_end"
-        android:layout_alignLeft="@+id/text_localization_end"
-        android:layout_alignStart="@+id/text_localization_end" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+
+        android:layout_alignLeft="@+id/text_time_end"
+        android:layout_alignStart="@+id/text_time_end" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/event_repetition"
-        android:id="@+id/textView3"
+        android:id="@+id/text_repetition"
         android:textSize="24dp"
         android:layout_below="@+id/checkBox_automatic_notification"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="7dp" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -212,16 +221,15 @@
         android:id="@+id/checkBox_radius"
         android:checked="false"
         android:textSize="30dp"
-        android:layout_marginTop="-1dp"
-        android:layout_alignTop="@+id/textView3"
-        android:layout_alignRight="@+id/checkBox_notification_start"
-        android:layout_alignEnd="@+id/checkBox_notification_start" />
+        android:layout_alignTop="@+id/text_repetition"
+        android:layout_toLeftOf="@+id/checkBox_notification_end"
+        android:layout_toStartOf="@+id/checkBox_notification_end" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/text_trip_name"
-        android:layout_alignTop="@+id/textView3"
+        android:layout_alignTop="@+id/text_repetition"
         android:layout_alignRight="@+id/text_localization_start"
         android:layout_alignEnd="@+id/text_localization_start" />
 
