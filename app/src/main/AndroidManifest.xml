@@ -56,7 +56,7 @@
                 android:value="com.example.hp.firstapp2.AddEvent" />
         </activity>
         <activity android:name=".EventDetails" />
-        <activity android:name=".EditEvent"></activity>
+        <activity android:name=".EditEvent" />
     </application>
 
 </manifest>

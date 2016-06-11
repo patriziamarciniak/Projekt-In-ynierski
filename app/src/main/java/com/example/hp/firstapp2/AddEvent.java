@@ -1,5 +1,8 @@
 package com.example.hp.firstapp2;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,10 +11,15 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.example.hp.sqlite.dao.EventDAO;
+
+import java.util.Calendar;
 
 public class AddEvent extends AppCompatActivity {
 
@@ -20,6 +28,14 @@ public class AddEvent extends AppCompatActivity {
     CheckBox notificationStart, notificationEnd, notificationAutomatic;
     Integer cyclicEvent;
     EventDAO db;
+
+    static final int DATE_DIALOG_ID = 999;
+    static final int TIME_DIALOG_ID = 998;
+
+    private Calendar actualDate;
+
+    private TextView activeDateDisplay;
+    private Calendar activeDate;
 
 
 
@@ -39,7 +55,9 @@ public class AddEvent extends AppCompatActivity {
         notificationEnd = (CheckBox) findViewById(R.id.checkBox_notification_end);
         notificationAutomatic = (CheckBox) findViewById(R.id.checkBox_automatic_notification);
         cyclicEvent = 0;
+
         db = new EventDAO(this);
+        actualDate = Calendar.getInstance();
 
         Button btnAddEvent = (Button) findViewById(R.id.btn_add_event);
 
@@ -78,7 +96,7 @@ public class AddEvent extends AppCompatActivity {
         dateStart.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                dateStart.setText(" ");
+                showDateDialog(dateStart, actualDate);
                 return false;
             }
         });
@@ -86,7 +104,7 @@ public class AddEvent extends AppCompatActivity {
         dateEnd.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                dateEnd.setText(" ");
+                showDateDialog(dateEnd, actualDate);
                 return false;
             }
         });
@@ -94,14 +112,14 @@ public class AddEvent extends AppCompatActivity {
         timeStart.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                timeStart.setText(" ");
+                showTimeDialog(timeStart, actualDate);
                 return false;
             }
         });
         timeEnd.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                timeEnd.setText(" ");
+                showTimeDialog(timeEnd, actualDate);
                 return false;
             }
         });
@@ -120,7 +138,32 @@ public class AddEvent extends AppCompatActivity {
             }
         });
 
+        updateDisplay(dateStart, actualDate);
+        updateDisplay(dateEnd, actualDate);
+        updateTimeDisplay(timeStart, actualDate);
+        updateTimeDisplay(timeEnd, actualDate);
     }
+
+    ////////////////////////////////////////////////////////////////////
+
+    private void updateDisplay(TextView dateDisplay, Calendar date) {
+        dateDisplay.setText(
+                new StringBuilder()
+                        .append(date.get(Calendar.DAY_OF_MONTH)).append("/")
+                        .append(date.get(Calendar.MONTH) + 1).append("/")
+                        .append(date.get(Calendar.YEAR)).append(" "));
+    }
+
+    private void updateTimeDisplay(TextView dateDisplay, Calendar date) {
+        dateDisplay.setText(
+                new StringBuilder()
+                        .append(date.get(Calendar.HOUR_OF_DAY)).append(":")
+                        .append(date.get(Calendar.MINUTE)));
+    }
+    Calendar c = Calendar.getInstance();
+
+    int Hr24=c.get(Calendar.HOUR_OF_DAY);
+    int Min=c.get(Calendar.MINUTE);
 
     private int getRadius(String selected){
 
@@ -138,4 +181,53 @@ public class AddEvent extends AppCompatActivity {
         }
         return 0;
     }
+
+    public void showDateDialog(TextView dateDisplay, Calendar date) {
+        activeDateDisplay = dateDisplay;
+        activeDate = date;
+        showDialog(DATE_DIALOG_ID);
+    }
+
+    public void showTimeDialog(TextView dateDisplay, Calendar date) {
+        activeDateDisplay = dateDisplay;
+        activeDate = date;
+        showDialog(TIME_DIALOG_ID);
+    }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
+            case DATE_DIALOG_ID:
+                return new DatePickerDialog(this, dateSetListener, activeDate.get(Calendar.YEAR), activeDate.get(Calendar.MONTH), activeDate.get(Calendar.DAY_OF_MONTH));
+            case TIME_DIALOG_ID:
+                return new TimePickerDialog(this, timeSetListener, activeDate.get(Calendar.HOUR_OF_DAY), activeDate.get(Calendar.MINUTE),true);
+        }
+        return null;
+    }
+
+    private DatePickerDialog.OnDateSetListener dateSetListener
+        = new DatePickerDialog.OnDateSetListener() {
+
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            activeDate.set(Calendar.YEAR, year);
+            activeDate.set(Calendar.MONTH, monthOfYear);
+            activeDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateDisplay(activeDateDisplay, activeDate);
+        }
+    };
+
+
+    private TimePickerDialog.OnTimeSetListener timeSetListener
+            = new TimePickerDialog.OnTimeSetListener() {
+
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute ) {
+
+            activeDate.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            activeDate.set(Calendar.MINUTE, minute);
+            updateTimeDisplay(activeDateDisplay, activeDate);
+        }
+    };
+
+
+
 }
