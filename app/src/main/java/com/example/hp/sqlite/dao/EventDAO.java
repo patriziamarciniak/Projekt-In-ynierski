@@ -88,6 +88,25 @@ public class EventDAO {
                 + " = " + id, null);
     }
 
+    public void editEvent( Long id, String dataStart, String dataEnd, String timeStart,  String timeEnd, boolean history, boolean notificationsStart, boolean notificationsEnd,
+                         boolean autoNotifications, int radius, String localisation, int repetition, long motherId ) {
+        ContentValues values = new ContentValues();
+
+        values.put(DBHelper.COLUMN_DATA_START, dataStart);
+        values.put(DBHelper.COLUMN_DATA_END, dataEnd);
+        values.put(DBHelper.COLUMN_TIME_START, timeStart);
+        values.put(DBHelper.COLUMN_TIME_END, timeEnd);
+        values.put(DBHelper.COLUMN_HISTORY, history);
+        values.put(DBHelper.COLUMN_NOTIFICATIONS_START, notificationsStart);
+        values.put(DBHelper.COLUMN_NOTIFICATIONS_END, notificationsEnd);
+        values.put(DBHelper.COLUMN_AUTO_NOTIFICATIONS, autoNotifications);
+        values.put(DBHelper.COLUMN_RADIUS, radius);
+        values.put(DBHelper.COLUMN_LOCALISATION, localisation);
+        values.put(DBHelper.COLUMN_REPETITION, repetition);
+        values.put(DBHelper.COLUMN_MOTHER_ID, motherId);
+
+        mDatabase.update(DBHelper.TABLE_EVENTS, values, DBHelper.COLUMN_EVENT_ID + " = " + id, null);
+    }
 
 
     public List<Event> getAllEvents() {

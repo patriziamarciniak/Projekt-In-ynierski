@@ -48,6 +48,8 @@
     <string name="title_activity_event_added">EventAdded</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
     <string-array name="radius_spinner">
         <item>200m</item>
         <item>500m</item>

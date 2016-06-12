@@ -107,14 +107,11 @@ public class ListEventsAdapter extends BaseAdapter {
         TextView txtRadius;
         TextView txtLocalisation;
         TextView txtRepetition;
-
-
     }
 
 
     public void remove(Event employee) {
         mItems.remove(employee);
         notifyDataSetChanged();
-     //   super.remove(employee);
     }
 }

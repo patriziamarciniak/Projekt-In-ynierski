@@ -5,12 +5,15 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.renderscript.Sampler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -45,48 +48,53 @@ public class ComingTrips extends AppCompatActivity {
         task = new GetEmpTask(activity);
         task.execute((Void) null);
         updateView();
-        eventsListView = (ListView)findViewById(R.id.eventslistView);
-
-        listEventsAdapter = new ListEventsAdapter(activity,eventsList);
+        eventsListView = (ListView) findViewById(R.id.eventslistView);
+        registerForContextMenu(eventsListView);
+        listEventsAdapter = new ListEventsAdapter(activity, eventsList);
         eventsListView.setAdapter(listEventsAdapter);
         eventsListView.deferNotifyDataSetChanged();
 
-
-        AdapterView.OnItemLongClickListener longListener = new AdapterView.OnItemLongClickListener() {
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position,
-                                    long id) {
-                setTitle(parent.getItemAtPosition(position).toString());
-
-                eventDAO.deleteEvent(listEventsAdapter.getItem(position));
-                listEventsAdapter.remove(listEventsAdapter.getItem(position));
-                return true;
-
-            }
-        };
-
         AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position,
-                                           long id) {
-                setTitle(parent.getItemAtPosition(position).toString());
-
-                //  Log.d("position", parent.getItemAtPosition(position).toString());
+                                    long id) {
 
                 Event event = listEventsAdapter.getItem(position);
-                Log.d("moj event", event.getDataEnd());
-
                 Intent intent = new Intent(view.getContext(), EventDetails.class);
                 intent.putExtra("event", event);
                 startActivity(intent);
-
-
             }
         };
+        eventsListView.setOnItemClickListener(listener);
+    }
 
-        eventsListView.setOnItemLongClickListener(longListener);
-    eventsListView.setOnItemClickListener(listener);
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        if (v.getId() == R.id.eventslistView) {
+            getMenuInflater().inflate(R.menu.menu_item_event, menu);
+       }
+    }
 
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
+                .getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.menu_item_delete:
+                eventDAO.deleteEvent(listEventsAdapter.getItem(info.position));
+                listEventsAdapter.remove(listEventsAdapter.getItem(info.position));
+                return true;
 
-}
+            case R.id.menu_item_edit:
+                Event event = listEventsAdapter.getItem(info.position);
+                Intent intent = new Intent(getApplicationContext(), EditEvent.class);
+                intent.putExtra("event", event);
+                startActivity(intent);
+                return true;
+
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
 
 
     public class GetEmpTask extends AsyncTask<Void, Void, List<Event>> {
@@ -123,7 +131,6 @@ public class ComingTrips extends AppCompatActivity {
             }
         }
     }
-
 
     public void updateView() {
         task = new GetEmpTask(activity);

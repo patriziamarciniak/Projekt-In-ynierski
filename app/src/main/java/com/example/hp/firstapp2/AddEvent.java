@@ -146,7 +146,7 @@ public class AddEvent extends AppCompatActivity {
 
     ////////////////////////////////////////////////////////////////////
 
-    private void updateDisplay(TextView dateDisplay, Calendar date) {
+    public void updateDisplay(TextView dateDisplay, Calendar date) {
         dateDisplay.setText(
                 new StringBuilder()
                         .append(date.get(Calendar.DAY_OF_MONTH)).append("/")
@@ -154,7 +154,7 @@ public class AddEvent extends AppCompatActivity {
                         .append(date.get(Calendar.YEAR)).append(" "));
     }
 
-    private void updateTimeDisplay(TextView dateDisplay, Calendar date) {
+    public void updateTimeDisplay(TextView dateDisplay, Calendar date) {
         dateDisplay.setText(
                 new StringBuilder()
                         .append(date.get(Calendar.HOUR_OF_DAY)).append(":")
@@ -165,7 +165,7 @@ public class AddEvent extends AppCompatActivity {
     int Hr24=c.get(Calendar.HOUR_OF_DAY);
     int Min=c.get(Calendar.MINUTE);
 
-    private int getRadius(String selected){
+    public int getRadius(String selected){
 
         switch (selected){
             case "200m":
@@ -195,7 +195,7 @@ public class AddEvent extends AppCompatActivity {
     }
 
     @Override
-    protected Dialog onCreateDialog(int id) {
+    public Dialog onCreateDialog(int id) {
         switch (id) {
             case DATE_DIALOG_ID:
                 return new DatePickerDialog(this, dateSetListener, activeDate.get(Calendar.YEAR), activeDate.get(Calendar.MONTH), activeDate.get(Calendar.DAY_OF_MONTH));
@@ -205,7 +205,7 @@ public class AddEvent extends AppCompatActivity {
         return null;
     }
 
-    private DatePickerDialog.OnDateSetListener dateSetListener
+    public DatePickerDialog.OnDateSetListener dateSetListener
         = new DatePickerDialog.OnDateSetListener() {
 
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -217,7 +217,7 @@ public class AddEvent extends AppCompatActivity {
     };
 
 
-    private TimePickerDialog.OnTimeSetListener timeSetListener
+    public TimePickerDialog.OnTimeSetListener timeSetListener
             = new TimePickerDialog.OnTimeSetListener() {
 
             public void onTimeSet(TimePicker view, int hourOfDay, int minute ) {

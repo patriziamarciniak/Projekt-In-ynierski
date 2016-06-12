@@ -21,7 +21,7 @@ public class EventAdded extends AppCompatActivity {
     EventDAO eventDAO;
     Event event;
     TextView localization, data, time;
-    Button btnMainMenu;
+    Button btnMainMenu, btnEdit;
 
 
     @Override
@@ -31,7 +31,6 @@ public class EventAdded extends AppCompatActivity {
 
         eventDAO = new EventDAO(this);
         event = eventDAO.getLastEvent();
-        Log.d("event: ", event.getLocalisation().toString());
 
         localization = (TextView)this.findViewById(R.id.txt_added_localization);
         localization.setText(event.getLocalisation().toString());
@@ -48,7 +47,15 @@ public class EventAdded extends AppCompatActivity {
                 startActivity(nextScreen);
             }
         });
+        btnEdit = (Button) findViewById(R.id.btn_edit_event);
+        btnMainMenu.setOnClickListener(new View.OnClickListener() {
 
+            public void onClick(View arg0) {
+                Intent nextScreen = new Intent(getApplicationContext(), EditEvent.class);
+                nextScreen.putExtra("event", event);
+                startActivity(nextScreen);
+            }
+        });
     }
 
 }
