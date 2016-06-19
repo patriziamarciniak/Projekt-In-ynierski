@@ -23,11 +23,12 @@ public class EventDAO {
     private SQLiteDatabase mDatabase;
     private DBHelper mDbHelper;
     private Context mContext;
-    private String[] mAllColumns = { DBHelper.COLUMN_EVENT_ID,
+    private String[] mAllColumns = {DBHelper.COLUMN_EVENT_ID,
             DBHelper.COLUMN_DATA_START, DBHelper.COLUMN_TIME_START,
-            DBHelper.COLUMN_DATA_END, DBHelper.COLUMN_TIME_END, DBHelper.COLUMN_HISTORY,
-            DBHelper.COLUMN_NOTIFICATIONS_START, DBHelper.COLUMN_NOTIFICATIONS_END, DBHelper.COLUMN_AUTO_NOTIFICATIONS,
-            DBHelper.COLUMN_RADIUS, DBHelper.COLUMN_LOCALISATION, DBHelper.COLUMN_REPETITION, DBHelper.COLUMN_MOTHER_ID };
+            DBHelper.COLUMN_DATA_END, DBHelper.COLUMN_TIME_END, DBHelper.COLUMN_NOTIFICATIONS_START,
+            DBHelper.COLUMN_NOTIFICATIONS_END, DBHelper.COLUMN_AUTO_NOTIFICATIONS,
+            DBHelper.COLUMN_RADIUS, DBHelper.COLUMN_START_LOCALISATION_X, DBHelper.COLUMN_START_LOCALISATION_Y,
+            DBHelper.COLUMN_END_LOCALISATION_X, DBHelper.COLUMN_END_LOCALISATION_Y, DBHelper.COLUMN_REPETITION, DBHelper.COLUMN_MOTHER_ID };
 
 
     public EventDAO(Context context) {
@@ -50,8 +51,9 @@ public class EventDAO {
         mDbHelper.close();
     }
 
-    public Event createEvent( String dataStart, String timeStart, String dataEnd, String timeEnd, boolean history, boolean notificationsStart, boolean notificationsEnd,
-                              boolean autoNotifications, int radius, String localisation, int repetition, long motherId ) {
+    public Event createEvent( String dataStart, String dataEnd, String timeStart,  String timeEnd, boolean notificationsStart, boolean notificationsEnd,
+                            boolean autoNotifications, int radius, String startLocalisationX, String startLocalisationY, String endLocalisationX,
+                            String endLocalisationY, int repetition, long motherId ) {
 
         ContentValues values = new ContentValues();
 
@@ -59,12 +61,14 @@ public class EventDAO {
         values.put(DBHelper.COLUMN_TIME_START, timeStart);
         values.put(DBHelper.COLUMN_DATA_END, dataEnd);
         values.put(DBHelper.COLUMN_TIME_END, timeEnd);
-        values.put(DBHelper.COLUMN_HISTORY, history);
         values.put(DBHelper.COLUMN_NOTIFICATIONS_START, notificationsStart);
         values.put(DBHelper.COLUMN_NOTIFICATIONS_END, notificationsEnd);
         values.put(DBHelper.COLUMN_AUTO_NOTIFICATIONS, autoNotifications);
         values.put(DBHelper.COLUMN_RADIUS, radius);
-        values.put(DBHelper.COLUMN_LOCALISATION, localisation);
+        values.put(DBHelper.COLUMN_START_LOCALISATION_X, startLocalisationX);
+        values.put(DBHelper.COLUMN_START_LOCALISATION_Y, startLocalisationY);
+        values.put(DBHelper.COLUMN_END_LOCALISATION_X, endLocalisationX);
+        values.put(DBHelper.COLUMN_END_LOCALISATION_Y, endLocalisationY);
         values.put(DBHelper.COLUMN_REPETITION, repetition);
         values.put(DBHelper.COLUMN_MOTHER_ID, motherId);
 
@@ -88,20 +92,23 @@ public class EventDAO {
                 + " = " + id, null);
     }
 
-    public void editEvent( Long id, String dataStart, String dataEnd, String timeStart,  String timeEnd, boolean history, boolean notificationsStart, boolean notificationsEnd,
-                         boolean autoNotifications, int radius, String localisation, int repetition, long motherId ) {
+    public void editEvent( Long id, String dataStart, String dataEnd, String timeStart,  String timeEnd, boolean notificationsStart, boolean notificationsEnd,
+                        boolean autoNotifications, int radius, String startLocalisationX, String startLocalisationY, String endLocalisationX,
+                        String endLocalisationY, int repetition, long motherId ) {
         ContentValues values = new ContentValues();
 
         values.put(DBHelper.COLUMN_DATA_START, dataStart);
         values.put(DBHelper.COLUMN_DATA_END, dataEnd);
         values.put(DBHelper.COLUMN_TIME_START, timeStart);
         values.put(DBHelper.COLUMN_TIME_END, timeEnd);
-        values.put(DBHelper.COLUMN_HISTORY, history);
         values.put(DBHelper.COLUMN_NOTIFICATIONS_START, notificationsStart);
         values.put(DBHelper.COLUMN_NOTIFICATIONS_END, notificationsEnd);
         values.put(DBHelper.COLUMN_AUTO_NOTIFICATIONS, autoNotifications);
         values.put(DBHelper.COLUMN_RADIUS, radius);
-        values.put(DBHelper.COLUMN_LOCALISATION, localisation);
+        values.put(DBHelper.COLUMN_START_LOCALISATION_X, startLocalisationX);
+        values.put(DBHelper.COLUMN_START_LOCALISATION_Y, startLocalisationY);
+        values.put(DBHelper.COLUMN_END_LOCALISATION_X, endLocalisationX);
+        values.put(DBHelper.COLUMN_END_LOCALISATION_Y, endLocalisationY);
         values.put(DBHelper.COLUMN_REPETITION, repetition);
         values.put(DBHelper.COLUMN_MOTHER_ID, motherId);
 
@@ -165,14 +172,16 @@ public class EventDAO {
         event.setTimeStart(cursor.getString(2));
         event.setDataEnd(cursor.getString(3));
         event.setTimeEnd(cursor.getString(4));
-        event.setHistory(cursor.getInt(5) > 0);
-        event.setNotificationsStart(cursor.getInt(6) > 0);
-        event.setNotificationsEnd(cursor.getInt(7) > 0);
-        event.setAutoNotifications(cursor.getInt(8) > 0);
+        event.setNotificationsStart(cursor.getInt(5) > 0);
+        event.setNotificationsEnd(cursor.getInt(6) > 0);
+        event.setAutoNotifications(cursor.getInt(7) > 0);
         event.setRadius(cursor.getInt(9));
-        event.setLocalisation(cursor.getString(10));
-        event.setRepetition(cursor.getInt(11));
-        event.setMotherId(cursor.getLong(12));
+        event.setStartLocalisationX(cursor.getString(10));
+        event.setStartLocalisationY(cursor.getString(11));
+        event.setEndLocalisationX(cursor.getString(12));
+        event.setEndLocalisationY(cursor.getString(13));
+        event.setRepetition(cursor.getInt(14));
+        event.setMotherId(cursor.getLong(15));
 
         return event;
     }
