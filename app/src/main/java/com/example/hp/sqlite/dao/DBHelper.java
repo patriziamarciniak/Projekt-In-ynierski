@@ -17,12 +17,14 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_TIME_START = "time_start";
     public static final String COLUMN_DATA_END = "data_end";
     public static final String COLUMN_TIME_END = "time_end";
-    public static final String COLUMN_HISTORY = "history";
     public static final String COLUMN_NOTIFICATIONS_START = "notifications_start";
     public static final String COLUMN_NOTIFICATIONS_END = "notification_end";
     public static final String COLUMN_AUTO_NOTIFICATIONS = "auto_notification";
     public static final String COLUMN_RADIUS = "radius";
-    public static final String COLUMN_LOCALISATION = "localisation";
+    public static final String COLUMN_START_LOCALISATION_X = "start_localisation_x";
+    public static final String COLUMN_START_LOCALISATION_Y = "start_localisation_y";
+    public static final String COLUMN_END_LOCALISATION_X = "end_localisation_x";
+    public static final String COLUMN_END_LOCALISATION_Y = "end_localisation_y";
     public static final String COLUMN_REPETITION = "repetition";
     public static final String COLUMN_MOTHER_ID = "mother_id";
 
@@ -70,12 +72,14 @@ public class DBHelper extends SQLiteOpenHelper {
             + COLUMN_TIME_START + " TEXT, "
             + COLUMN_DATA_END + " TEXT NOT NULL, "
             + COLUMN_TIME_END + " TEXT, "
-            + COLUMN_HISTORY + " BOOLEAN, "
             + COLUMN_NOTIFICATIONS_START + " BOOLEAN, "
             + COLUMN_NOTIFICATIONS_END + " BOOLEAN, "
             + COLUMN_AUTO_NOTIFICATIONS + " BOOLEAN, "
             + COLUMN_RADIUS + " INTEGER, "
-            + COLUMN_LOCALISATION + " TEXT, "
+            + COLUMN_START_LOCALISATION_X + " TEXT, "
+            + COLUMN_START_LOCALISATION_Y + " TEXT, "
+            + COLUMN_END_LOCALISATION_X + " TEXT, "
+            + COLUMN_END_LOCALISATION_Y + " TEXT, "
             + COLUMN_REPETITION + " INTEGER, "
             + COLUMN_MOTHER_ID + " INTEGER "
             +");";
