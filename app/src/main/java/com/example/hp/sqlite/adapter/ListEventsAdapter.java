@@ -51,12 +51,14 @@ public class ListEventsAdapter extends BaseAdapter {
             holder.txtTimeStart = (TextView) v.findViewById(R.id.txt_time_start);
             holder.txtDataEnd = (TextView) v.findViewById(R.id.txt_data_end);
             holder.txtTimeEnd = (TextView) v.findViewById(R.id.txt_time_end);
-            holder.txtHistory = (TextView) v.findViewById(R.id.txt_history);
             holder.txtNotificationsStart = (TextView) v.findViewById(R.id.txt_notifications_start);
             holder.txtNotificationsEnd = (TextView) v.findViewById(R.id.txt_notifications_end);
             holder.txtAutoNotifications = (TextView) v.findViewById(R.id.txt_auto_notifications);
             holder.txtRadius = (TextView) v.findViewById(R.id.txt_radius);
-            holder.txtLocalisation = (TextView) v.findViewById(R.id.txt_localisation);
+            holder.txtStartLocalisationX = (TextView) v.findViewById(R.id.txt_start_localisation_x);
+            holder.txtStartLocalisationY = (TextView) v.findViewById(R.id.txt_start_localisation_y);
+            holder.txtEndLocalisationX = (TextView) v.findViewById(R.id.txt_end_localisation_x);
+            holder.txtEndLocalisationY = (TextView) v.findViewById(R.id.txt_end_localisation_y);
             holder.txtRepetition = (TextView) v.findViewById(R.id.txt_repetition);
 
 
@@ -73,12 +75,14 @@ public class ListEventsAdapter extends BaseAdapter {
             holder.txtTimeStart.setText(currentItem.getTimeStart());
             holder.txtDataEnd.setText(currentItem.getDataEnd());
             holder.txtTimeEnd.setText(currentItem.getTimeEnd());
-            holder.txtHistory.setText(Boolean.toString(currentItem.getHistory()));
             holder.txtNotificationsStart.setText(Boolean.toString(currentItem.getNotificationsStart()));
             holder.txtNotificationsEnd.setText(Boolean.toString(currentItem.getNotificationsEnd()));
             holder.txtAutoNotifications.setText(Boolean.toString(currentItem.getAutoNotifications()));
             holder.txtRadius.setText(String.valueOf(currentItem.getRadius()));//added conversion
-            holder.txtLocalisation.setText(currentItem.getLocalisation());
+            holder.txtStartLocalisationX.setText(currentItem.getStartLocalisationX());
+            holder.txtStartLocalisationY.setText(currentItem.getStartLocalisationY());
+            holder.txtEndLocalisationX.setText(currentItem.getEndLocalisationX());
+            holder.txtEndLocalisationY.setText(currentItem.getEndLocalisationY());
             holder.txtRepetition.setText(String.valueOf(currentItem.getRepetition()));
         }
 
@@ -100,12 +104,14 @@ public class ListEventsAdapter extends BaseAdapter {
         TextView txtTimeStart;
         TextView txtDataEnd;
         TextView txtTimeEnd;
-        TextView txtHistory;
         TextView txtNotificationsStart;
         TextView txtNotificationsEnd;
         TextView txtAutoNotifications;
         TextView txtRadius;
-        TextView txtLocalisation;
+        TextView txtStartLocalisationX;
+        TextView txtStartLocalisationY;
+        TextView txtEndLocalisationX;
+        TextView txtEndLocalisationY;
         TextView txtRepetition;
     }
 
