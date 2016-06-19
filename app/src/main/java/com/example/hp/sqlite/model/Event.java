@@ -181,12 +181,14 @@ public class Event implements  Parcelable{
         this.mTimeStart ,
         this.mDataEnd ,
         this.mTimeEnd ,
-                String.valueOf(this.mHistory),
                 String.valueOf(this.mNotificationsStart),
                 String.valueOf(this.mNotificationsEnd),
                 String.valueOf(this.mAutoNotifications),
                 String.valueOf(this.mRadius),
-        this.mLocalisation ,
+        this.mStartLocalisationX ,
+        this.mStartLocalisationY ,
+        this.mEndLocalisationX ,
+        this.mEndLocalisationY ,
                 String.valueOf(this.mRepetition),
                 String.valueOf(this.mMotherId)
         });
