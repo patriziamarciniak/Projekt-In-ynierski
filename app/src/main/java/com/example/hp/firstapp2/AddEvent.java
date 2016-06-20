@@ -10,6 +10,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -68,10 +69,8 @@ public class AddEvent extends AppCompatActivity {
         dateEnd = (EditText) findViewById(R.id.text_date_end);
         timeStart = (EditText) findViewById(R.id.text_time_start);
         timeEnd = (EditText) findViewById(R.id.text_time_end);
-        // localisationStartX = (EditText) findViewById(R.id.text_localisation_start_x);
-       // localisationStartY = (EditText) findViewById(R.id.text_localization_end_y);
-       // localisationEndX = (EditText) findViewById(R.id.text_localization_start_x);
-       // localisationEndY = (EditText) findViewById(R.id.text_localization_end_y);
+        localisationStart = (EditText) findViewById(R.id.text_localization_start);
+        localisationEnd = (EditText) findViewById(R.id.text_localization_end);
         myLocalisation = (CheckBox) findViewById(R.id.checkBox_my_localisation);
         notificationStart = (CheckBox) findViewById(R.id.checkBox_notification_start);
         notificationEnd = (CheckBox) findViewById(R.id.checkBox_notification_end);
@@ -96,10 +95,14 @@ public class AddEvent extends AppCompatActivity {
                         notificationEnd.isChecked(),
                         notificationAutomatic.isChecked(),
                         getRadius(radius.getSelectedItem().toString()),
-                        localisationStartX.getText().toString(),
-                        localisationStartY.getText().toString(),
-                        localisationEndX.getText().toString(),
-                        localisationEndY.getText().toString(),
+                        /// Longitude start
+                        startAddressToGeolocationX().toString(),
+                        /// Latitude start
+                        startAddressToGeolocationY().toString(),
+                        /// Longitude end
+                        endAddressToGeolocationX().toString(),
+                        /// Latitude end
+                        endAddressToGeolocationY().toString(),
                         cyclicEvent,
                         Long.valueOf(db.countEvents())
                 );
@@ -149,35 +152,21 @@ public class AddEvent extends AppCompatActivity {
                 return false;
             }
         });
-        localisationEndX.setOnTouchListener(new View.OnTouchListener() {
+        localisationStart.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                localisationEndX.setText(" ");
+                localisationStart.setText("aaa ");
                 return false;
             }
         });
-        localisationStartX.setOnTouchListener(new View.OnTouchListener() {
+        localisationEnd.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                localisationStartX.setText(" ");
+                localisationEnd.setText("bbb ");
                 return false;
             }
         });
 
-        localisationEndY.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                localisationEndY.setText(" ");
-                return false;
-            }
-        });
-        localisationStartY.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                localisationStartY.setText(" ");
-                return false;
-            }
-        });
 
         updateDisplay(dateStart, actualDate);
         updateDisplay(dateEnd, actualDate);
@@ -193,10 +182,10 @@ public class AddEvent extends AppCompatActivity {
     }
 
     private String getAddressFrom(Location location) {
-        String result = "Your address:\n";
+        String result = " ";
         try {
             List<Address> addresses = geocoder.getFromLocation(
-                    location.getLatitude(),	location.getLongitude(), 3);
+                    location.getLatitude(),	location.getLongitude(), 1);
             for (Address address : addresses) {
                 for (int i = 0, j = address.getMaxAddressLineIndex(); i <= j; i++) {
                     result += address.getAddressLine(i) + "\n";
@@ -227,7 +216,63 @@ public class AddEvent extends AppCompatActivity {
         }
     }
 
-    ////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////
+
+    //////////////////// ZAMIANA ADRESU NA WSPOLRZEDNE ////////////////////////////
+
+
+    private String getXFrom(String locationStr) {
+        String result = "";
+        try {
+            List<Address> addresses = geocoder.getFromLocationName(locationStr, 1);
+            for (Address address : addresses) {
+                    result += address.getLongitude();
+            }
+        } catch (IOException e) {
+            showToast(e.toString());
+        }
+        return result;
+    }
+
+    private String getYFrom(String locationStr) {
+        String result = "";
+        try {
+            List<Address> addresses = geocoder.getFromLocationName(locationStr, 1);
+            for (Address address : addresses) {
+                result += address.getLatitude();
+            }
+        } catch (IOException e) {
+            showToast(e.toString());
+        }
+        return result;
+    }
+
+
+    private String startAddressToGeolocationX() {
+        String location = localisationStart.getText().toString();
+        String result = getXFrom(location);
+        return result;
+    }
+
+    private String startAddressToGeolocationY() {
+        String location = localisationStart.getText().toString();
+        String result = getYFrom(location);
+        return result;
+    }
+
+    private String endAddressToGeolocationX() {
+        String location = localisationEnd.getText().toString();
+        String result = getXFrom(location);
+        return result;
+    }
+
+    private String endAddressToGeolocationY() {
+        String location = localisationEnd.getText().toString();
+        String result = getXFrom(location);
+        return result;
+    }
+
+    //////////////////////////////////////////////////////////////////////////////
 
     public void updateDisplay(TextView dateDisplay, Calendar date) {
         dateDisplay.setText(

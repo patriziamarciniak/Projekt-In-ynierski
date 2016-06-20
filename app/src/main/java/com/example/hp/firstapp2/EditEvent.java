@@ -4,6 +4,8 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,15 +19,18 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.example.hp.sqlite.dao.EventDAO;
 import com.example.hp.sqlite.model.Event;
 
+import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
 
 public class EditEvent extends AppCompatActivity {
 
-    EditText dateStart, dateEnd, timeStart, timeEnd, localisationStartX, localisationStartY, localisationEndX, localisationEndY;
+    EditText dateStart, dateEnd, timeStart, timeEnd, localisationStartX, localisationStartY, localisationEndX, localisationEndY, localisationStart, localisationEnd;
     Spinner radius;
     Button btnEditEvent;
     CheckBox notificationStart, notificationEnd, notificationAutomatic;
@@ -40,6 +45,8 @@ public class EditEvent extends AppCompatActivity {
 
     private TextView activeDateDisplay;
     private Calendar activeDate;
+    private Geocoder geocoder;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,10 +62,8 @@ public class EditEvent extends AppCompatActivity {
         dateEnd = (EditText) findViewById(R.id.text_edit_date_end);
         timeStart = (EditText) findViewById(R.id.text_edit_time_start);
         timeEnd = (EditText) findViewById(R.id.text_edit_time_end);
-       // localisationStartX = (EditText) findViewById(R.id.text_localization_start_x);
-       // localisationStartY = (EditText) findViewById(R.id.text_localization_end_y);
-       // localisationEndX = (EditText) findViewById(R.id.text_localization_start_x);
-       // localisationEndY = (EditText) findViewById(R.id.text_localization_end_y);
+        localisationStart = (EditText) findViewById(R.id.text_localization_start);
+        localisationEnd = (EditText) findViewById(R.id.text_localization_end);
         notificationStart = (CheckBox) findViewById(R.id.checkBox_edit_notification_start);
         notificationEnd = (CheckBox) findViewById(R.id.checkBox_edit_notification_end);
         notificationAutomatic = (CheckBox) findViewById(R.id.checkBox_edit_automatic_notification);
@@ -111,32 +116,17 @@ public class EditEvent extends AppCompatActivity {
                 return false;
             }
         });
-        localisationEndX.setOnTouchListener(new View.OnTouchListener() {
+        localisationStart.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                localisationEndX.setText(" ");
+                localisationStart.setText("aaa ");
                 return false;
             }
         });
-        localisationStartX.setOnTouchListener(new View.OnTouchListener() {
+        localisationEnd.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                localisationStartX.setText(" ");
-                return false;
-            }
-        });
-
-        localisationEndY.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                localisationEndY.setText(" ");
-                return false;
-            }
-        });
-        localisationStartY.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                localisationStartY.setText(" ");
+                localisationEnd.setText("bbb ");
                 return false;
             }
         });
@@ -154,10 +144,14 @@ public class EditEvent extends AppCompatActivity {
                         notificationEnd.isChecked(),
                         notificationAutomatic.isChecked(),
                         getRadius(radius.getSelectedItem().toString()),
-                        localisationStartX.getText().toString(),
-                        localisationStartY.getText().toString(),
-                        localisationEndX.getText().toString(),
-                        localisationEndY.getText().toString(),
+                        /// Longitude start
+                        startAddressToGeolocationX().toString(),
+                        /// Latitude start
+                        startAddressToGeolocationY().toString(),
+                        /// Longitude end
+                        endAddressToGeolocationX().toString(),
+                        /// Latitude end
+                        endAddressToGeolocationY().toString(),
                         0,
                         event.getId());
 
@@ -166,6 +160,68 @@ public class EditEvent extends AppCompatActivity {
             }});
 
     }
+
+
+    //////////////////// ZAMIANA ADRESU NA WSPOLRZEDNE ////////////////////////////
+
+    private void showToast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    private String getXFrom(String locationStr) {
+        String result = "";
+        try {
+            List<Address> addresses = geocoder.getFromLocationName(locationStr, 1);
+            for (Address address : addresses) {
+                result += address.getLongitude();
+            }
+        } catch (IOException e) {
+            showToast(e.toString());
+        }
+        return result;
+    }
+
+    private String getYFrom(String locationStr) {
+        String result = "";
+        try {
+            List<Address> addresses = geocoder.getFromLocationName(locationStr, 1);
+            for (Address address : addresses) {
+                result += address.getLatitude();
+            }
+        } catch (IOException e) {
+            showToast(e.toString());
+        }
+        return result;
+    }
+
+
+    private String startAddressToGeolocationX() {
+        String location = localisationStart.getText().toString();
+        String result = getXFrom(location);
+        return result;
+    }
+
+    private String startAddressToGeolocationY() {
+        String location = localisationStart.getText().toString();
+        String result = getYFrom(location);
+        return result;
+    }
+
+    private String endAddressToGeolocationX() {
+        String location = localisationEnd.getText().toString();
+        String result = getXFrom(location);
+        return result;
+    }
+
+    private String endAddressToGeolocationY() {
+        String location = localisationEnd.getText().toString();
+        String result = getXFrom(location);
+        return result;
+    }
+
+    //////////////////////////////////////////////////////////////////////////////
+
+
     ////////////////////////////////////////////////////////////////////
 
     public void updateDisplay(TextView dateDisplay, Calendar date) {

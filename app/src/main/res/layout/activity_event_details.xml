@@ -30,7 +30,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/event_localization"
+                    android:text="startLocal"
                     android:id="@+id/textView7"
                     android:padding="5dp"
                     android:textColor="#6d93ed"
@@ -40,13 +40,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/event_radius"
-                    android:id="@+id/textView4"
+                    android:text="endLocal"
+                    android:id="@+id/textView5"
                     android:padding="5dp"
                     android:textColor="#6d93ed"
                     android:textStyle="bold"
-                    android:textSize="18dp"
-                    android:paddingBottom="0dp" />
+                    android:textSize="18dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -127,6 +126,17 @@
                     android:textColor="#6d93ed"
                     android:textStyle="bold"
                     android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/event_radius"
+                    android:id="@+id/textView4"
+                    android:padding="5dp"
+                    android:textColor="#6d93ed"
+                    android:textStyle="bold"
+                    android:textSize="18dp"
+                    android:paddingBottom="0dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -137,8 +147,8 @@
                 android:padding="5dp">
 
                 <TextView
-                    android:text="loc"
-                    android:id="@+id/txt_details_localization"
+                    android:text="startLoc"
+                    android:id="@+id/txt_details_start_localisation"
                     android:padding="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -146,11 +156,11 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:text="endLoc"
+                    android:id="@+id/txt_details_end_localisation"
+                    android:padding="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="radius"
-                    android:id="@+id/txt_details_radius"
-                    android:padding="5dp"
                     android:textSize="18dp"
                     android:textStyle="bold" />
 
@@ -222,6 +232,15 @@
                     android:layout_height="wrap_content"
                     android:text="repetition"
                     android:id="@+id/txt_details_repetition"
+                    android:padding="5dp"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="radius"
+                    android:id="@+id/txt_details_radius"
                     android:padding="5dp"
                     android:textSize="18dp"
                     android:textStyle="bold" />
