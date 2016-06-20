@@ -13,7 +13,7 @@ import com.example.hp.sqlite.model.Event;
 
 public class EventDetails extends AppCompatActivity {
 
-    TextView dateStart, dateEnd, timeStart, timeEnd, localizationStart, spinner, notAuto, notStart, notEnd;
+    TextView dateStart, dateEnd, timeStart, timeEnd, localizationStartX, localisationStartY, localisationEndX, localisationEndY, spinner, notAuto, notStart, notEnd;
 
 
     @Override
@@ -28,7 +28,7 @@ public class EventDetails extends AppCompatActivity {
         dateEnd = (TextView) findViewById(R.id.txt_details_data_end);
         timeStart = (TextView) findViewById(R.id.txt_details_time_start);
         timeEnd = (TextView) findViewById(R.id.txt_details_time_end);
-        localizationStart = (TextView) findViewById(R.id.txt_details_localization);
+      //  localizationStart = (TextView) findViewById(R.id.txt_details_localization);
         spinner = (TextView) findViewById(R.id.txt_details_radius);
         notAuto = (TextView) findViewById(R.id.txt_details_auto_notifications);
         notStart = (TextView) findViewById(R.id.txt_details_notification_start);
@@ -38,7 +38,11 @@ public class EventDetails extends AppCompatActivity {
         dateStart.setText(event.getDataStart());
         timeEnd.setText(event.getTimeEnd());
         timeStart.setText(event.getTimeStart());
-        localizationStart.setText(event.getLocalisation());
+        localizationStartX.setText(event.getStartLocalisationX());
+        localisationStartY.setText(event.getStartLocalisationY());
+        localisationEndX.setText(event.getEndLocalisationX());
+        localisationEndY.setText(event.getEndLocalisationY());
+
         spinner.setText(String.valueOf(event.getRadius()));
         notAuto.setText(String.valueOf(event.getAutoNotifications()));
         notStart.setText(String.valueOf(event.getNotificationsStart()));
