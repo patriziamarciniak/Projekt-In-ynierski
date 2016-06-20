@@ -23,7 +23,7 @@ import java.util.Calendar;
 
 public class AddEvent extends AppCompatActivity {
 
-    EditText eventName, dateStart, dateEnd, timeStart, timeEnd, localizationStart, localizationEnd;
+    EditText eventName, dateStart, dateEnd, timeStart, timeEnd, localisationStartX, localisationStartY, localisationEndX, localisationEndY;
     Spinner radius;
     CheckBox notificationStart, notificationEnd, notificationAutomatic;
     Integer cyclicEvent;
@@ -49,8 +49,10 @@ public class AddEvent extends AppCompatActivity {
         dateEnd = (EditText) findViewById(R.id.text_date_end);
         timeStart = (EditText) findViewById(R.id.text_time_start);
         timeEnd = (EditText) findViewById(R.id.text_time_end);
-        localizationStart = (EditText) findViewById(R.id.text_localization_start);
-        localizationEnd = (EditText) findViewById(R.id.text_localization_end);
+      //  localisationStartX = (EditText) findViewById(R.id.text_localization_start_x);
+       // localisationStartY = (EditText) findViewById(R.id.text_localization_end_y);
+       // localisationEndX = (EditText) findViewById(R.id.text_localization_start_x);
+       // localisationEndY = (EditText) findViewById(R.id.text_localization_end_y);
         notificationStart = (CheckBox) findViewById(R.id.checkBox_notification_start);
         notificationEnd = (CheckBox) findViewById(R.id.checkBox_notification_end);
         notificationAutomatic = (CheckBox) findViewById(R.id.checkBox_automatic_notification);
@@ -70,12 +72,14 @@ public class AddEvent extends AppCompatActivity {
                         timeStart.getText().toString(),
                         dateEnd.getText().toString(),
                         timeEnd.getText().toString(),
-                        false,
                         notificationStart.isChecked(),
                         notificationEnd.isChecked(),
                         notificationAutomatic.isChecked(),
                         getRadius(radius.getSelectedItem().toString()),
-                        localizationStart.getText().toString(),
+                        localisationStartX.getText().toString(),
+                        localisationStartY.getText().toString(),
+                        localisationEndX.getText().toString(),
+                        localisationEndY.getText().toString(),
                         cyclicEvent,
                         Long.valueOf(db.countEvents())
                 );
@@ -123,17 +127,32 @@ public class AddEvent extends AppCompatActivity {
                 return false;
             }
         });
-        localizationEnd.setOnTouchListener(new View.OnTouchListener() {
+        localisationEndX.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                localizationEnd.setText(" ");
+                localisationEndX.setText(" ");
                 return false;
             }
         });
-        localizationStart.setOnTouchListener(new View.OnTouchListener() {
+        localisationStartX.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                localizationStart.setText(" ");
+                localisationStartX.setText(" ");
+                return false;
+            }
+        });
+
+        localisationEndY.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                localisationEndY.setText(" ");
+                return false;
+            }
+        });
+        localisationStartY.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                localisationStartY.setText(" ");
                 return false;
             }
         });

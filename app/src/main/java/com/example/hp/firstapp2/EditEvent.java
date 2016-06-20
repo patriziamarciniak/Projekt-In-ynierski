@@ -25,7 +25,7 @@ import java.util.Calendar;
 
 public class EditEvent extends AppCompatActivity {
 
-    EditText dateStart, dateEnd, timeStart, timeEnd, localizationStart, localizationEnd;
+    EditText dateStart, dateEnd, timeStart, timeEnd, localisationStartX, localisationStartY, localisationEndX, localisationEndY;
     Spinner radius;
     Button btnEditEvent;
     CheckBox notificationStart, notificationEnd, notificationAutomatic;
@@ -55,8 +55,10 @@ public class EditEvent extends AppCompatActivity {
         dateEnd = (EditText) findViewById(R.id.text_edit_date_end);
         timeStart = (EditText) findViewById(R.id.text_edit_time_start);
         timeEnd = (EditText) findViewById(R.id.text_edit_time_end);
-        localizationStart = (EditText) findViewById(R.id.text_edit_localization_start);
-        localizationEnd = (EditText) findViewById(R.id.text_edit_localization_end);
+       // localisationStartX = (EditText) findViewById(R.id.text_localization_start_x);
+       // localisationStartY = (EditText) findViewById(R.id.text_localization_end_y);
+       // localisationEndX = (EditText) findViewById(R.id.text_localization_start_x);
+       // localisationEndY = (EditText) findViewById(R.id.text_localization_end_y);
         notificationStart = (CheckBox) findViewById(R.id.checkBox_edit_notification_start);
         notificationEnd = (CheckBox) findViewById(R.id.checkBox_edit_notification_end);
         notificationAutomatic = (CheckBox) findViewById(R.id.checkBox_edit_automatic_notification);
@@ -66,8 +68,10 @@ public class EditEvent extends AppCompatActivity {
         dateStart.setText(event.getDataStart());
         timeStart.setText(event.getTimeStart());
         timeEnd.setText(event.getTimeEnd());
-        localizationStart.setText(event.getLocalisation());
-        localizationEnd.setText(event.getLocalisation());
+        localisationStartX.setText(event.getStartLocalisationX());
+        localisationStartY.setText(event.getStartLocalisationY());
+        localisationEndX.setText(event.getEndLocalisationX());
+        localisationEndY.setText(event.getEndLocalisationY());
 
         actualDate = Calendar.getInstance();
         radius = (Spinner) findViewById(R.id.spinner_edit_radius);
@@ -107,20 +111,36 @@ public class EditEvent extends AppCompatActivity {
                 return false;
             }
         });
-        localizationEnd.setOnTouchListener(new View.OnTouchListener() {
+        localisationEndX.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                localizationEnd.setText(" ");
+                localisationEndX.setText(" ");
                 return false;
             }
         });
-        localizationStart.setOnTouchListener(new View.OnTouchListener() {
+        localisationStartX.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                localizationStart.setText(" ");
+                localisationStartX.setText(" ");
                 return false;
             }
         });
+
+        localisationEndY.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                localisationEndY.setText(" ");
+                return false;
+            }
+        });
+        localisationStartY.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                localisationStartY.setText(" ");
+                return false;
+            }
+        });
+
 
         btnEditEvent = (Button) findViewById(R.id.btn_edit_event);
         btnEditEvent.setOnClickListener(new View.OnClickListener(){
@@ -130,12 +150,14 @@ public class EditEvent extends AppCompatActivity {
                         dateEnd.getText().toString(),
                         timeStart.getText().toString(),
                         timeEnd.getText().toString(),
-                        false,
                         notificationStart.isChecked(),
                         notificationEnd.isChecked(),
                         notificationAutomatic.isChecked(),
                         getRadius(radius.getSelectedItem().toString()),
-                        localizationStart.getText().toString(),
+                        localisationStartX.getText().toString(),
+                        localisationStartY.getText().toString(),
+                        localisationEndX.getText().toString(),
+                        localisationEndY.getText().toString(),
                         0,
                         event.getId());
 
