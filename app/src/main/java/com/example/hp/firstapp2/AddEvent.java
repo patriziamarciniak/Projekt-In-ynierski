@@ -4,6 +4,10 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
@@ -16,18 +20,34 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
+import android.view.View;
+import android.view.View.OnClickListener;
+
 
 import com.example.hp.sqlite.dao.EventDAO;
 
+import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
 
 public class AddEvent extends AppCompatActivity {
 
-    EditText eventName, dateStart, dateEnd, timeStart, timeEnd, localisationStartX, localisationStartY, localisationEndX, localisationEndY;
+    EditText eventName, dateStart, dateEnd, timeStart, timeEnd, localisationStartX, localisationStartY, localisationEndX, localisationEndY, localisationStart, localisationEnd;
     Spinner radius;
-    CheckBox notificationStart, notificationEnd, notificationAutomatic;
+    CheckBox notificationStart, notificationEnd, notificationAutomatic, myLocalisation;
     Integer cyclicEvent;
     EventDAO db;
+
+    private TextView tvInformations;
+    private LocationManager locationManager;
+    private EditText etAddress;
+    private EditText etLatitude;
+    private EditText etLongitude;
+    private Button btnAddressToGeo;
+    private Button btnGeoToAddress;
+    private Button btnFromYourPos;
+    private Geocoder geocoder;
 
     static final int DATE_DIALOG_ID = 999;
     static final int TIME_DIALOG_ID = 998;
@@ -36,7 +56,6 @@ public class AddEvent extends AppCompatActivity {
 
     private TextView activeDateDisplay;
     private Calendar activeDate;
-
 
 
     @Override
@@ -49,10 +68,11 @@ public class AddEvent extends AppCompatActivity {
         dateEnd = (EditText) findViewById(R.id.text_date_end);
         timeStart = (EditText) findViewById(R.id.text_time_start);
         timeEnd = (EditText) findViewById(R.id.text_time_end);
-      //  localisationStartX = (EditText) findViewById(R.id.text_localization_start_x);
+        // localisationStartX = (EditText) findViewById(R.id.text_localisation_start_x);
        // localisationStartY = (EditText) findViewById(R.id.text_localization_end_y);
        // localisationEndX = (EditText) findViewById(R.id.text_localization_start_x);
        // localisationEndY = (EditText) findViewById(R.id.text_localization_end_y);
+        myLocalisation = (CheckBox) findViewById(R.id.checkBox_my_localisation);
         notificationStart = (CheckBox) findViewById(R.id.checkBox_notification_start);
         notificationEnd = (CheckBox) findViewById(R.id.checkBox_notification_end);
         notificationAutomatic = (CheckBox) findViewById(R.id.checkBox_automatic_notification);
@@ -89,6 +109,8 @@ public class AddEvent extends AppCompatActivity {
             }
 
         });
+
+
 
         radius = (Spinner) findViewById(R.id.spinner_radius);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -161,6 +183,48 @@ public class AddEvent extends AppCompatActivity {
         updateDisplay(dateEnd, actualDate);
         updateTimeDisplay(timeStart, actualDate);
         updateTimeDisplay(timeEnd, actualDate);
+    }
+
+
+    ////////// POBIERANIE MOJEJ LOKALIZACJI /////////////////////////
+
+    private void showToast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    private String getAddressFrom(Location location) {
+        String result = "Your address:\n";
+        try {
+            List<Address> addresses = geocoder.getFromLocation(
+                    location.getLatitude(),	location.getLongitude(), 3);
+            for (Address address : addresses) {
+                for (int i = 0, j = address.getMaxAddressLineIndex(); i <= j; i++) {
+                    result += address.getAddressLine(i) + "\n";
+                }
+                result += " ";
+            }
+        } catch (Exception e) {
+            showToast(e.toString());
+        }
+        return result;
+    }
+
+    private void currentLocationToAddress() {
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        String result = getAddressFrom(location);
+        localisationStart.setText(result);
+    }
+
+    public void onCheckboxClicked(View view) {
+        // Is the view now checked?
+        boolean checked = ((CheckBox) view).isChecked();
+        // Check which checkbox was clicked
+        switch(view.getId()) {
+            case R.id.checkBox_my_localisation:
+                if (checked)
+                    currentLocationToAddress();
+                break;
+        }
     }
 
     ////////////////////////////////////////////////////////////////////

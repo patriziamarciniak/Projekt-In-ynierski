@@ -129,18 +129,6 @@
         android:layout_marginBottom="7dp"
         android:layout_below="@+id/label_notification" />
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/event_notification_end"
-        android:id="@+id/checkBox_notification_end"
-        android:checked="true"
-        android:textSize="30dp"
-        android:layout_centerVertical="true"
-        android:layout_alignRight="@+id/text_trip_name"
-        android:layout_alignEnd="@+id/text_trip_name"
-        android:layout_below="@+id/label_notification"
-        android:layout_marginBottom="7dp" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -233,5 +221,68 @@
         android:layout_alignRight="@+id/text_localization_start"
         android:layout_alignEnd="@+id/text_localization_start" />
 
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ML"
+        android:id="@+id/checkBox_my_localisation"
+        android:checked="false"
+        android:textSize="20dp"
+        android:layout_centerVertical="true"
+        android:layout_above="@+id/text_time_end"
+        android:layout_toRightOf="@+id/label_event_end"
+        android:layout_toEndOf="@+id/label_event_end"
+        android:onClick="onCheckboxClicked" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/event_notification_end"
+        android:id="@+id/checkBox_notification_end"
+        android:checked="true"
+        android:textSize="30dp"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/text_trip_name"
+        android:layout_alignEnd="@+id/text_trip_name"
+        android:layout_below="@+id/label_notification"
+        android:layout_marginBottom="7dp" />
+
+
+
+    ///////////////////////////////////////////////////////
+     <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="start local x"
+        android:id="@+id/txt_localisation_start_x"
+        android:padding="5dp"
+        android:visibility="invisible" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="start local y"
+        android:id="@+id/txt_localisation_start_y"
+        android:padding="5dp"
+        android:visibility="invisible" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="end local x"
+        android:id="@+id/txt_localisation_end_x"
+        android:padding="5dp"
+        android:visibility="invisible" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="end local y"
+        android:id="@+id/txt_localisation_end_y"
+        android:padding="5dp"
+        android:visibility="invisible" />
+
+
+    /////////////////////////////////////////////////////////////
 
 </RelativeLayout>

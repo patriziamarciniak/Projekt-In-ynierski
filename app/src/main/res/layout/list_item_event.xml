@@ -87,37 +87,6 @@ android:layout_alignBottom="@id/txt_localisation"
         android:padding="5dp"
         android:visibility="invisible" />
 
-<TextView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="start local x"
-        android:id="@+id/txt_start_localisation_x"
-        android:padding="5dp"
-        android:visibility="invisible" />
-
-<TextView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="start local y"
-        android:id="@+id/txt_start_localisation_y"
-        android:padding="5dp"
-        android:visibility="invisible" />
-
-<TextView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="end local x"
-        android:id="@+id/txt_end_localisation_x"
-        android:padding="5dp"
-        android:visibility="invisible" />
-
-<TextView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="end local y"
-        android:id="@+id/txt_end_localisation_y"
-        android:padding="5dp"
-        android:visibility="invisible" />
 
     <TextView
         android:layout_width="0dp"
