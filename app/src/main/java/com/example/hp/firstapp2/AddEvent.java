@@ -40,15 +40,9 @@ public class AddEvent extends AppCompatActivity {
     Integer cyclicEvent;
     EventDAO db;
 
-    private TextView tvInformations;
-    private LocationManager locationManager;
-    private EditText etAddress;
-    private EditText etLatitude;
-    private EditText etLongitude;
-    private Button btnAddressToGeo;
-    private Button btnGeoToAddress;
-    private Button btnFromYourPos;
     private Geocoder geocoder;
+    private LocationManager locationManager;
+
 
     static final int DATE_DIALOG_ID = 999;
     static final int TIME_DIALOG_ID = 998;
@@ -96,13 +90,13 @@ public class AddEvent extends AppCompatActivity {
                         notificationAutomatic.isChecked(),
                         getRadius(radius.getSelectedItem().toString()),
                         /// Longitude start
-                        startAddressToGeolocationX().toString(),
+                        startAddressToGeolocationX(),
                         /// Latitude start
-                        startAddressToGeolocationY().toString(),
+                        startAddressToGeolocationY(),
                         /// Longitude end
-                        endAddressToGeolocationX().toString(),
+                        endAddressToGeolocationX(),
                         /// Latitude end
-                        endAddressToGeolocationY().toString(),
+                        endAddressToGeolocationY(),
                         cyclicEvent,
                         Long.valueOf(db.countEvents())
                 );
@@ -155,14 +149,14 @@ public class AddEvent extends AppCompatActivity {
         localisationStart.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                localisationStart.setText("aaa ");
+                localisationStart.setText("");
                 return false;
             }
         });
         localisationEnd.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                localisationEnd.setText("bbb ");
+                localisationEnd.setText("");
                 return false;
             }
         });
@@ -181,40 +175,40 @@ public class AddEvent extends AppCompatActivity {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
-    private String getAddressFrom(Location location) {
-        String result = " ";
-        try {
-            List<Address> addresses = geocoder.getFromLocation(
-                    location.getLatitude(),	location.getLongitude(), 1);
-            for (Address address : addresses) {
-                for (int i = 0, j = address.getMaxAddressLineIndex(); i <= j; i++) {
-                    result += address.getAddressLine(i) + "\n";
-                }
-                result += " ";
-            }
-        } catch (Exception e) {
-            showToast(e.toString());
-        }
-        return result;
-    }
+//    private String getAddressFrom(Location location) {
+ //       String result = " ";
+  //      try {
+   //         List<Address> addresses = geocoder.getFromLocation(
+    //                location.getLatitude(),	location.getLongitude(), 1);
+     //       for (Address address : addresses) {
+     //           for (int i = 0, j = address.getMaxAddressLineIndex(); i <= j; i++) {
+      //              result += address.getAddressLine(i) + "\n";
+      //          }
+       //         result += " ";
+        //    }
+       // } catch (Exception e) {
+       //     showToast(e.toString());
+       // }
+       // return result;
+   // }
 
-    private void currentLocationToAddress() {
-        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        String result = getAddressFrom(location);
-        localisationStart.setText(result);
-    }
+   // private void currentLocationToAddress() {
+   //     Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+   //     String result = getAddressFrom(location);
+   //     localisationStart.setText(result);
+   // }
 
-    public void onCheckboxClicked(View view) {
-        // Is the view now checked?
-        boolean checked = ((CheckBox) view).isChecked();
+//    public void onCheckboxClicked(View view) {
+ //       // Is the view now checked?
+  //      boolean checked = ((CheckBox) view).isChecked();
         // Check which checkbox was clicked
-        switch(view.getId()) {
-            case R.id.checkBox_my_localisation:
-                if (checked)
-                    currentLocationToAddress();
-                break;
-        }
-    }
+   //     switch(view.getId()) {
+    //        case R.id.checkBox_my_localisation:
+     //           if (checked)
+      //              currentLocationToAddress();
+       //         break;
+       // }
+   // }
 
     ////////////////////////////////////////////////////////////////////////////////
 
