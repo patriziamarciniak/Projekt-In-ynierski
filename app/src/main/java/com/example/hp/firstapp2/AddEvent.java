@@ -240,8 +240,7 @@ public class AddEvent extends AppCompatActivity {
         }
         return result;
     }
-
-
+    
     private String startAddressToGeolocationX() {
         String location = localisationStart.getText().toString();
         String result = getXFrom(location);

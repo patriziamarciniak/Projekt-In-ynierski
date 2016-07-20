@@ -58,4 +58,10 @@
         <item>5km</item>
     </string-array>
     <string name="title_activity_my_android_app">MyAndroidAppActivity</string>
+    <string name="latitude_label">Latitude</string>
+    <string name="longitude_label">Longitude</string>
+
+    <string name="no_location_detected">
+        No location detected. Make sure location is enabled on the device.
+    </string>
 </resources>
