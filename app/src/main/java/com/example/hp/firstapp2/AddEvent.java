@@ -1,11 +1,19 @@
 package com.example.hp.firstapp2;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.LocationManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -17,9 +25,18 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.example.hp.sqlite.dao.AttendanceDAO;
 import com.example.hp.sqlite.dao.EventDAO;
+import com.example.hp.sqlite.model.PhoneContact;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+
 
 public class AddEvent extends AppCompatActivity {
 
@@ -28,23 +45,30 @@ public class AddEvent extends AppCompatActivity {
     CheckBox notificationStart, notificationEnd, notificationAutomatic;
     Integer cyclicEvent;
     EventDAO db;
+    Button btnAddEvent, btnAddPeople;
+    List<PhoneContact> contactsList = new ArrayList<>();
+    Context context ;
+
+    private Geocoder geocoder;
+    private LocationManager locationManager;
+
 
     static final int DATE_DIALOG_ID = 999;
     static final int TIME_DIALOG_ID = 998;
 
     private Calendar actualDate;
-
     private TextView activeDateDisplay;
     private Calendar activeDate;
 
-
+    SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat format2 = new SimpleDateFormat("kk:mm");
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
+        context = getApplicationContext();
 
-        eventName = (EditText) findViewById(R.id.text_trip_name);
         dateStart = (EditText) findViewById(R.id.text_date_start);
         dateEnd = (EditText) findViewById(R.id.text_date_end);
         timeStart = (EditText) findViewById(R.id.text_time_start);
@@ -56,10 +80,13 @@ public class AddEvent extends AppCompatActivity {
         notificationAutomatic = (CheckBox) findViewById(R.id.checkBox_automatic_notification);
         cyclicEvent = 0;
 
+        buildGoogleApiClient();
+
         db = new EventDAO(this);
         actualDate = Calendar.getInstance();
 
-        Button btnAddEvent = (Button) findViewById(R.id.btn_add_event);
+        btnAddEvent = (Button) findViewById(R.id.btn_add_event);
+        btnAddPeople = (Button) findViewById(R.id.btn_add_people);
 
         btnAddEvent.setOnClickListener(new View.OnClickListener() {
 
@@ -67,23 +94,48 @@ public class AddEvent extends AppCompatActivity {
 
                 db.createEvent(
                         dateStart.getText().toString(),
-                        timeStart.getText().toString(),
                         dateEnd.getText().toString(),
+                        timeStart.getText().toString(),
                         timeEnd.getText().toString(),
-                        false,
                         notificationStart.isChecked(),
                         notificationEnd.isChecked(),
                         notificationAutomatic.isChecked(),
                         getRadius(radius.getSelectedItem().toString()),
+                        /// Longitude start
+                        currentLocationX(),
+                        /// Latitude start
+                        currentLocationY(),
+                        /// Longitude end
                         localizationStart.getText().toString(),
+                        /// Latitude end
+                        localizationEnd.getText().toString(),
+
                         cyclicEvent,
                         Long.valueOf(db.countEvents())
                 );
+
+                AttendanceDAO attendanceDAO = new AttendanceDAO(context);
+                for (PhoneContact phoneContact : contactsList){
+                attendanceDAO.createAttendance(db.getLastEvent().getId(), phoneContact.getId());
+                }
 
                 Intent nextScreen = new Intent(getApplicationContext(), EventAdded.class);
                 startActivity(nextScreen);
             }
 
+        });
+
+        btnAddPeople.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+
+                Intent intent = new Intent(getApplicationContext(), AddPeople.class);
+                Bundle b = getEventInfo();
+                intent.putExtra("eventData", b);
+                if (contactsList.size() != 0){
+                    b.putSerializable("contacts", new ArrayList<>(contactsList));
+                }
+                startActivity(intent);
+            }
         });
 
         radius = (Spinner) findViewById(R.id.spinner_radius);
@@ -142,32 +194,154 @@ public class AddEvent extends AppCompatActivity {
         updateDisplay(dateEnd, actualDate);
         updateTimeDisplay(timeStart, actualDate);
         updateTimeDisplay(timeEnd, actualDate);
+
+
+        if (getIntent().getExtras() != null) {
+            Bundle bundle = getIntent().getExtras().getBundle("eventData");
+            fillEventInfo(bundle);
+        }
     }
 
-    ////////////////////////////////////////////////////////////////////
+    //////////////////// CURRENT LOCATION //////////////
+
+    protected GoogleApiClient mGoogleApiClient;
+    protected Location mLastLocation;
+
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(LocationServices.API)
+                .build();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
+    }
+
+    public String currentLocationX() {
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if (mLastLocation != null) {
+            return(Double.toString(mLastLocation.getLongitude()));
+        }
+        else return("0.00");
+    }
+
+    public String currentLocationY() {
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if (mLastLocation != null) {
+            return(Double.toString(mLastLocation.getLatitude()));
+        }
+        else return("0.00");
+    }
+
+
+    //////////////////// ZAMIANA ADRESU NA WSPOLRZEDNE ////////////////////////////
+/*
+    private String getXFromAddress(String addressName) {
+        String result = "0";
+        try {
+            List<Address> geoResults = geocoder.getFromLocationName(addressName, 1);
+            while (geoResults.size()==0) {
+                geoResults = geocoder.getFromLocationName(addressName, 1);
+            }
+            if (geoResults.size()>0) {
+                Address addr = geoResults.get(0);
+            }
+        } catch (Exception e) {
+            System.out.print(e.getMessage());
+        }
+        return result;
+    }
+
+    private String getYFromAddress(String addressName) {
+        String result = "0";
+        try {
+            List<Address> geoResults = geocoder.getFromLocationName(addressName, 1);
+            while (geoResults.size()==0) {
+                geoResults = geocoder.getFromLocationName(addressName, 1);
+            }
+            if (geoResults.size()>0) {
+                Address addr = geoResults.get(0);
+                result += addr.getLatitude();
+
+            }
+        } catch (Exception e) {
+            System.out.print(e.getMessage());
+        }
+        return result;
+    }
+
+    private String startAddressToGeolocationX() {
+        String location = localizationStart.getText().toString();
+        String result = getXFromAddress(location);
+        return result;
+    }
+
+    private String startAddressToGeolocationY() {
+        String location = localizationStart.getText().toString();
+        String result = getYFromAddress(location);
+        return result;
+    }
+
+    private String endAddressToGeolocationX() {
+        String location = localizationEnd.getText().toString();
+        String result = getXFromAddress(location);
+        return result;
+    }
+
+    private String endAddressToGeolocationY() {
+        String location = localizationEnd.getText().toString();
+        String result = getXFromAddress(location);
+        return result;
+    }
+*/
+    //////////////////////////////////////////////////////////////////////////////
+
+    public Bundle getEventInfo(){
+        Bundle b = new Bundle();
+        b.putString("dateStart", dateStart.getText().toString());
+        b.putString("dateEnd", dateEnd.getText().toString());
+        b.putString("timeStart", timeStart.getText().toString());
+        b.putString("timeEnd", timeEnd.getText().toString());
+        b.putString("localizationStart", localizationStart.getText().toString());
+        b.putString("localizationEnd", localizationEnd.getText().toString());
+        return b;
+    }
+
+    public void fillEventInfo(Bundle b){
+        dateStart.setText(b.getString("dateStart"));
+        dateEnd.setText(b.getString("dateEnd"));
+        timeStart.setText(b.getString("timeStart"));
+        timeEnd.setText(b.getString("timeEnd"));
+        localizationStart.setText(b.getString("localizationStart"));
+        localizationEnd.setText(b.getString("localizationEnd"));
+        contactsList =  (List<PhoneContact>)(b.getSerializable("contacts"));
+    }
 
     public void updateDisplay(TextView dateDisplay, Calendar date) {
-        dateDisplay.setText(
-                new StringBuilder()
-                        .append(date.get(Calendar.DAY_OF_MONTH)).append("/")
-                        .append(date.get(Calendar.MONTH) + 1).append("/")
-                        .append(date.get(Calendar.YEAR)).append(" "));
+
+        String dateToSet = format1.format(date.getTime());
+        dateDisplay.setText(dateToSet);
     }
 
     public void updateTimeDisplay(TextView dateDisplay, Calendar date) {
-        dateDisplay.setText(
-                new StringBuilder()
-                        .append(date.get(Calendar.HOUR_OF_DAY)).append(":")
-                        .append(date.get(Calendar.MINUTE)));
+
+        String timeToSet = format2.format(date.getTime());
+        dateDisplay.setText(timeToSet);
     }
-    Calendar c = Calendar.getInstance();
 
-    int Hr24=c.get(Calendar.HOUR_OF_DAY);
-    int Min=c.get(Calendar.MINUTE);
+    public int getRadius(String selected) {
 
-    public int getRadius(String selected){
-
-        switch (selected){
+        switch (selected) {
             case "200m":
                 return 200;
             case "500m":
@@ -200,13 +374,13 @@ public class AddEvent extends AppCompatActivity {
             case DATE_DIALOG_ID:
                 return new DatePickerDialog(this, dateSetListener, activeDate.get(Calendar.YEAR), activeDate.get(Calendar.MONTH), activeDate.get(Calendar.DAY_OF_MONTH));
             case TIME_DIALOG_ID:
-                return new TimePickerDialog(this, timeSetListener, activeDate.get(Calendar.HOUR_OF_DAY), activeDate.get(Calendar.MINUTE),true);
+                return new TimePickerDialog(this, timeSetListener, activeDate.get(Calendar.HOUR_OF_DAY), activeDate.get(Calendar.MINUTE), true);
         }
         return null;
     }
 
     public DatePickerDialog.OnDateSetListener dateSetListener
-        = new DatePickerDialog.OnDateSetListener() {
+            = new DatePickerDialog.OnDateSetListener() {
 
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             activeDate.set(Calendar.YEAR, year);
@@ -220,14 +394,13 @@ public class AddEvent extends AppCompatActivity {
     public TimePickerDialog.OnTimeSetListener timeSetListener
             = new TimePickerDialog.OnTimeSetListener() {
 
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute ) {
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
             activeDate.set(Calendar.HOUR_OF_DAY, hourOfDay);
             activeDate.set(Calendar.MINUTE, minute);
             updateTimeDisplay(activeDateDisplay, activeDate);
         }
     };
-
 
 
 }

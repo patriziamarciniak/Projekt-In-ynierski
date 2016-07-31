@@ -22,7 +22,6 @@ public class ContactsDAO {
     private Context mContext;
     private String[] mAllColumns = { DBHelper.COLUMN_CONTACTS_ID,
             DBHelper.COLUMN_CONTACTS_PHONE, DBHelper.COLUMN_CONTACTS_NAME,
-//            DBHelper.COLUMN_CONTACTS_PHONE_NUMBER, DBHelper.COLUMN_CONTACTS_NAME,
             DBHelper.COLUMN_CONTACTS_LAST_NAME };
 
     public ContactsDAO(Context context) {
@@ -48,7 +47,6 @@ public class ContactsDAO {
 
     public Contacts createContacts( String phoneNumber, String name, String lastName ) {
         ContentValues values = new ContentValues();
-//        values.put(DBHelper.COLUMN_CONTACTS_PHONE_NUMBER, phoneNumber);
         values.put(DBHelper.COLUMN_CONTACTS_PHONE, phoneNumber);
         values.put(DBHelper.COLUMN_CONTACTS_NAME, name);
         values.put(DBHelper.COLUMN_CONTACTS_LAST_NAME, lastName);

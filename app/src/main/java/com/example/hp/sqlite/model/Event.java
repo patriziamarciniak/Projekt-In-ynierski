@@ -15,31 +15,35 @@ public class Event implements  Parcelable{
     private String mTimeStart;
     private String mDataEnd;
     private String mTimeEnd;
-    private boolean mHistory;
     private boolean mNotificationsStart;
     private boolean mNotificationsEnd;
     private boolean mAutoNotifications;
     private int mRadius;
-    private String mLocalisation;
+    private String mStartLocalisationX;
+    private String mStartLocalisationY;
+    private String mEndLocalisationX;
+    private String mEndLocalisationY;
     private int mRepetition;
     private long mMotherId;
 
 
     public Event(){};
 
-    public Event(String dataStart, String timeStart, String dataEnd, String timeEnd, boolean history, boolean notificationsStart, boolean notificationsEnd,
-                 boolean autoNotifications, int radius, String localisation, int repetition, long motherId ) {
+    public Event(String dataStart, String timeStart, String dataEnd, String timeEnd, boolean notificationsStart, boolean notificationsEnd,
+                 boolean autoNotifications, int radius, String startLocalisationX, String startLocalisationY, String endLocalisationX, String endLocalisationY, int repetition, long motherId ) {
 
         this.mDataStart = dataStart;
         this.mTimeStart = timeStart;
         this.mDataEnd = dataEnd;
         this.mTimeEnd = timeEnd;
-        this.mHistory = history;
         this.mNotificationsStart = notificationsStart;
         this.mNotificationsEnd = notificationsEnd;
         this.mAutoNotifications = autoNotifications;
         this.mRadius = radius;
-        this.mLocalisation = localisation;
+        this.mStartLocalisationX = startLocalisationX;
+        this.mStartLocalisationY = startLocalisationY;
+        this.mEndLocalisationX = endLocalisationX;
+        this.mEndLocalisationY = endLocalisationY;
         this.mRepetition = repetition;
         this.mMotherId = motherId;
 
@@ -80,13 +84,6 @@ public class Event implements  Parcelable{
         this.mTimeEnd = mTimeEnd;
     }
 
-    public boolean getHistory() {
-        return mHistory;
-    }
-    public void setHistory(boolean mHistory) {
-        this.mHistory = mHistory;
-    }
-
     public boolean getNotificationsStart() {
         return mNotificationsStart;
     }
@@ -109,8 +106,21 @@ public class Event implements  Parcelable{
         this.mRadius = mRadius;
     }
 
-    public String getLocalisation() { return mLocalisation; }
-    public void setLocalisation(String mLocalisation) { this.mLocalisation = mLocalisation;}
+    public String getStartLocalisationX() { return mStartLocalisationX; }
+
+    public void setStartLocalisationX(String mStartLocalisationX) { this.mStartLocalisationX = mStartLocalisationX;}
+
+    public String getStartLocalisationY() { return mStartLocalisationY; }
+
+    public void setStartLocalisationY(String mStartLocalisationY) { this.mStartLocalisationY = mStartLocalisationY;}
+
+    public String getEndLocalisationX() { return mEndLocalisationX; }
+
+    public void setEndLocalisationX(String mEndLocalisationX) { this.mEndLocalisationX = mEndLocalisationX;}
+
+    public String getEndLocalisationY() { return mEndLocalisationY; }
+
+    public void setEndLocalisationY(String mEndLocalisationY) { this.mEndLocalisationY = mEndLocalisationY;}
 
     public int getRepetition(){ return mRepetition; }
     public void setRepetition(int mRepetition) { this.mRepetition = mRepetition;}
@@ -120,7 +130,7 @@ public class Event implements  Parcelable{
 
     // Parcelling part
     public Event(Parcel in){
-        String[] data = new String[13];
+        String[] data = new String[15];
 
         in.readStringArray(data);
         this.mId = Long.parseLong(data[0]);
@@ -128,33 +138,17 @@ public class Event implements  Parcelable{
         this.mTimeStart = data[2];
         this.mDataEnd = data[3];
         this.mTimeEnd = data[4];
-        this.mHistory = Boolean.parseBoolean(data[5]);
-        this.mNotificationsStart = Boolean.parseBoolean(data[6]);
-        this.mNotificationsEnd = Boolean.parseBoolean(data[7]);
-        this.mAutoNotifications = Boolean.parseBoolean(data[8]);
-        this.mRadius = Integer.parseInt(data[9]);
-        this.mLocalisation = data[10];
-        this.mRepetition = Integer.parseInt(data[11]);
-        this.mMotherId = Long.parseLong(data[12]);
+        this.mNotificationsStart = Boolean.parseBoolean(data[5]);
+        this.mNotificationsEnd = Boolean.parseBoolean(data[6]);
+        this.mAutoNotifications = Boolean.parseBoolean(data[7]);
+        this.mRadius = Integer.parseInt(data[8]);
+        this.mStartLocalisationX = data[9];
+        this.mStartLocalisationY = data[10];
+        this.mEndLocalisationX = data[11];
+        this.mEndLocalisationY = data[12];
+        this.mRepetition = Integer.parseInt(data[13]);
+        this.mMotherId = Long.parseLong(data[14]);
     }
-// Parcelling part
-//    public Event(Parcel in){
-//        String[] data = new String[12];
-//
-//        in.readStringArray(data);
-//        this.mDataStart = data[0];
-//        this.mTimeStart = data[1];
-//        this.mDataEnd = data[2];
-//        this.mTimeEnd = data[3];
-//        this.mHistory = Boolean.parseBoolean(data[4]);
-//        this.mNotificationsStart = Boolean.parseBoolean(data[5]);
-//        this.mNotificationsEnd = Boolean.parseBoolean(data[6]);
-//        this.mAutoNotifications = Boolean.parseBoolean(data[7]);
-//        this.mRadius = Integer.parseInt(data[8]);
-//        this.mLocalisation = data[9];
-//        this.mRepetition = Integer.parseInt(data[10]);
-//        this.mMotherId = Long.parseLong(data[11]);
-//    }
 
     @Override
     public int describeContents(){
@@ -166,36 +160,21 @@ public class Event implements  Parcelable{
         dest.writeStringArray(new String[] {
                 String.valueOf(this.mId),
                 this.mDataStart,
-        this.mTimeStart ,
-        this.mDataEnd ,
-        this.mTimeEnd ,
-                String.valueOf(this.mHistory),
+                this.mTimeStart ,
+                this.mDataEnd ,
+                this.mTimeEnd ,
                 String.valueOf(this.mNotificationsStart),
                 String.valueOf(this.mNotificationsEnd),
                 String.valueOf(this.mAutoNotifications),
                 String.valueOf(this.mRadius),
-        this.mLocalisation ,
+                this.mStartLocalisationX ,
+                this.mStartLocalisationY ,
+                this.mEndLocalisationX ,
+                this.mEndLocalisationY ,
                 String.valueOf(this.mRepetition),
                 String.valueOf(this.mMotherId)
         });
     }
-//    @Override
-//    public void writeToParcel(Parcel dest, int flags) {
-//        dest.writeStringArray(new String[] {
-//                this.mDataStart,
-//        this.mTimeStart ,
-//        this.mDataEnd ,
-//        this.mTimeEnd ,
-//                String.valueOf(this.mHistory),
-//                String.valueOf(this.mNotificationsStart),
-//                String.valueOf(this.mNotificationsEnd),
-//                String.valueOf(this.mAutoNotifications),
-//                String.valueOf(this.mRadius),
-//        this.mLocalisation ,
-//                String.valueOf(this.mRepetition),
-//                String.valueOf(this.mMotherId)
-//        });
-//    }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public Event createFromParcel(Parcel in) {
@@ -208,4 +187,4 @@ public class Event implements  Parcelable{
     };
 
 
-    }
+}

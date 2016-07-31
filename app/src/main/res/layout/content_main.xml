@@ -17,7 +17,12 @@
         android:layout_height="wrap_content"
         android:text="@string/title_activity_add_event"
         android:id="@+id/button1"
-        android:layout_marginTop="70dp"
+        android:width="200dp"
+        android:height="70dp"
+        android:background="@drawable/roundedbuttonsblue"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="80dp"
+        android:padding="10dp"
         android:layout_centerHorizontal="true" />
 
     <Button
@@ -25,16 +30,26 @@
         android:layout_height="wrap_content"
         android:text="@string/title_coming_trips"
         android:id="@+id/button2"
-        android:layout_marginTop="70dp"
+        android:width="200dp"
+        android:height="70dp"
+        android:background="@drawable/roundedbuttonsblue"
+        android:textColor="#FFFFFF"
+        android:padding="10dp"
+        android:layout_marginTop="60dp"
         android:layout_below="@+id/button1"
         android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:width="200dp"
+        android:height="70dp"
         android:text="@string/title_history"
         android:id="@+id/button3"
-        android:layout_marginTop="70dp"
+        android:background="@drawable/roundedbuttonsblue"
+        android:textColor="#FFFFFF"
+        android:padding="10dp"
+        android:layout_marginTop="60dp"
         android:layout_below="@+id/button2"
         android:layout_centerHorizontal="true" />
 

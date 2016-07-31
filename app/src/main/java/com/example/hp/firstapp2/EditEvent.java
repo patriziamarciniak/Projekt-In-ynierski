@@ -18,36 +18,47 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.example.hp.sqlite.dao.AttendanceDAO;
 import com.example.hp.sqlite.dao.EventDAO;
 import com.example.hp.sqlite.model.Event;
+import com.example.hp.sqlite.model.PhoneContact;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class EditEvent extends AppCompatActivity {
 
     EditText dateStart, dateEnd, timeStart, timeEnd, localizationStart, localizationEnd;
     Spinner radius;
-    Button btnEditEvent;
+    Button btnEditEvent, btnAddPeople;
     CheckBox notificationStart, notificationEnd, notificationAutomatic;
     Integer cyclicEvent;
     EventDAO eventDAO;
     Event event, updatedEvent;
+    List<PhoneContact> contactsList = new ArrayList<>();
+    AttendanceDAO attendanceDAO;
+    private Calendar actualDate;
+    private TextView activeDateDisplay;
+    private Calendar activeDate;
+
 
     static final int DATE_DIALOG_ID = 999;
     static final int TIME_DIALOG_ID = 998;
 
-    private Calendar actualDate;
+    SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat format2 = new SimpleDateFormat("kk:mm");
 
-    private TextView activeDateDisplay;
-    private Calendar activeDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_event);
-
+        attendanceDAO = new AttendanceDAO(this);
         Bundle bundle = getIntent().getExtras();
         event = bundle.getParcelable("event");
+        contactsList = attendanceDAO.getContacts(event.getId());
 
         updatedEvent = new Event();
         eventDAO = new EventDAO(this);
@@ -66,8 +77,8 @@ public class EditEvent extends AppCompatActivity {
         dateStart.setText(event.getDataStart());
         timeStart.setText(event.getTimeStart());
         timeEnd.setText(event.getTimeEnd());
-        localizationStart.setText(event.getLocalisation());
-        localizationEnd.setText(event.getLocalisation());
+        localizationStart.setText(event.getStartLocalisationX());
+        localizationEnd.setText(event.getEndLocalisationX());
 
         actualDate = Calendar.getInstance();
         radius = (Spinner) findViewById(R.id.spinner_edit_radius);
@@ -130,40 +141,69 @@ public class EditEvent extends AppCompatActivity {
                         dateEnd.getText().toString(),
                         timeStart.getText().toString(),
                         timeEnd.getText().toString(),
-                        false,
                         notificationStart.isChecked(),
                         notificationEnd.isChecked(),
                         notificationAutomatic.isChecked(),
                         getRadius(radius.getSelectedItem().toString()),
                         localizationStart.getText().toString(),
+                        localizationStart.getText().toString(),
+                        localizationEnd.getText().toString(),
+                        localizationEnd.getText().toString(),
                         0,
                         event.getId());
 
-                Intent nextScreen = new Intent(getApplicationContext(), ComingTrips.class);
+                Intent nextScreen = new Intent(getApplicationContext(), EventAdded.class);
                 startActivity(nextScreen);
             }});
 
+        btnAddPeople = (Button) findViewById(R.id.btn_edit_add_people);
+        btnAddPeople.setOnClickListener(new View.OnClickListener(){
+                    public void onClick(View arg0) {
+                        Intent intent = new Intent(getApplicationContext(), AddPeople.class);
+                        Bundle b = getEventInfo();
+                        intent.putExtra("eventData", b);
+                        if (contactsList.size() != 0){
+                            b.putSerializable("contacts", new ArrayList<>(contactsList));
+                        }
+                        startActivity(intent);
+                    }
+                });
+
+    }
+
+    public Bundle getEventInfo(){
+        Bundle b = new Bundle();
+        b.putString("dateStart", dateStart.getText().toString());
+        b.putString("dateEnd", dateEnd.getText().toString());
+        b.putString("timeStart", timeStart.getText().toString());
+        b.putString("timeEnd", timeEnd.getText().toString());
+        b.putString("localizationStart", localizationStart.getText().toString());
+        b.putString("localizationEnd", localizationEnd.getText().toString());
+        return b;
+    }
+
+    public void fillEventInfo(Bundle b){
+        dateStart.setText(b.getString("dateStart"));
+        dateEnd.setText(b.getString("dateEnd"));
+        timeStart.setText(b.getString("timeStart"));
+        timeEnd.setText(b.getString("timeEnd"));
+        localizationStart.setText(b.getString("localizationStart"));
+        localizationEnd.setText(b.getString("localizationEnd"));
+        contactsList =  (List<PhoneContact>)(b.getSerializable("contacts"));
     }
     ////////////////////////////////////////////////////////////////////
 
     public void updateDisplay(TextView dateDisplay, Calendar date) {
-        dateDisplay.setText(
-                new StringBuilder()
-                        .append(date.get(Calendar.DAY_OF_MONTH)).append("/")
-                        .append(date.get(Calendar.MONTH) + 1).append("/")
-                        .append(date.get(Calendar.YEAR)).append(" "));
+
+        String dateToSet = format1.format(date.getTime());
+        dateDisplay.setText(dateToSet);
     }
 
     public void updateTimeDisplay(TextView dateDisplay, Calendar date) {
-        dateDisplay.setText(
-                new StringBuilder()
-                        .append(date.get(Calendar.HOUR_OF_DAY)).append(":")
-                        .append(date.get(Calendar.MINUTE)));
-    }
-    Calendar c = Calendar.getInstance();
 
-    int Hr24=c.get(Calendar.HOUR_OF_DAY);
-    int Min=c.get(Calendar.MINUTE);
+        String timeToSet = format2.format(date.getTime());
+        dateDisplay.setText(timeToSet);
+    }
 
     public int getRadius(String selected){
 

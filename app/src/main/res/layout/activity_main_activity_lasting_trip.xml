@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    tools:context="com.example.hp.firstapp2.MainActivityLastingTrip">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        android:id="@+id/trips_layout"
+        android:orientation="vertical"
+        android:layout_weight="0.3" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="30sp"
+            android:text="@string/actual_event"
+            android:layout_marginTop="10dp"
+            android:id="@+id/textView5"
+            android:layout_gravity="center_horizontal" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/listViewLastingEvents"
+            android:padding="10dp"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="top"
+        android:id="@+id/trips_buttons"
+        android:orientation="vertical"
+        android:layout_weight="0.7" >
+
+        <Button
+
+            android:text="@string/title_activity_add_event"
+            android:id="@+id/btn_add_event_lasting"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:background="@drawable/roundedbuttonsblue"
+            android:textColor="#FFFFFF"
+            android:padding="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <Button
+            android:text="@string/title_coming_trips"
+            android:id="@+id/btn_coming_trips_lasting"
+            android:layout_width="170dp"
+            android:background="@drawable/roundedbuttonsblue"
+            android:textColor="#FFFFFF"
+            android:padding="10dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_add_event_lasting"
+            android:layout_alignLeft="@+id/btn_add_event_lasting"
+            android:layout_alignStart="@+id/btn_add_event_lasting" />
+
+        <Button
+            android:text="@string/title_history"
+            android:id="@+id/btn_history_lasting"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/roundedbuttonsblue"
+            android:textColor="#FFFFFF"
+            android:padding="10dp"
+            android:layout_alignTop="@+id/btn_coming_trips_lasting"
+            android:layout_toRightOf="@+id/btn_coming_trips_lasting"
+            android:layout_alignRight="@+id/btn_add_event_lasting"
+            android:layout_alignEnd="@+id/btn_add_event_lasting" />
+    </RelativeLayout>
+
+
+</LinearLayout>

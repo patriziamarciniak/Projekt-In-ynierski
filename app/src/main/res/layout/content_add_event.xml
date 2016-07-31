@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/m"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -10,228 +11,223 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.hp.firstapp2.AddEvent"
-    tools:showIn="@layout/activity_add_event"
-    android:id="@+id/m">
+    tools:showIn="@layout/activity_add_event">
 
     <TextView
+        android:id="@+id/label_event_end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/event_end"
-        android:id="@+id/label_event_end"
-        android:textSize="30dp"
-        android:layout_below="@+id/text_localization_start"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-         />
+        android:layout_below="@+id/text_date_start"
+        android:text="@string/event_end"
+        android:textSize="30dp" />
 
     <EditText
 
+        android:id="@+id/text_date_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="date"
-        android:ems="10"
-        android:id="@+id/text_date_start"
-        android:width="100dp"
-        android:textSize="20dp"
         android:layout_alignBottom="@+id/label_start"
         android:layout_centerHorizontal="true"
-        android:text="@string/event_date"
-        />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="date"
-        android:ems="10"
-        android:id="@+id/text_date_end"
         android:width="100dp"
-        android:textSize="20dp"
+        android:inputType="date"
         android:text="@string/event_date"
-        android:layout_alignBottom="@+id/label_event_end"
-        android:layout_alignStart="@+id/text_date_start"
-        android:layout_alignLeft="@+id/text_date_start" />
+        android:textSize="15sp" />
 
     <EditText
+        android:id="@+id/text_date_end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="time"
-        android:ems="10"
+        android:layout_alignBottom="@+id/label_event_end"
+        android:layout_alignLeft="@+id/text_date_start"
+        android:layout_alignStart="@+id/text_date_start"
+        android:width="100dp"
+        android:text="@string/event_date"
+        android:inputType="date"
+        android:textSize="15sp" />
+
+    <EditText
         android:id="@+id/text_time_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/text_date_start"
         android:layout_toEndOf="@+id/text_date_start"
         android:layout_toRightOf="@+id/text_date_start"
-        android:text="@string/event_time" />
+        android:inputType="time"
+        android:textSize="15sp" />
 
     <EditText
+        android:id="@+id/text_time_end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="time"
-        android:ems="10"
-        android:id="@+id/text_time_end"
-        android:text="@string/event_time"
         android:layout_alignBottom="@+id/label_event_end"
         android:layout_toEndOf="@+id/text_date_end"
-        android:layout_toRightOf="@+id/text_date_end" />
+        android:layout_toRightOf="@+id/text_date_end"
+        android:inputType="time"
+        android:textSize="15sp" />
 
     <EditText
+        android:id="@+id/text_localization_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPostalAddress"
-        android:ems="10"
-        android:id="@+id/text_localization_start"
-        android:layout_below="@+id/text_date_start"
-        android:layout_alignStart="@+id/text_date_start"
         android:layout_alignLeft="@+id/text_date_start"
+        android:layout_alignStart="@+id/text_date_start"
+        android:layout_below="@+id/text_date_end"
+
+        android:ems="10"
+        android:inputType="textPostalAddress"
         android:text="@string/event_localization" />
 
     <EditText
+        android:id="@+id/text_localization_end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPostalAddress"
-        android:ems="10"
-        android:id="@+id/text_localization_end"
-        android:text="@string/event_localization"
-        android:layout_below="@+id/text_date_end"
-        android:layout_alignStart="@+id/text_date_end"
         android:layout_alignLeft="@+id/text_date_end"
-        android:layout_alignRight="@+id/text_time_end"
-        android:layout_alignEnd="@+id/text_time_end" />
+        android:layout_alignStart="@+id/text_date_end"
+        android:ems="10"
+        android:layout_below="@+id/text_localization_start"
+        android:inputType="textPostalAddress"
+        android:text="@string/event_localization"
+        android:layout_alignRight="@+id/spinner_radius"
+        android:layout_alignEnd="@+id/spinner_radius" />
 
 
     <TextView
+        android:id="@+id/label_notification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/event_notification"
-        android:id="@+id/label_notification"
-        android:textSize="24dp"
-        android:layout_below="@+id/spinner_radius"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="7dp" />
+        android:layout_below="@+id/spinner_radius"
+        android:layout_marginBottom="7dp"
+        android:text="@string/event_notification"
+        android:textSize="24dp" />
 
     <TextView
+        android:id="@+id/label_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/event_start"
-        android:id="@+id/label_start"
-        android:textSize="30dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:text="@string/event_start"
+        android:textSize="30dp" />
 
     <CheckBox
+        android:id="@+id/checkBox_notification_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/event_notification_start"
-        android:id="@+id/checkBox_notification_start"
-        android:checked="false"
-        android:textSize="30dp"
+        android:layout_below="@+id/label_notification"
         android:layout_centerVertical="true"
         android:layout_marginBottom="7dp"
-        android:layout_below="@+id/label_notification" />
+        android:checked="false"
+        android:text="@string/event_notification_start"
+        android:textSize="30dp" />
 
     <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/event_notification_end"
         android:id="@+id/checkBox_notification_end"
-        android:checked="true"
-        android:textSize="30dp"
-        android:layout_centerVertical="true"
-        android:layout_alignRight="@+id/text_trip_name"
-        android:layout_alignEnd="@+id/text_trip_name"
-        android:layout_below="@+id/label_notification"
-        android:layout_marginBottom="7dp" />
-
-    <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/event_automatic_notification"
-        android:id="@+id/checkBox_automatic_notification"
-        android:textSize="25dp"
+        android:layout_alignEnd="@+id/text_trip_name"
+        android:layout_alignRight="@+id/text_trip_name"
+        android:layout_below="@+id/label_notification"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="7dp"
         android:checked="true"
-        android:layout_below="@+id/checkBox_notification_start"
+        android:text="@string/event_notification_end"
+        android:textSize="30dp" />
+
+    <CheckBox
+        android:id="@+id/checkBox_automatic_notification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/checkBox_notification_start"
         android:layout_alignStart="@+id/checkBox_notification_start"
+        android:layout_below="@+id/checkBox_notification_start"
         android:layout_toLeftOf="@+id/text_trip_name"
-        android:layout_toStartOf="@+id/text_trip_name" />
+        android:layout_toStartOf="@+id/text_trip_name"
+        android:checked="true"
+        android:text="@string/event_automatic_notification"
+        android:textSize="25dp" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/event_radius"
         android:id="@+id/label_event_radius"
-        android:textSize="24dp"
-        android:layout_alignTop="@+id/spinner_radius"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/event_add"
-        android:id="@+id/btn_add_event"
-        android:background="@color/colorAccent"
-        android:textSize="30dp"
-        android:padding="5dp"
-        android:textStyle="normal"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="5dp"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/event_list_of_people"
-        android:id="@+id/btn_add_people"
-        android:textSize="20dp"
-        android:textStyle="normal"
-        android:layout_marginBottom="5dp"
-        android:layout_above="@+id/btn_add_event"
-        android:layout_alignLeft="@+id/btn_add_event"
-        android:layout_alignStart="@+id/btn_add_event"
-        android:layout_alignRight="@+id/btn_add_event"
-        android:layout_alignEnd="@+id/btn_add_event" />
-
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner_radius"
-        android:spinnerMode="dropdown"
-        android:layout_below="@+id/text_localization_end"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-
-        android:layout_alignLeft="@+id/text_time_end"
-        android:layout_alignStart="@+id/text_time_end" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/event_repetition"
-        android:id="@+id/text_repetition"
-        android:textSize="24dp"
-        android:layout_below="@+id/checkBox_automatic_notification"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="7dp" />
+        android:layout_alignTop="@+id/spinner_radius"
+        android:text="@string/event_radius"
+        android:textSize="24dp" />
+
+    <Button
+        android:id="@+id/btn_add_event"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:width="250dp"
+        android:background="@drawable/roundedbuttons"
+        android:padding="5dp"
+        android:text="@string/event_add"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/btn_add_people"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_add_event"
+        android:layout_alignEnd="@+id/btn_add_event"
+        android:layout_alignLeft="@+id/btn_add_event"
+        android:layout_alignRight="@+id/btn_add_event"
+        android:layout_alignStart="@+id/btn_add_event"
+        android:layout_marginBottom="5dp"
+        android:width="250dp"
+        android:background="@drawable/roundedbuttonsblue"
+        android:text="@string/event_list_of_people"
+        android:textColor="#FFFFFF" />
+
+    <Spinner
+        android:id="@+id/spinner_radius"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/text_time_end"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignStart="@+id/text_time_end"
+
+        android:layout_below="@+id/text_localization_end"
+        android:spinnerMode="dropdown" />
+
+    <TextView
+        android:id="@+id/text_repetition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/checkBox_automatic_notification"
+        android:layout_marginTop="7dp"
+        android:text="@string/event_repetition"
+        android:textSize="24dp" />
 
     <CheckBox
+        android:id="@+id/checkBox_radius"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/checkBox_radius"
-        android:checked="false"
-        android:textSize="30dp"
         android:layout_alignTop="@+id/text_repetition"
         android:layout_toLeftOf="@+id/checkBox_notification_end"
-        android:layout_toStartOf="@+id/checkBox_notification_end" />
+        android:layout_toStartOf="@+id/checkBox_notification_end"
+        android:checked="false"
+        android:textSize="30dp" />
 
     <EditText
+        android:id="@+id/text_trip_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/text_trip_name"
-        android:layout_alignTop="@+id/text_repetition"
+        android:layout_alignEnd="@+id/text_localization_start"
         android:layout_alignRight="@+id/text_localization_start"
-        android:layout_alignEnd="@+id/text_localization_start" />
+        android:layout_alignTop="@+id/text_repetition" />
 
 
 </RelativeLayout>

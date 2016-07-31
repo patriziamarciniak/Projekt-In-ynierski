@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    tools:context="com.example.hp.firstapp2.AddPeople">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width= "fill_parent"
+        android:layout_height="150dp"
+        android:id="@+id/choosedContactsLayout">
+
+        <ListView
+            android:id="@+id/choosedContactsListView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cacheColorHint="#ffccff"
+            android:divider="#D32F2F"
+            android:dividerHeight="2sp" >
+        </ListView>
+
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/choosedContactsLayout"
+        android:layout_above="@+id/btn_accept_people"
+        android:id="@+id/allContactsLayout">
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:background="@android:color/black"/>
+
+        <ListView
+            android:id="@+id/allContactslistView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="#2196F3"
+            android:dividerHeight="2sp" >
+
+        </ListView>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_activity_add_people"
+        android:id="@+id/btn_accept_people"
+        android:background="@drawable/roundedbuttonsblue"
+        android:textSize="20dp"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:textStyle="normal"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

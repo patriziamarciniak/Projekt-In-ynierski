@@ -3,6 +3,7 @@ package com.example.hp.sqlite.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -13,6 +14,7 @@ import android.util.Log;
 import com.example.hp.sqlite.model.Contacts;
 import com.example.hp.sqlite.model.Event;
 import com.example.hp.sqlite.model.Attendance;
+import com.example.hp.sqlite.model.PhoneContact;
 
 public class AttendanceDAO {
 
@@ -50,7 +52,7 @@ public class AttendanceDAO {
         ContentValues values = new ContentValues();
 
         values.put(DBHelper.COLUMN_ATTENDANCE_EVENT_ID, eventId);
-        values.put(DBHelper.COLUMN_CONTACTS_ID, contactsId);
+        values.put(DBHelper.COLUMN_ATTENDANCE_CONTACT_ID, contactsId);
 
 
         long insertId = mDatabase
@@ -85,8 +87,6 @@ public class AttendanceDAO {
                 listAttendance.add(attendance);
                 cursor.moveToNext();
             }
-
-            // make sure to close the cursor
             cursor.close();
         }
         return listAttendance;
@@ -108,21 +108,51 @@ public class AttendanceDAO {
         Attendance attendance = new Attendance();
 
         long eventId = cursor.getLong(0);
-        EventDAO dao= new EventDAO(mContext);
-        Event event = dao.getEventById(eventId);
-        if(event!=null){
-            attendance.setEvent(event);
-        }
 
-        long contactsId = cursor.getLong(1);
-        ContactsDAO dao1= new ContactsDAO(mContext);
-        Contacts contacts = dao1.getContactsById(contactsId);
-        if(event!=null){
-            attendance.setContacts(contacts);
-        }
+        attendance.setId(cursor.getLong(0));
+        attendance.setEvent(cursor.getLong(1));
+        attendance.setContacts(cursor.getLong(2));
+
+//        EventDAO dao= new EventDAO(mContext);
+//        Event event = dao.getEventById(eventId);
+//        if(event!=null){
+//            attendance.setEvent(event);
+//        }
+//
+//        long contactsId = cursor.getLong(1);
+////        PhoneContactsDAO dao1= new PhoneContactsDAO(mContext);
+//        ContactsDAO dao1= new ContactsDAO(mContext);
+////        PhoneContacts contacts = dao1.getContactsById(contactsId);
+//        Contacts contacts = dao1.getContactsById(contactsId);
+//        if(event!=null){
+//            attendance.setContacts(contacts);
+//        }
 
 
         return attendance;
+    }
+
+    public List<PhoneContact> getContacts(long id) {
+
+        List<PhoneContact> phoneContactList = new ArrayList<PhoneContact>(){};
+        PhoneContactsDAO phoneContactsDAO = new PhoneContactsDAO(mContext);
+
+        Cursor cursor = mDatabase.query(DBHelper.TABLE_ATTENDANCE, mAllColumns,
+                DBHelper.COLUMN_ATTENDANCE_EVENT_ID + " = ?",
+                new String[]{String.valueOf(id)}, null, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+        if (cursor != null) {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                Attendance attendance = cursorToAttendance(cursor);
+                phoneContactList.add(phoneContactsDAO.getContactsById(attendance.getContacts()));
+                cursor.moveToNext();
+            }
+            cursor.close();
+        }
+        return phoneContactList;
     }
 
 }

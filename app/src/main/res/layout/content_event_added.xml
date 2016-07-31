@@ -17,78 +17,72 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/event_added"
+        android:textStyle="bold"
         android:id="@+id/txt_event_added"
+        android:layout_margin="7dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:textSize="30dp" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="220dp"
+        android:id="@+id/listView"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/txt_event_added"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp" />
+
+
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_below="@+id/listView"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/iconAccept"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:padding="10dp"
+            android:src="@mipmap/accept"></ImageView>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_below="@+id/relativeLayout"
+            android:gravity="center">
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/event_edit"
         android:id="@+id/btn_edit_event"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="143dp"
-        android:background="#6d93ed"
+        android:textColor="#FFFFFF"
+        android:width="150dp"
+        android:background="@drawable/roundedbuttonsblue"
         android:padding="10dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/btn_edit_event"
+        android:layout_marginLeft="10dp"
         android:text="@string/main_menu"
         android:id="@+id/btn_main_menu"
-        android:layout_marginTop="68dp"
-        android:layout_alignTop="@+id/btn_edit_event"
-        android:layout_centerHorizontal="true"
-        android:background="#6d93ed"
+        android:width="150dp"
+        android:background="@drawable/roundedbuttonsblue"
+        android:textColor="#FFFFFF"
         android:padding="10dp" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:layout_margin="50dp"
-        android:layout_marginBottom="100dp"
-        android:layout_above="@+id/btn_edit_event"
-        android:layout_below="@+id/txt_event_added"
-        android:background="#6d93ed">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Text"
-            android:id="@+id/txt_added_localization"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:textSize="30dp"
-            android:padding="10dp"
-            android:layout_marginTop="10dp"
-            android:textAlignment="center" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Text"
-            android:id="@+id/txt_added_data_start"
-            android:layout_below="@+id/txt_added_localization"
-            android:layout_centerHorizontal="true"
-            android:textSize="30dp"
-            android:padding="10dp"
-            android:textAlignment="center" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Text"
-            android:id="@+id/txt_added_time_end"
-            android:textSize="30dp"
-            android:padding="10dp"
-            android:layout_below="@+id/txt_added_data_start"
-            android:layout_alignLeft="@+id/txt_added_data_start"
-            android:layout_alignStart="@+id/txt_added_data_start"
-            android:textAlignment="center" />
-    </RelativeLayout>
+        </RelativeLayout>
 
 </RelativeLayout>
