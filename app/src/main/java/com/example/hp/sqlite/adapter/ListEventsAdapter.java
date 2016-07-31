@@ -1,13 +1,20 @@
 package com.example.hp.sqlite.adapter;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.hp.firstapp2.R;
 
@@ -23,12 +30,14 @@ public class ListEventsAdapter extends BaseAdapter {
 
     public static final String TAG = "ListEventAdapter";
 
+    private Context context;
     private List<Event> mItems;
     private LayoutInflater mInflater;
     private int layoutType;
 
     public ListEventsAdapter(Context context, List<Event> listEvent, int type) {
         this.setItems(listEvent);
+        this.context = context;
         this.mInflater = LayoutInflater.from(context);
         this.layoutType = type;
 
@@ -48,6 +57,67 @@ public class ListEventsAdapter extends BaseAdapter {
     public long getItemId(int position) {
         return (getItems() != null && !getItems().isEmpty()) ? getItems().get(position).getId() : position;
     }
+
+
+    /////////////////////////////////////////////////
+
+
+    private String startGeolocationToAddress(String mLongitude, String mLatitude) {
+
+        double longitude = Double.valueOf(mLongitude);
+        double latitude = Double.valueOf(mLatitude);
+        String result = changeToAddress(latitude, longitude);
+        return (result);
+
+    }
+
+    public String changeToAddress(double latitude, double longitude){
+        List<Address> addresses = null;
+
+        Geocoder geocoder = new Geocoder(this.context, Locale.getDefault());
+        try {
+            addresses = geocoder.getFromLocation(latitude, longitude, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String result = "";
+
+        if (addresses.size() != 0) {
+            Address address = addresses.get(0);
+
+            ArrayList<String> addressFragments = new ArrayList<String>();
+
+            // Fetch the address lines using {@code getAddressLine},
+            // join them, and send them to the thread. The {@link android.location.address}
+            // class provides other options for fetching address details that you may prefer
+            // to use. Here are some examples:
+            // getLocality() ("Mountain View", for example)
+            // getAdminArea() ("CA", for example)
+            // getPostalCode() ("94043", for example)
+            // getCountryCode() ("US", for example)
+            // getCountryName() ("United States", for example)
+            for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
+                addressFragments.add(address.getAddressLine(i));
+            }
+
+            if (addresses.get(0).getLocality() != null) {
+                result += addresses.get(0).getLocality();
+                result += ", ";
+                result += addresses.get(0).getCountryName();
+            } else {
+                result += addresses.get(0).getCountryName();
+            }
+
+            return result;
+        } else {
+            return ("0");
+        }
+    }
+//////////////////////
+
+
+
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -80,7 +150,8 @@ public class ListEventsAdapter extends BaseAdapter {
             holder = (ViewHolder) v.getTag();
         }
 
-        // fill row data
+
+            // fill row data
         Event currentItem = getItem(position);
         if(currentItem != null) {
             holder.txtDataStart.setText(currentItem.getDataStart());
@@ -91,9 +162,19 @@ public class ListEventsAdapter extends BaseAdapter {
 //            holder.txtNotificationsEnd.setText(Boolean.toString(currentItem.getNotificationsEnd()));
 //            holder.txtAutoNotifications.setText(Boolean.toString(currentItem.getAutoNotifications()));
 //            holder.txtRadius.setText(String.valueOf(currentItem.getRadius()));//added conversion
-            holder.txtStartLocalizationX.setText(currentItem.getStartLocalisationX());
+            try {
+                holder.txtStartLocalizationX.setText(startGeolocationToAddress(currentItem.getStartLocalisationX(), currentItem.getStartLocalisationY()));
+            }
+            catch (NumberFormatException e) {
+                holder.txtStartLocalizationX.setText(currentItem.getStartLocalisationX() + " " + currentItem.getStartLocalisationY());
+            }
 //            holder.txtStartLocalizationY.setText(currentItem.getStartLocalisationY());
-            holder.txtEndLocalizationX.setText(currentItem.getEndLocalisationX());
+            try {
+                holder.txtEndLocalizationX.setText(startGeolocationToAddress(currentItem.getEndLocalisationX(), currentItem.getEndLocalisationY()));
+            }
+            catch (NumberFormatException e) {
+                holder.txtEndLocalizationX.setText(currentItem.getEndLocalisationX() + " " + currentItem.getEndLocalisationY());
+            }
 //            holder.txtEndLocalizationY.setText(currentItem.getEndLocalisationY());
 //            holder.txtRepetition.setText(String.valueOf(currentItem.getRepetition()));
             List<PhoneContact> phoneContactList = attendanceDAO.getContacts(currentItem.getId());

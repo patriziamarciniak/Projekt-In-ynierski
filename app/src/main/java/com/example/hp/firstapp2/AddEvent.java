@@ -116,7 +116,7 @@ public class AddEvent extends AppCompatActivity {
 
                 AttendanceDAO attendanceDAO = new AttendanceDAO(context);
                 for (PhoneContact phoneContact : contactsList){
-                attendanceDAO.createAttendance(db.getLastEvent().getId(), phoneContact.getId());
+                    attendanceDAO.createAttendance(db.getLastEvent().getId(), phoneContact.getId());
                 }
 
                 Intent nextScreen = new Intent(getApplicationContext(), EventAdded.class);

@@ -8,16 +8,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+
+import com.example.hp.sqlite.model.Event;
 
 public class MyService extends Service
 {
     private static final String TAG = "BOOMBOOMTESTGPS";
     private LocationManager mLocationManager = null;
-    private static final int LOCATION_INTERVAL = 1000;
+    private static final int LOCATION_INTERVAL = 2000;
     private static final float LOCATION_DISTANCE = 10f;
+
+    Intent ir=new Intent(this, Service.class);
+
 
     private class LocationListener implements android.location.LocationListener{
         Location mLastLocation;
@@ -52,15 +58,18 @@ public class MyService extends Service
             new LocationListener(LocationManager.GPS_PROVIDER),
             new LocationListener(LocationManager.NETWORK_PROVIDER)
     };
+
     @Override
     public IBinder onBind(Intent arg0)
     {
         return null;
     }
     @Override
+
     public int onStartCommand(Intent intent, int flags, int startId)
     {
         Log.e(TAG, "onStartCommand");
+        Bundle bundle = intent.getExtras();
         super.onStartCommand(intent, flags, startId);
         return START_STICKY;
     }
@@ -69,6 +78,7 @@ public class MyService extends Service
     {
         Log.e(TAG, "onCreate");
         initializeLocationManager();
+
         try {
             mLocationManager.requestLocationUpdates(
                     LocationManager.NETWORK_PROVIDER, LOCATION_INTERVAL, LOCATION_DISTANCE,

@@ -39,6 +39,9 @@ public class TripFinished extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         event = bundle.getParcelable("event");
 
+        Intent intent = new Intent(this, MyService.class);
+        startService(intent);
+
         contacts = attendanceDAO.getContacts(event.getId());
         people = (TextView) findViewById(R.id.txt_people);
         String displayContacts = "";

@@ -25,6 +25,7 @@ import android.content.ContentResolver;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.content.BroadcastReceiver;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +35,25 @@ public class MainActivity extends AppCompatActivity {
     Configuration config;
     List<Event> lastingEventsList;
 
+    /*
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+
+                String string = bundle.getString(MyService.LOCATION_SERVICE);
+
+                int resultCode = bundle.getInt(MyService.RESULT);
+
+                if (resultCode == RESULT_OK) {
+
+                }
+            }
+        }
+    };
+
+*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         config = new Configuration();
         config.locale = locale;
         context.getApplicationContext().getResources().updateConfiguration(config, null);
+
 
         EventDAO db = new EventDAO(context);
         lastingEventsList = db.findLastingEvents();
