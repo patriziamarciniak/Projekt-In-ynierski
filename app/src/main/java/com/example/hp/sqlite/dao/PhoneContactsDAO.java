@@ -50,7 +50,7 @@ public class PhoneContactsDAO {
 
             List<PhoneContact> listContacts = new ArrayList<PhoneContact>();
             Cursor c = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
-                    null, null, null);
+                    null, null, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME+" ASC");
 
             while (c.moveToNext()) {
                 PhoneContact phoneContact = new PhoneContact();
