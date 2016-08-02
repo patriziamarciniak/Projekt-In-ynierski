@@ -109,7 +109,6 @@ public class AddEvent extends AppCompatActivity {
                         getLoc(localizationStart.getText().toString()),
                         /// Latitude end
                         getLoc(localizationEnd.getText().toString()),
-
                         cyclicEvent,
                         Long.valueOf(db.countEvents())
                 );
