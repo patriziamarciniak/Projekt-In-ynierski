@@ -77,8 +77,8 @@ public class EditEvent extends AppCompatActivity {
         dateStart.setText(event.getDataStart());
         timeStart.setText(event.getTimeStart());
         timeEnd.setText(event.getTimeEnd());
-        localizationStart.setText(event.getStartLocalisationX());
-        localizationEnd.setText(event.getEndLocalisationX());
+        localizationStart.setText(event.getEndLocalisationX());
+        localizationEnd.setText(event.getEndLocalisationY());
 
         actualDate = Calendar.getInstance();
         radius = (Spinner) findViewById(R.id.spinner_edit_radius);
@@ -147,8 +147,8 @@ public class EditEvent extends AppCompatActivity {
                         getRadius(radius.getSelectedItem().toString()),
                         localizationStart.getText().toString(),
                         localizationStart.getText().toString(),
-                        localizationEnd.getText().toString(),
-                        localizationEnd.getText().toString(),
+                        getLoc(localizationStart.getText().toString()),
+                        getLoc(localizationEnd.getText().toString()),
                         0,
                         event.getId());
 
@@ -203,6 +203,16 @@ public class EditEvent extends AppCompatActivity {
 
         String timeToSet = format2.format(date.getTime());
         dateDisplay.setText(timeToSet);
+    }
+
+    public String getLoc(String local){
+        try {
+            Double local2 = Double.parseDouble(local);
+            return (Double.toString(local2));
+        }
+        catch (NumberFormatException e) {
+            return ("0.00");
+        }
     }
 
     public int getRadius(String selected){
