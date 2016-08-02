@@ -106,9 +106,9 @@ public class AddEvent extends AppCompatActivity {
                         /// Latitude start
                         currentLocationY(),
                         /// Longitude end
-                        localizationStart.getText().toString(),
+                        getLoc(localizationStart.getText().toString()),
                         /// Latitude end
-                        localizationEnd.getText().toString(),
+                        getLoc(localizationEnd.getText().toString()),
 
                         cyclicEvent,
                         Long.valueOf(db.countEvents())
@@ -199,6 +199,16 @@ public class AddEvent extends AppCompatActivity {
         if (getIntent().getExtras() != null) {
             Bundle bundle = getIntent().getExtras().getBundle("eventData");
             fillEventInfo(bundle);
+        }
+    }
+    
+    public String getLoc(String local){
+        try {
+            Double local2 = Double.parseDouble(local);
+            return (Double.toString(local2));
+        }
+        catch (NumberFormatException e) {
+            return ("0.00");
         }
     }
 
