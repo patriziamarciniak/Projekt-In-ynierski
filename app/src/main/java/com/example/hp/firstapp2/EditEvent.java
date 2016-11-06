@@ -73,8 +73,11 @@ public class EditEvent extends AppCompatActivity {
         dateStart.setText(event.getDataStart());
         timeStart.setText(event.getTimeStart());
         timeEnd.setText(event.getTimeEnd());
-        localisationStartX.setText(event.getStartLocalisationX());
+
+        if(localisationStartX != null){ localisationStartX.setText(event.getStartLocalisationX());
         localisationStartY.setText(event.getStartLocalisationY());
+
+
         localisationEndX.setText(event.getEndLocalisationX());
         localisationEndY.setText(event.getEndLocalisationY());
 
@@ -136,7 +139,9 @@ public class EditEvent extends AppCompatActivity {
         btnEditEvent.setOnClickListener(new View.OnClickListener(){
             public void onClick(View arg0) {
 
-                eventDAO.editEvent(event.getId(), dateStart.getText().toString(),
+                eventDAO.editEvent(
+                        event.getId(),
+                        dateStart.getText().toString(),
                         dateEnd.getText().toString(),
                         timeStart.getText().toString(),
                         timeEnd.getText().toString(),

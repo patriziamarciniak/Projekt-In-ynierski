@@ -221,18 +221,12 @@
         android:layout_alignRight="@+id/text_localization_start"
         android:layout_alignEnd="@+id/text_localization_start" />
 
-    <CheckBox
+    <Button
+        android:id="@+id/fetch_address_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ML"
-        android:id="@+id/checkBox_my_localisation"
-        android:checked="false"
-        android:textSize="20dp"
-        android:layout_centerVertical="true"
-        android:layout_above="@+id/text_time_end"
-        android:layout_toRightOf="@+id/label_event_end"
-        android:layout_toEndOf="@+id/label_event_end"
-        android:onClick="onCheckboxClicked" />
+        android:text="@string/fetch_address"
+        android:onClick="fetchAddressButtonHandler" />
 
     <CheckBox
         android:layout_width="wrap_content"
@@ -246,7 +240,6 @@
         android:layout_alignEnd="@+id/text_trip_name"
         android:layout_below="@+id/label_notification"
         android:layout_marginBottom="7dp" />
-
 
 
     ///////////////////////////////////////////////////////

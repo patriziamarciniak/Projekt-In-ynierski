@@ -45,7 +45,7 @@ public class FetchAddressIntentService extends IntentService {
      * Tries to get the location address using a Geocoder. If successful, sends an address to a
      * result receiver. If unsuccessful, sends an error message instead.
      * Note: We define a {@link android.os.ResultReceiver} in * MainActivity to process content
-     * sent from this service.
+     * sent from this s ervice.
      *
      * This service calls this method from the default worker thread with the intent that started
      * the service. When this method returns, the service automatically stops.
@@ -142,7 +142,7 @@ public class FetchAddressIntentService extends IntentService {
     /**
      * Sends a resultCode and message to the receiver.
      */
-    private void deliverResultToReceiver(int resultCode, String message) {
+    public void deliverResultToReceiver(int resultCode, String message) {
         Bundle bundle = new Bundle();
         bundle.putString(Constants.RESULT_DATA_KEY, message);
         mReceiver.send(resultCode, bundle);

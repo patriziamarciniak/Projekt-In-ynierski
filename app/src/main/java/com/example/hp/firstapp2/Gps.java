@@ -20,6 +20,27 @@ import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.location.LocationServices;
 
+
+import org.apache.http.client.methods.HttpPost;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+import org.apache.http.client.HttpClient;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpEntity;;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.client.ClientProtocolException;
+
+import java.io.InputStream;
+import java.io.IOException;
+
+
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+
+
 /**
  * Getting the Location Address.
  *
@@ -103,9 +124,8 @@ public class Gps extends ActionBarActivity implements
         mResultReceiver = new AddressResultReceiver(new Handler());
 
         mLocationAddressTextView = (TextView) findViewById(R.id.location_address_view);
-        mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
         mFetchAddressButton = (Button) findViewById(R.id.fetch_address_button);
-
+        mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
         // Set defaults, then update using values stored in the Bundle.
         mAddressRequested = false;
         mAddressOutput = "";
@@ -114,6 +134,8 @@ public class Gps extends ActionBarActivity implements
         updateUIWidgets();
         buildGoogleApiClient();
     }
+
+
 
     /**
      * Updates fields based on data stored in the bundle.

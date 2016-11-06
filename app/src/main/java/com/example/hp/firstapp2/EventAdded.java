@@ -32,8 +32,8 @@ public class EventAdded extends AppCompatActivity {
         eventDAO = new EventDAO(this);
         event = eventDAO.getLastEvent();
 
-        //localization = (TextView)this.findViewById(R.id.txt_added_localization);
-       // localization.setText(event.getLocalisation().toString());
+        localization = (TextView)this.findViewById(R.id.txt_added_localization);
+        localization.setText(event.getStartLocalisationX());
         data = (TextView)this.findViewById(R.id.txt_added_data_start);
         data.setText(event.getDataEnd().toString());
         time = (TextView)this.findViewById(R.id.txt_added_time_end);

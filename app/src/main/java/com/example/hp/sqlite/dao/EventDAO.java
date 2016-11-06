@@ -181,7 +181,6 @@ public class EventDAO {
         event.setEndLocalisationX(cursor.getString(12));
         event.setEndLocalisationY(cursor.getString(13));
         event.setRepetition(cursor.getInt(14));
-        event.setMotherId(cursor.getLong(15));
 
         return event;
     }

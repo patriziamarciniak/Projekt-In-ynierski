@@ -2,8 +2,10 @@ package com.example.hp.firstapp2;
 
 import android.location.Address;
 import android.location.Geocoder;
+import android.os.ResultReceiver;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -15,7 +17,9 @@ import android.widget.Toast;
 import com.example.hp.sqlite.model.Event;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class EventDetails extends AppCompatActivity {
 
@@ -35,8 +39,8 @@ public class EventDetails extends AppCompatActivity {
         dateEnd = (TextView) findViewById(R.id.txt_details_data_end);
         timeStart = (TextView) findViewById(R.id.txt_details_time_start);
         timeEnd = (TextView) findViewById(R.id.txt_details_time_end);
-        localisationStart = (TextView) findViewById(R.id.txt_details_start_localisation);
-        localisationEnd = (TextView) findViewById(R.id.txt_details_end_localisation);
+        //localisationStart = (TextView) findViewById(R.id.txt_details_start_localisation);
+        //localisationEnd = (TextView) findViewById(R.id.txt_details_end_localisation);
         spinner = (TextView) findViewById(R.id.txt_details_radius);
         notAuto = (TextView) findViewById(R.id.txt_details_auto_notifications);
         notStart = (TextView) findViewById(R.id.txt_details_notification_start);
@@ -69,7 +73,7 @@ public class EventDetails extends AppCompatActivity {
 
         double longitude = new Double(localisationStartX.getText().toString());
         double latitude = new Double(localisationStartY.getText().toString());
-        String result = getAddressFrom(latitude, longitude);
+        String result = changeToAddress(latitude, longitude);
         localisationStart.setText(result);
 
     }
@@ -78,22 +82,50 @@ public class EventDetails extends AppCompatActivity {
 
         double longitude = new Double(localisationEndX.getText().toString());
         double latitude = new Double(localisationEndY.getText().toString());
-        String result = getAddressFrom(latitude, longitude);
+        String result = changeToAddress(latitude, longitude);
         localisationEnd.setText(result);
 
     }
 
-    private String getAddressFrom(double latitude, double longitude) {
-        String result = "";
+    public String changeToAddress(double latitude, double longitude){
+        List<Address> addresses = null;
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         try {
-            List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
-            for (Address address : addresses) {
-                result += address;
-            }
-        } catch (IOException e) {
-            showToast(e.toString());
+            addresses = geocoder.getFromLocation(latitude, longitude, 1);
         }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Address address = addresses.get(0);
+        ArrayList<String> addressFragments = new ArrayList<String>();
+
+        // Fetch the address lines using {@code getAddressLine},
+        // join them, and send them to the thread. The {@link android.location.address}
+        // class provides other options for fetching address details that you may prefer
+        // to use. Here are some examples:
+        // getLocality() ("Mountain View", for example)
+        // getAdminArea() ("CA", for example)
+        // getPostalCode() ("94043", for example)
+        // getCountryCode() ("US", for example)
+        // getCountryName() ("United States", for example)
+        for(int i = 0; i < address.getMaxAddressLineIndex(); i++) {
+            addressFragments.add(address.getAddressLine(i));
+        }
+        deliverResultToReceiver(Constants.SUCCESS_RESULT,
+                TextUtils.join(System.getProperty("line.separator"), addressFragments));
+
+        String result = "";
+        result += addresses.get(0).getLocality();
+        result += addresses.get(0).getCountryName();
         return result;
+    }
+    protected ResultReceiver mReceiver;
+
+    public void deliverResultToReceiver(int resultCode, String message) {
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.RESULT_DATA_KEY, message);
+        mReceiver.send(resultCode, bundle);
     }
 
 

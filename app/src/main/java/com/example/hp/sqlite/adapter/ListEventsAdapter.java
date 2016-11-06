@@ -55,10 +55,10 @@ public class ListEventsAdapter extends BaseAdapter {
             holder.txtNotificationsEnd = (TextView) v.findViewById(R.id.txt_notifications_end);
             holder.txtAutoNotifications = (TextView) v.findViewById(R.id.txt_auto_notifications);
             holder.txtRadius = (TextView) v.findViewById(R.id.txt_radius);
-            //holder.txtStartLocalisationX = (TextView) v.findViewById(R.id.txt_start_localisation_x);
-            //holder.txtStartLocalisationY = (TextView) v.findViewById(R.id.txt_start_localisation_y);
-            //holder.txtEndLocalisationX = (TextView) v.findViewById(R.id.txt_end_localisation_x);
-            //holder.txtEndLocalisationY = (TextView) v.findViewById(R.id.txt_end_localisation_y);
+            holder.txtStartLocalisationX = (TextView) v.findViewById(R.id.txt_localisation);
+            holder.txtStartLocalisationY = (TextView) v.findViewById(R.id.txt_localisation);
+            holder.txtEndLocalisationX = (TextView) v.findViewById(R.id.txt_localisation);
+            holder.txtEndLocalisationY = (TextView) v.findViewById(R.id.txt_localisation);
             holder.txtRepetition = (TextView) v.findViewById(R.id.txt_repetition);
 
 

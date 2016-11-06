@@ -1,4 +1,5 @@
 package com.example.hp.firstapp2;
+import android.os.StrictMode;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -9,7 +10,9 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.ResultReceiver;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,15 +31,45 @@ import android.view.View.OnClickListener;
 
 import com.example.hp.sqlite.dao.EventDAO;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
+
+import org.apache.http.client.methods.HttpPost;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+
+import org.apache.http.client.HttpClient;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpEntity;;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.client.ClientProtocolException;
+
+import java.io.InputStream;
+import java.io.IOException;
+
+
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
 
 public class AddEvent extends AppCompatActivity {
 
     EditText eventName, dateStart, dateEnd, timeStart, timeEnd, localisationStartX, localisationStartY, localisationEndX, localisationEndY, localisationStart, localisationEnd;
     Spinner radius;
-    CheckBox notificationStart, notificationEnd, notificationAutomatic, myLocalisation;
+    CheckBox notificationStart, notificationEnd, notificationAutomatic;
+    Button myLocalisation;
     Integer cyclicEvent;
     EventDAO db;
 
@@ -58,6 +91,11 @@ public class AddEvent extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
 
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
         eventName = (EditText) findViewById(R.id.text_trip_name);
         dateStart = (EditText) findViewById(R.id.text_date_start);
         dateEnd = (EditText) findViewById(R.id.text_date_end);
@@ -65,7 +103,7 @@ public class AddEvent extends AppCompatActivity {
         timeEnd = (EditText) findViewById(R.id.text_time_end);
         localisationStart = (EditText) findViewById(R.id.text_localization_start);
         localisationEnd = (EditText) findViewById(R.id.text_localization_end);
-        myLocalisation = (CheckBox) findViewById(R.id.checkBox_my_localisation);
+        myLocalisation = (Button) findViewById(R.id.fetch_address_button);
         notificationStart = (CheckBox) findViewById(R.id.checkBox_notification_start);
         notificationEnd = (CheckBox) findViewById(R.id.checkBox_notification_end);
         notificationAutomatic = (CheckBox) findViewById(R.id.checkBox_automatic_notification);
@@ -89,14 +127,14 @@ public class AddEvent extends AppCompatActivity {
                         notificationEnd.isChecked(),
                         notificationAutomatic.isChecked(),
                         getRadius(radius.getSelectedItem().toString()),
-                        /// Longitude start
-                        startAddressToGeolocationX(),
+                        //Longitude start a
+                        getLatLong(getLocationInfo(localisationStart.getText().toString())),
                         /// Latitude start
-                        startAddressToGeolocationY(),
+                        getLatLong(getLocationInfo(localisationStart.getText().toString())),
                         /// Longitude end
-                        endAddressToGeolocationX(),
+                        getLatLong(getLocationInfo(localisationEnd.getText().toString())),
                         /// Latitude end
-                        endAddressToGeolocationY(),
+                        getLatLong(getLocationInfo(localisationEnd.getText().toString())),
                         cyclicEvent,
                         Long.valueOf(db.countEvents())
                 );
@@ -146,6 +184,7 @@ public class AddEvent extends AppCompatActivity {
                 return false;
             }
         });
+
         localisationStart.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -169,102 +208,128 @@ public class AddEvent extends AppCompatActivity {
     }
 
 
-    ////////// POBIERANIE MOJEJ LOKALIZACJI /////////////////////////
+    ////////// ZAMIANA ADRESU NA WSPÓLRZĘDNE /////////////////////////
 
-    private void showToast(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    public static JSONObject getLocationInfo(String address) {
+        StringBuilder stringBuilder = new StringBuilder();
+        try {
+
+            address = address.replaceAll(" ","%20");
+            HttpPost httppost = new HttpPost("http://maps.google.com/maps/api/geocode/json?address=" + address + "&sensor=false");
+            HttpClient client = new DefaultHttpClient();
+            HttpResponse response;
+            stringBuilder = new StringBuilder();
+
+
+            response = client.execute(httppost);
+            HttpEntity entity = response.getEntity();
+            InputStream stream = entity.getContent();
+            int b;
+            while ((b = stream.read()) != -1) {
+                stringBuilder.append((char) b);
+            }
+        } catch (ClientProtocolException e) {
+        } catch (IOException e) {
+        }
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject = new JSONObject(stringBuilder.toString());
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return jsonObject;
     }
 
-//    private String getAddressFrom(Location location) {
- //       String result = " ";
-  //      try {
-   //         List<Address> addresses = geocoder.getFromLocation(
-    //                location.getLatitude(),	location.getLongitude(), 1);
-     //       for (Address address : addresses) {
-     //           for (int i = 0, j = address.getMaxAddressLineIndex(); i <= j; i++) {
-      //              result += address.getAddressLine(i) + "\n";
-      //          }
-       //         result += " ";
-        //    }
-       // } catch (Exception e) {
-       //     showToast(e.toString());
-       // }
-       // return result;
-   // }
 
-   // private void currentLocationToAddress() {
-   //     Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-   //     String result = getAddressFrom(location);
-   //     localisationStart.setText(result);
-   // }
+    public static String getLatLong(JSONObject jsonObject) {
+        double longitute, latitude;
+        String mLongitute;
 
-//    public void onCheckboxClicked(View view) {
- //       // Is the view now checked?
-  //      boolean checked = ((CheckBox) view).isChecked();
-        // Check which checkbox was clicked
-   //     switch(view.getId()) {
-    //        case R.id.checkBox_my_localisation:
-     //           if (checked)
-      //              currentLocationToAddress();
-       //         break;
-       // }
-   // }
+        try {
+
+            longitute = ((JSONArray)jsonObject.get("results")).getJSONObject(0)
+                    .getJSONObject("geometry").getJSONObject("location")
+                    .getDouble("lng");
+            mLongitute = Double.toString(longitute);
+
+            latitude = ((JSONArray)jsonObject.get("results")).getJSONObject(0)
+                    .getJSONObject("geometry").getJSONObject("location")
+                    .getDouble("lat");
+
+        } catch (JSONException e) {
+            return "0";
+
+        }
+
+        return mLongitute;
+    }
 
     ////////////////////////////////////////////////////////////////////////////////
 
+
+/*
     //////////////////// ZAMIANA ADRESU NA WSPOLRZEDNE ////////////////////////////
 
-
-    private String getXFrom(String locationStr) {
+    private String getXFromAddress(String addressName) {
         String result = "";
         try {
-            List<Address> addresses = geocoder.getFromLocationName(locationStr, 1);
-            for (Address address : addresses) {
-                    result += address.getLongitude();
+            List<Address> geoResults = geocoder.getFromLocationName(addressName, 1);
+            while (geoResults.size()==0) {
+                geoResults = geocoder.getFromLocationName(addressName, 1);
             }
-        } catch (IOException e) {
-            showToast(e.toString());
+            if (geoResults.size()>0) {
+                Address addr = geoResults.get(0);
+                result += addr.getLongitude();
+            }
+        } catch (Exception e) {
+            System.out.print(e.getMessage());
         }
         return result;
     }
 
-    private String getYFrom(String locationStr) {
+    private String getYFromAddress(String addressName) {
         String result = "";
         try {
-            List<Address> addresses = geocoder.getFromLocationName(locationStr, 1);
-            for (Address address : addresses) {
-                result += address.getLatitude();
+            List<Address> geoResults = geocoder.getFromLocationName(addressName, 1);
+            while (geoResults.size()==0) {
+                geoResults = geocoder.getFromLocationName(addressName, 1);
             }
-        } catch (IOException e) {
-            showToast(e.toString());
+            if (geoResults.size()>0) {
+                Address addr = geoResults.get(0);
+                result += addr.getLatitude();
+            }
+        } catch (Exception e) {
+            System.out.print(e.getMessage());
         }
         return result;
     }
     
     private String startAddressToGeolocationX() {
         String location = localisationStart.getText().toString();
-        String result = getXFrom(location);
+        String result = getXFromAddress(location);
         return result;
     }
 
     private String startAddressToGeolocationY() {
         String location = localisationStart.getText().toString();
-        String result = getYFrom(location);
+        String result = getYFromAddress(location);
         return result;
     }
 
     private String endAddressToGeolocationX() {
         String location = localisationEnd.getText().toString();
-        String result = getXFrom(location);
+        String result = getXFromAddress(location);
         return result;
     }
 
     private String endAddressToGeolocationY() {
         String location = localisationEnd.getText().toString();
-        String result = getXFrom(location);
+        String result = getXFromAddress(location);
         return result;
     }
-
+*/
     //////////////////////////////////////////////////////////////////////////////
 
     public void updateDisplay(TextView dateDisplay, Calendar date) {

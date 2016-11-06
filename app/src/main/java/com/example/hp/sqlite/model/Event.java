@@ -130,7 +130,7 @@ public class Event implements  Parcelable{
 
     // Parcelling part
     public Event(Parcel in){
-        String[] data = new String[16];
+        String[] data = new String[15];
 
         in.readStringArray(data);
         this.mId = Long.parseLong(data[0]);
