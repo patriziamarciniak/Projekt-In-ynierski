@@ -25,7 +25,6 @@ public class EventDAO {
 
     public static final String TAG = "EventDAO";
 
-    // Database fields
     private SQLiteDatabase mDatabase;
     private DBHelper mDbHelper;
     private Context mContext;
@@ -138,14 +137,29 @@ public class EventDAO {
 
     public List<Event> getPassEvents(String minDate, String maxDate) {
         List<Event> listEvents = new ArrayList<Event>();
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String actualDate = dateFormat.format(c.getTime());
+        Date actual, endDate;
 
-        Cursor cursor = mDatabase.query(DBHelper.TABLE_EVENTS, mAllColumns, DBHelper.COLUMN_DATA_END + " BETWEEN ? AND ?" + " ORDER BY DATA_END DESC", new String[]{
+        Cursor cursor = mDatabase.query(DBHelper.TABLE_EVENTS, mAllColumns, DBHelper.COLUMN_DATA_END + " BETWEEN ? AND ?" + " ORDER BY DATA_END DESC, TIME_END DESC", new String[]{
                 minDate, maxDate}, null, null, null, null);
+
         if (cursor != null) {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
                 Event event = cursorToEvent(cursor);
-                listEvents.add(event);
+
+                try {
+                    actual = dateFormat.parse(actualDate);
+                    endDate = dateFormat.parse(event.getDataEnd() + " " + event.getTimeEnd());
+                    if (endDate.before(actual)){
+                        listEvents.add(event);
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
                 cursor.moveToNext();
             }
 
@@ -157,15 +171,28 @@ public class EventDAO {
     public List<Event> getComingEvents(String minDate, String maxDate) {
 
         List<Event> listEvents = new ArrayList<Event>();
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String actualDate = dateFormat.format(c.getTime());
+        Date actual, startDate;
 
-        Cursor cursor = mDatabase.query(DBHelper.TABLE_EVENTS, mAllColumns, DBHelper.COLUMN_DATA_END + " BETWEEN ? AND ?" + " ORDER BY DATA_END ASC", new String[]{
+        Cursor cursor = mDatabase.query(DBHelper.TABLE_EVENTS, mAllColumns, DBHelper.COLUMN_DATA_START + " BETWEEN ? AND ?" + " ORDER BY DATA_START, TIME_START", new String[]{
                 minDate, maxDate}, null, null, null, null);
 
         if (cursor != null) {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
                 Event event = cursorToEvent(cursor);
-                listEvents.add(event);
+
+                try {
+                    actual = dateFormat.parse(actualDate);
+                    startDate = dateFormat.parse(event.getDataStart() + " " + event.getTimeStart());
+                    if (startDate.after(actual)){
+                        listEvents.add(event);
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 cursor.moveToNext();
             }
 
@@ -175,10 +202,11 @@ public class EventDAO {
     }
 
     public List<Event> findLastingEvents() {
+
         List<Event> listEvents = getAllEvents();
         List<Event> lastingEvents = new ArrayList<>();
         Calendar c = Calendar.getInstance();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         String actualDate = dateFormat.format(c.getTime());
 
         for (Event event : listEvents) {
@@ -187,7 +215,7 @@ public class EventDAO {
                 Date start = dateFormat.parse(event.getDataStart() + " " + event.getTimeStart());
                 Date end = dateFormat.parse(event.getDataEnd() + " " + event.getTimeEnd());
 
-                if (actual.after(start) && actual.before(end)) {
+                if (!actual.before(start) && actual.before(end)) {
                     lastingEvents.add(event);
                 }
             } catch (ParseException e) {

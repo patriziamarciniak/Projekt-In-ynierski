@@ -2,12 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.hp.firstapp2">
 
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.SEND_SMS" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_SERVICE" />
 
     <application
         android:allowBackup="true"
@@ -25,6 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".AddEvent"
             android:label="@string/title_activity_add_event"
@@ -35,6 +38,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.hp.firstapp2.MainActivity" />
         </activity>
+
         <activity
             android:name=".MyHistory"
             android:label="@string/title_activity_my_history"
@@ -56,7 +60,7 @@
         <activity
             android:name=".EventAdded"
             android:label="@string/title_activity_event_added"
-            android:parentActivityName=".AddEvent"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -66,7 +70,23 @@
         <activity android:name=".EditEvent" />
         <activity android:name=".AddPeople" />
         <activity android:name=".MainActivityLastingTrip" />
-        <activity android:name=".TripFinished"></activity>
+        <activity
+            android:name=".Settings"
+            android:label="@string/settings" />
+        <activity
+            android:name=".AddCyclicalEvent"
+            android:label="@string/title_activity_add_cyclical_event">
+            <!--android:theme="@style/AppTheme.NoActionBar"-->
+            <!-->-->
+        </activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <service android:name=".GeofenceTransitionsIntentService" />
     </application>
 
+
+
 </manifest>
+

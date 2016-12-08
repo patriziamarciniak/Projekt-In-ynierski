@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:descendantFocusability="blocksDescendants">
 
 
 
@@ -96,13 +97,28 @@
 
         </RelativeLayout>
 
-        <ImageView
-            android:id="@+id/iconCar"
-            android:layout_below="@+id/relativeLayout3"
-            android:layout_width="300dp"
-            android:layout_height="150dp"
-            android:layout_gravity="center"
-            android:src="@mipmap/car"></ImageView>
+    <ImageView
+        android:id="@+id/iconCar"
+        android:layout_below="@+id/relativeLayout3"
+        android:layout_width="250dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:src="@mipmap/car"></ImageView>
+
+    <Button
+        android:id="@+id/btn_send_message"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/rounded_button_black"
+        android:padding="5dp"
+        android:text="@string/send_sms"
+        android:textColor="#FFFFFF" />
+
+
+
+
 
 
 </LinearLayout>

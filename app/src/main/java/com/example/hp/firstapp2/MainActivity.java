@@ -1,10 +1,19 @@
 package com.example.hp.firstapp2;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.provider.Telephony;
 import android.support.v7.app.AppCompatActivity;
+import android.telecom.TelecomManager;
+import android.telephony.SmsManager;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
@@ -18,6 +27,7 @@ import com.example.hp.sqlite.dao.EventDAO;
 import com.example.hp.sqlite.model.Attendance;
 import com.example.hp.sqlite.model.Contacts;
 import com.example.hp.sqlite.model.Event;
+import com.example.hp.sqlite.model.PhoneContact;
 
 import java.util.List;
 import java.util.Locale;
@@ -26,6 +36,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.content.BroadcastReceiver;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +45,11 @@ public class MainActivity extends AppCompatActivity {
     Locale locale;
     Configuration config;
     List<Event> lastingEventsList;
+    EventDAO db;
+    private static final int RESULT_SETTINGS = 1;
+
+
+
 
     /*
     private BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -58,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Typeface ubuntu_font = Typeface.createFromAsset(getAssets(), "fonts/Ubuntu-B.ttf");
 
         locale = new Locale("pl");
         Locale.setDefault(locale);
@@ -65,15 +82,23 @@ public class MainActivity extends AppCompatActivity {
         config.locale = locale;
         context.getApplicationContext().getResources().updateConfiguration(config, null);
 
+//        db = new EventDAO(context);
+//        AttendanceDAO cdb = new AttendanceDAO(context);
+//        List<Event> list = db.getAllEvents();
+//        for (Event event: list) {
+//            List<PhoneContact> contacts = cdb.getContacts(event.getId());
+//            for (PhoneContact c : contacts ) {
+//                Log.d("osoby", String.valueOf((event.getId()) + " " + String.valueOf(c.getName())));
+//            }
+//        }
 
-        EventDAO db = new EventDAO(context);
-        lastingEventsList = db.findLastingEvents();
-        if (lastingEventsList.size()!=0){
-            Intent nextScreen = new Intent(getApplicationContext(), MainActivityLastingTrip.class);
-            startActivity(nextScreen);
-        }
+
+        checkLastingTrips();
+
 
         btnMyHistory = (Button) findViewById(R.id.button3);
+        btnMyHistory.setTypeface(ubuntu_font);
+
         btnMyHistory.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View arg0) {
@@ -90,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(nextScreen);
             }
         });
+        btnMyEvents.setTypeface(ubuntu_font);
 
         btnAddEvent = (Button) findViewById(R.id.button1);
         btnAddEvent.setOnClickListener(new View.OnClickListener() {
@@ -99,6 +125,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(nextScreen);
             }
         });
+        btnAddEvent.setTypeface(ubuntu_font);
+
+
         changeItemTranslation();
 
     }
@@ -114,6 +143,8 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()){
             case R.id.action_settings:
+                Intent nextScreen = new Intent(getApplicationContext(), Settings.class);
+                startActivity(nextScreen);
                 return true;
             case R.id.action_changeLanguage:
                 return true;
@@ -145,4 +176,19 @@ public class MainActivity extends AppCompatActivity {
         btnMyEvents.setText(R.string.title_coming_trips);
         btnMyHistory.setText(R.string.title_history);
     }
+
+    private void checkLastingTrips(){
+        db = new EventDAO(context);
+        lastingEventsList = db.findLastingEvents();
+        if (lastingEventsList.size()!=0){
+            Intent nextScreen = new Intent(getApplicationContext(), MainActivityLastingTrip.class);
+            startActivity(nextScreen);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        this.finishAffinity();
+    }
+
 }

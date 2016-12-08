@@ -1,12 +1,15 @@
 package com.example.hp.firstapp2;
 
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,25 +43,18 @@ public class MainActivityLastingTrip extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_activity_lasting_trip);
         eventDAO = new EventDAO(this);
         lastingEventsListView = (ListView) findViewById(R.id.listViewLastingEvents);
+        loadEvents();
 
         locale = new Locale("pl");
         Locale.setDefault(locale);
         config = new Configuration();
         config.locale = locale;
         context.getApplicationContext().getResources().updateConfiguration(config, null);
-
-        task = new GetEmpTask(activity);
-        task.execute((Void) null);
-        updateView();
-        registerForContextMenu(lastingEventsListView);
-
-        listEventsAdapter = new ListEventsAdapter(activity, eventsList, 1);
-        lastingEventsListView.setAdapter(listEventsAdapter);
-        lastingEventsListView.deferNotifyDataSetChanged();
 
         AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position,
@@ -71,6 +67,7 @@ public class MainActivityLastingTrip extends AppCompatActivity {
             }
         };
         lastingEventsListView.setOnItemClickListener(listener);
+
 
         btnMyHistory = (Button) findViewById(R.id.btn_history_lasting);
         btnMyHistory.setOnClickListener(new View.OnClickListener() {
@@ -103,41 +100,17 @@ public class MainActivityLastingTrip extends AppCompatActivity {
         changeItemTranslation();
     }
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        if (v.getId() == R.id.listViewLastingEvents) {
-            getMenuInflater().inflate(R.menu.menu_lasting_event, menu);
-        }
-    }
 
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
-                .getMenuInfo();
-        switch (item.getItemId()) {
-            case R.id.menu_item_delete:
-                eventDAO.deleteEvent(listEventsAdapter.getItem(info.position));
-                listEventsAdapter.remove(listEventsAdapter.getItem(info.position));
-                return true;
+    public void loadEvents() {
 
-            case R.id.menu_item_edit:
-                Event event = listEventsAdapter.getItem(info.position);
-                Intent intent = new Intent(getApplicationContext(), EditEvent.class);
-                intent.putExtra("event", event);
-                startActivity(intent);
-                return true;
-
-
-            case R.id.menu_item_finish_trip:
-                Event event2 = listEventsAdapter.getItem(info.position);
-                Intent intent2 = new Intent(getApplicationContext(), TripFinished.class);
-                intent2.putExtra("event", event2);
-                startActivity(intent2);
-                return true;
-
-            default:
-                return super.onContextItemSelected(item);
-        }
+        task = new GetEmpTask(activity);
+        task.execute((Void) null);
+        updateView();
+        registerForContextMenu(lastingEventsListView);
+        listEventsAdapter = new ListEventsAdapter(activity, eventsList, 1);
+        lastingEventsListView.setAdapter(listEventsAdapter);
+        listEventsAdapter.notifyDataSetChanged();
+        lastingEventsListView.deferNotifyDataSetChanged();
     }
 
     public class GetEmpTask extends AsyncTask<Void, Void, List<Event>> {
@@ -166,6 +139,7 @@ public class MainActivityLastingTrip extends AppCompatActivity {
                                 events, 1);
                         lastingEventsListView.setAdapter(listEventsAdapter);
                         listEventsAdapter.notifyDataSetChanged();
+                        lastingEventsListView.deferNotifyDataSetChanged();
                     }
                 }
             }
@@ -173,6 +147,7 @@ public class MainActivityLastingTrip extends AppCompatActivity {
     }
 
     public void updateView() {
+
         task = new GetEmpTask(activity);
         task.execute((Void) null);
     }
@@ -188,6 +163,8 @@ public class MainActivityLastingTrip extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.action_settings:
+                Intent nextScreen = new Intent(getApplicationContext(), Settings.class);
+                startActivity(nextScreen);
                 return true;
             case R.id.action_changeLanguage:
                 return true;
@@ -213,6 +190,46 @@ public class MainActivityLastingTrip extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        if (v.getId() == R.id.listViewLastingEvents) {
+            getMenuInflater().inflate(R.menu.menu_lasting_event, menu);
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
+                .getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.menu_item_delete:
+                eventDAO.deleteEvent(listEventsAdapter.getItem(info.position));
+                listEventsAdapter.remove(listEventsAdapter.getItem(info.position));
+                checkLastingTrips(eventDAO);
+                return true;
+
+            case R.id.menu_item_edit:
+                Event event = listEventsAdapter.getItem(info.position);
+                Intent intent = new Intent(getApplicationContext(), EditEvent.class);
+                intent.putExtra("event", event);
+                startActivity(intent);
+                return true;
+
+
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    private void checkLastingTrips(EventDAO db){
+        db = new EventDAO(context);
+        eventsList = db.findLastingEvents();
+        if (eventsList.size()==0){
+            Intent nextScreen = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(nextScreen);
+        }
+    }
+
     private void changeItemTranslation() {
 
         btnAddEvent.setText(R.string.title_activity_add_event);
@@ -221,5 +238,11 @@ public class MainActivityLastingTrip extends AppCompatActivity {
         TextView txtActualTrip = (TextView) findViewById(R.id.textView5);
         txtActualTrip.setText(R.string.actual_event);
     }
+
+    @Override
+    public void onBackPressed() {
+        this.finishAffinity();
+    }
+
 
 }

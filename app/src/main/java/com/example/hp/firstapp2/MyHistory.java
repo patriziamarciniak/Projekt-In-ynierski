@@ -2,13 +2,12 @@ package com.example.hp.firstapp2;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -20,10 +19,8 @@ import com.example.hp.sqlite.dao.EventDAO;
 import com.example.hp.sqlite.model.Event;
 
 import java.lang.ref.WeakReference;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class MyHistory extends AppCompatActivity {
@@ -34,22 +31,31 @@ public class MyHistory extends AppCompatActivity {
     ListEventsAdapter listEventsAdapter;
     EventDAO eventDAO;
     GetEmpTask task;
-    Button btnDay, btnAll, btnWeek;
+    Button btnDay, btnAll, btnWeek, btnMonth;
     Calendar calendar = Calendar.getInstance();
-    SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-    String today = format1.format(calendar.getTime());
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    String today = dateFormat.format(calendar.getTime());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_history);
-        eventsListView = (ListView) findViewById(R.id.eventslistViewHistory);
+        Typeface ubuntu_font = Typeface.createFromAsset(getAssets(), "fonts/Ubuntu-B.ttf");
+        eventsListView = (ListView) findViewById(R.id.eventsListViewHistory);
         eventDAO = new EventDAO(this);
         loadEvents();
 
         btnDay = (Button) findViewById(R.id.btn_day_history);
-        btnAll = (Button) findViewById(R.id.btn_month_history);
+        btnAll = (Button) findViewById(R.id.btn_all_history);
+        btnMonth = (Button) findViewById(R.id.btn_month_history);
         btnWeek = (Button) findViewById(R.id.btn_week_history);
+        btnDay.setTypeface(ubuntu_font);
+        btnAll.setTypeface(ubuntu_font);
+        btnMonth.setTypeface(ubuntu_font);
+        btnWeek.setTypeface(ubuntu_font);
+        setButtonsUnselected();
+        btnAll.setTypeface(null, Typeface.BOLD);
+
 
         AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position,
@@ -61,10 +67,13 @@ public class MyHistory extends AppCompatActivity {
                 startActivity(intent);
             }
         };
+
         eventsListView.setOnItemClickListener(listener);
 
         btnDay.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
+                setButtonsUnselected();
+                btnDay.setTypeface(null, Typeface.BOLD);
                 eventsList = eventDAO.getPassEvents(today, today);
                 registerForContextMenu(eventsListView);
                 listEventsAdapter = new ListEventsAdapter(activity, eventsList, 0);
@@ -75,7 +84,11 @@ public class MyHistory extends AppCompatActivity {
 
         btnWeek.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
-                eventsList = eventDAO.getPassEvents(findLastWeek(), today);
+                setButtonsUnselected();
+                btnWeek.setTypeface(null, Typeface.BOLD);
+                Calendar cal = Calendar.getInstance();
+                cal.add(Calendar.DATE, -6);
+                eventsList = eventDAO.getPassEvents(dateFormat.format(cal.getTime()), today);
                 registerForContextMenu(eventsListView);
                 listEventsAdapter = new ListEventsAdapter(activity, eventsList, 0);
                 eventsListView.setAdapter(listEventsAdapter);
@@ -83,14 +96,67 @@ public class MyHistory extends AppCompatActivity {
             }
         });
 
+        btnMonth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setButtonsUnselected();
+                btnMonth.setTypeface(null, Typeface.BOLD);
+                Calendar cal = Calendar.getInstance();
+                cal.add(Calendar.MONTH, -1);
+                eventsList = eventDAO.getPassEvents(dateFormat.format(cal.getTime()), today);
+                registerForContextMenu(eventsListView);
+                listEventsAdapter = new ListEventsAdapter(activity, eventsList, 0);
+                eventsListView.setAdapter(listEventsAdapter);
+                eventsListView.deferNotifyDataSetChanged();
+            }
+        });
 
         btnAll.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
+                setButtonsUnselected();
+                btnAll.setTypeface(null, Typeface.BOLD);
                 loadEvents();
             }
         });
 
     }
+
+    private void setButtonsUnselected() {
+        btnDay.setTypeface(null, Typeface.NORMAL);
+        btnWeek.setTypeface(null, Typeface.NORMAL);
+        btnMonth.setTypeface(null, Typeface.NORMAL);
+        btnAll.setTypeface(null, Typeface.NORMAL);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        if (v.getId() == R.id.eventsListViewHistory) {
+            getMenuInflater().inflate(R.menu.menu_item_event, menu);
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
+                .getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.menu_item_delete:
+                eventDAO.deleteEvent(listEventsAdapter.getItem(info.position));
+                listEventsAdapter.remove(listEventsAdapter.getItem(info.position));
+                return true;
+
+            case R.id.menu_item_edit:
+                Event event = listEventsAdapter.getItem(info.position);
+                Intent intent = new Intent(getApplicationContext(), EditEvent.class);
+                intent.putExtra("event", event);
+                startActivity(intent);
+                return true;
+
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
 
     public class GetEmpTask extends AsyncTask<Void, Void, List<Event>> {
 
@@ -132,34 +198,16 @@ public class MyHistory extends AppCompatActivity {
     }
 
     private void loadEvents() {
+
         task = new GetEmpTask(activity);
         task.execute((Void) null);
         updateView();
         registerForContextMenu(eventsListView);
-        listEventsAdapter = new ListEventsAdapter(activity, eventsList,0);
+        listEventsAdapter = new ListEventsAdapter(activity, eventsList, 0);
         eventsListView.setAdapter(listEventsAdapter);
         eventsListView.deferNotifyDataSetChanged();
     }
 
-    private String findLastWeek(){
-        int day = Integer.parseInt(today.substring(8));
-        int month = Integer.parseInt(today.substring(5,7));
-        int year = Integer.parseInt(today.substring(0,4));
-
-        if(day > 7){
-            day -= 7;
-        }else{
-            if(month > 1){
-                month--;
-                day = 30 - (7 - day);
-            }else {
-                year--;
-                month = 12;
-                day = 30 - (7 - day);
-            }
-        }
-       return year + "-" + String.format("%02d", month) + "-" + String.format("%02d", day);
-    }
 }
 
 

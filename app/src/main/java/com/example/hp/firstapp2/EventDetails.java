@@ -23,7 +23,7 @@ import java.util.Locale;
 
 public class EventDetails extends AppCompatActivity {
 
-    TextView dateStart, dateEnd, timeStart, timeEnd, localizationStart, localizationEnd, spinner, notAuto, notStart, notEnd;
+    TextView dateStart, dateEnd, timeStart, timeEnd, localisationStart, localisationEnd, spinner, notAuto, notStart, notEnd;
 
 
     @Override
@@ -38,8 +38,8 @@ public class EventDetails extends AppCompatActivity {
         dateEnd = (TextView) findViewById(R.id.txt_details_data_end);
         timeStart = (TextView) findViewById(R.id.txt_details_time_start);
         timeEnd = (TextView) findViewById(R.id.txt_details_time_end);
-        localizationStart = (TextView) findViewById(R.id.txt_details_localization_start);
-        localizationEnd = (TextView) findViewById(R.id.txt_details_localization_end);
+        localisationStart = (TextView) findViewById(R.id.txt_details_localization_start);
+        localisationEnd = (TextView) findViewById(R.id.txt_details_localization_end);
         spinner = (TextView) findViewById(R.id.txt_details_radius);
         notAuto = (TextView) findViewById(R.id.txt_details_auto_notifications);
         notStart = (TextView) findViewById(R.id.txt_details_notification_start);
@@ -49,8 +49,8 @@ public class EventDetails extends AppCompatActivity {
         dateStart.setText(event.getDataStart());
         timeEnd.setText(event.getTimeEnd());
         timeStart.setText(event.getTimeStart());
-        localizationStart.setText(startGeolocationToAddress(event.getStartLocalisationX(), event.getStartLocalisationY()));
-        localizationEnd.setText(startGeolocationToAddress(event.getEndLocalisationX(), event.getEndLocalisationY()));
+        localisationStart.setText(startGeolocationToAddress(event.getStartLocalisationX(), event.getStartLocalisationY()));
+        localisationEnd.setText(startGeolocationToAddress(event.getEndLocalisationX(), event.getEndLocalisationY()));
         spinner.setText(String.valueOf(event.getRadius()));
         notAuto.setText(String.valueOf(event.getAutoNotifications()));
         notStart.setText(String.valueOf(event.getNotificationsStart()));
@@ -58,7 +58,7 @@ public class EventDetails extends AppCompatActivity {
 
     }
 
-    //////////////////////ZAMIANA WSPOLRZEDNYCH NA ADRES ///////////////////////////
+//////////////////////ZAMIANA WSPOLRZEDNYCH NA ADRES ///////////////////////////
 
     private void showToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
@@ -72,6 +72,16 @@ public class EventDetails extends AppCompatActivity {
         return (result);
 
     }
+
+    private String endGeolocationToAddress(String mLongitude, String mLatitude) {
+
+        double longitude = new Double(mLongitude);
+        double latitude = new Double(mLatitude);
+        String result = changeToAddress(latitude, longitude);
+        return (result);
+
+    }
+
 
     public String changeToAddress(double latitude, double longitude) {
         List<Address> addresses = null;
@@ -87,8 +97,6 @@ public class EventDetails extends AppCompatActivity {
         if (addresses.size() != 0) {
             Address address = addresses.get(0);
 
-            ArrayList<String> addressFragments = new ArrayList<String>();
-
             // Fetch the address lines using {@code getAddressLine},
             // join them, and send them to the thread. The {@link android.location.address}
             // class provides other options for fetching address details that you may prefer
@@ -98,11 +106,9 @@ public class EventDetails extends AppCompatActivity {
             // getPostalCode() ("94043", for example)
             // getCountryCode() ("US", for example)
             // getCountryName() ("United States", for example)
-            for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
-                addressFragments.add(address.getAddressLine(i));
-            }
 
             if (addresses.get(0).getLocality() != null) {
+                if(addresses.get(0).getAddressLine(0) != null) result += addresses.get(0).getAddressLine(0) + ", ";
                 result += addresses.get(0).getLocality();
                 result += ", ";
                 result += addresses.get(0).getCountryName();
@@ -116,5 +122,5 @@ public class EventDetails extends AppCompatActivity {
         else{
             return("0");
         }
-    }
+   }
 }

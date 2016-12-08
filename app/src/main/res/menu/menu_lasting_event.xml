@@ -12,10 +12,5 @@
             android:orderInCategory="2"
             android:title="@string/delete"
             app:showAsAction="never"/>
-        <item
-            android:id="@+id/menu_item_finish_trip"
-            android:orderInCategory="3"
-            android:title="@string/trip_finish"
-            app:showAsAction="never">
-        </item>
+
 </menu>

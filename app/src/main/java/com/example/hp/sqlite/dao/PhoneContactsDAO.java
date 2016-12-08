@@ -57,7 +57,14 @@ public class PhoneContactsDAO {
                 phoneContact.setId(c.getLong(c.getColumnIndex(ContactsContract.CommonDataKinds.Phone._ID)));
                 phoneContact.setName(c.getString(c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)));
                 phoneContact.setPhoneNumber(c.getString(c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
-                listContacts.add(phoneContact);
+
+                //ograniczenie zeby nie oddawaly sie dwa razy te same kontakty - do przemyslenia kryterium
+                boolean present = false;
+                for (int i = 0; i < listContacts.size(); i++){
+                    if (listContacts.get(i).getName() == phoneContact.getName()) present = true;
+                }
+
+                if (!present)listContacts.add(phoneContact);
             }
             c.close();
             return listContacts;

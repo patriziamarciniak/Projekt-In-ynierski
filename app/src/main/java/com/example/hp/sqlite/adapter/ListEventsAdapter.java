@@ -5,14 +5,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +31,7 @@ import com.example.hp.sqlite.model.PhoneContact;
 
 public class ListEventsAdapter extends BaseAdapter {
 
-    //w obydwu adapterach, w konstruktorze wybieramy jaki typ layout'u chcemy
+    //w obu adapterach, w konstruktorze wybieramy jaki typ layout'u chcemy
     // tu mamy do wyboru wyswietlanie eventow lub wyswietlanie trwajacych eventow
     // w PhoneContactAdapter jedyna roznica jest ikonka do usuwania ich z listy
 
@@ -45,12 +52,12 @@ public class ListEventsAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return (getItems() != null && !getItems().isEmpty()) ? getItems().size() : 0 ;
+        return (getItems() != null && !getItems().isEmpty()) ? getItems().size() : 0;
     }
 
     @Override
     public Event getItem(int position) {
-        return (getItems() != null && !getItems().isEmpty()) ? getItems().get(position) : null ;
+        return (getItems() != null && !getItems().isEmpty()) ? getItems().get(position) : null;
     }
 
     @Override
@@ -59,21 +66,30 @@ public class ListEventsAdapter extends BaseAdapter {
     }
 
 
-    /////////////////////////////////////////////////
+
+    //////////////////////ZAMIANA WSPOLRZEDNYCH NA ADRES ///////////////////////////
 
 
     private String startGeolocationToAddress(String mLongitude, String mLatitude) {
 
-        double longitude = Double.valueOf(mLongitude);
-        double latitude = Double.valueOf(mLatitude);
+        double longitude = new Double(mLongitude);
+        double latitude = new Double(mLatitude);
         String result = changeToAddress(latitude, longitude);
         return (result);
 
     }
 
-    public String changeToAddress(double latitude, double longitude){
-        List<Address> addresses = null;
+    private String endGeolocationToAddress(String mLongitude, String mLatitude) {
 
+        double longitude = new Double(mLongitude);
+        double latitude = new Double(mLatitude);
+        String result = changeToAddress(latitude, longitude);
+        return (result);
+
+    }
+
+    public String changeToAddress(double latitude, double longitude) {
+        List<Address> addresses = null;
         Geocoder geocoder = new Geocoder(this.context, Locale.getDefault());
         try {
             addresses = geocoder.getFromLocation(latitude, longitude, 1);
@@ -97,94 +113,93 @@ public class ListEventsAdapter extends BaseAdapter {
             // getPostalCode() ("94043", for example)
             // getCountryCode() ("US", for example)
             // getCountryName() ("United States", for example)
-            for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
+            /*for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
                 addressFragments.add(address.getAddressLine(i));
-            }
+            }*/
 
             if (addresses.get(0).getLocality() != null) {
-                result += addresses.get(0).getLocality();
-                result += ", ";
-                result += addresses.get(0).getCountryName();
+                 result += addresses.get(0).getLocality();
             } else {
                 result += addresses.get(0).getCountryName();
             }
 
             return result;
-        } else {
-            return ("0");
+        }
+
+        else{
+            return("0");
         }
     }
-//////////////////////
-
-
 
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = convertView;
         ViewHolder holder;
-        Context context = parent.getContext();
+        final Context context = parent.getContext();
         AttendanceDAO attendanceDAO = new AttendanceDAO(context);
 
-        if(layoutType == 0){
-        if(v == null) {
-            v = mInflater.inflate(R.layout.list_item_event, parent, false);
-            holder = new ViewHolder();
-            holder.txtDataStart = (TextView) v.findViewById(R.id.txt_data_start);
-            holder.txtTimeStart = (TextView) v.findViewById(R.id.txt_time_start);
-            holder.txtDataEnd = (TextView) v.findViewById(R.id.txt_data_end);
-            holder.txtTimeEnd = (TextView) v.findViewById(R.id.txt_time_end);
+        if (layoutType == 0) {
+            if (v == null) {
+                v = mInflater.inflate(R.layout.list_item_event, parent, false);
+                holder = new ViewHolder();
+                holder.txtDataStart = (TextView) v.findViewById(R.id.txt_data_start);
+                holder.txtTimeStart = (TextView) v.findViewById(R.id.txt_time_start);
+                holder.txtDataEnd = (TextView) v.findViewById(R.id.txt_data_end);
+                holder.txtTimeEnd = (TextView) v.findViewById(R.id.txt_time_end);
 //            holder.txtNotificationsStart = (TextView) v.findViewById(R.id.txt_notifications_start);
 //            holder.txtNotificationsEnd = (TextView) v.findViewById(R.id.txt_notifications_end);
 //            holder.txtAutoNotifications = (TextView) v.findViewById(R.id.txt_auto_notifications);
 //            holder.txtRadius = (TextView) v.findViewById(R.id.txt_radius);
-            holder.txtStartLocalizationX = (TextView) v.findViewById(R.id.txt_start_localization_x);
+                holder.txtStartLocalizationX = (TextView) v.findViewById(R.id.txt_start_localization_x);
 //            holder.txtStartLocalizationY = (TextView) v.findViewById(R.id.txt_start_localisation_y);
-            holder.txtEndLocalizationX = (TextView) v.findViewById(R.id.txt_end_localization_x);
+                holder.txtEndLocalizationX = (TextView) v.findViewById(R.id.txt_end_localization_x);
 //            holder.txtEndLocalizationY = (TextView) v.findViewById(R.id.txt_end_localisation_y);
 //            holder.txtRepetition = (TextView) v.findViewById(R.id.txt_repetition);
-            holder.txtPeople = (TextView) v.findViewById(R.id.txt_people);
-            v.setTag(holder);
-        }
-        else {
-            holder = (ViewHolder) v.getTag();
-        }
+                holder.txtPeople = (TextView) v.findViewById(R.id.txt_people);
+                v.setTag(holder);
+            } else {
+                holder = (ViewHolder) v.getTag();
+            }
 
 
             // fill row data
-        Event currentItem = getItem(position);
-        if(currentItem != null) {
-            holder.txtDataStart.setText(currentItem.getDataStart());
-            holder.txtTimeStart.setText(currentItem.getTimeStart());
-            holder.txtDataEnd.setText(currentItem.getDataEnd());
-            holder.txtTimeEnd.setText(currentItem.getTimeEnd());
+            Event currentItem = getItem(position);
+            if (currentItem != null) {
+                holder.txtDataStart.setText(currentItem.getDataStart());
+                holder.txtTimeStart.setText(currentItem.getTimeStart());
+                holder.txtDataEnd.setText(currentItem.getDataEnd());
+                holder.txtTimeEnd.setText(currentItem.getTimeEnd());
 //            holder.txtNotificationsStart.setText(Boolean.toString(currentItem.getNotificationsStart()));
 //            holder.txtNotificationsEnd.setText(Boolean.toString(currentItem.getNotificationsEnd()));
 //            holder.txtAutoNotifications.setText(Boolean.toString(currentItem.getAutoNotifications()));
 //            holder.txtRadius.setText(String.valueOf(currentItem.getRadius()));//added conversion
-            try {
-                holder.txtStartLocalizationX.setText(startGeolocationToAddress(currentItem.getStartLocalisationX(), currentItem.getStartLocalisationY()));
-            }
-            catch (NumberFormatException e) {
-                holder.txtStartLocalizationX.setText(currentItem.getStartLocalisationX() + " " + currentItem.getStartLocalisationY());
-            }
+                try {
+                    holder.txtStartLocalizationX.setText(startGeolocationToAddress(currentItem.getStartLocalisationX(), currentItem.getStartLocalisationY()));
+                } catch (NumberFormatException e) {
+                    holder.txtStartLocalizationX.setText(currentItem.getStartLocalisationX() + " " + currentItem.getStartLocalisationY());
+                }
 //            holder.txtStartLocalizationY.setText(currentItem.getStartLocalisationY());
-            try {
-                holder.txtEndLocalizationX.setText(startGeolocationToAddress(currentItem.getEndLocalisationX(), currentItem.getEndLocalisationY()));
-            }
-            catch (NumberFormatException e) {
-                holder.txtEndLocalizationX.setText(currentItem.getEndLocalisationX() + " " + currentItem.getEndLocalisationY());
-            }
+                try {
+                    holder.txtEndLocalizationX.setText(startGeolocationToAddress(currentItem.getEndLocalisationX(), currentItem.getEndLocalisationY()));
+                } catch (NumberFormatException e) {
+                    holder.txtEndLocalizationX.setText(currentItem.getEndLocalisationX() + " " + currentItem.getEndLocalisationY());
+                }
 //            holder.txtEndLocalizationY.setText(currentItem.getEndLocalisationY());
 //            holder.txtRepetition.setText(String.valueOf(currentItem.getRepetition()));
-            List<PhoneContact> phoneContactList = attendanceDAO.getContacts(currentItem.getId());
-            String displayContacts = "";
-            for (PhoneContact phoneContact : phoneContactList){displayContacts += " " + phoneContact.getName();}
-            holder.txtPeople.setText(displayContacts);
-        }
-        return v;
+                List<PhoneContact> phoneContactList = attendanceDAO.getContacts(currentItem.getId());
+                String displayContacts = "";
+                for (PhoneContact phoneContact : phoneContactList) {
+                    displayContacts += " " + phoneContact.getName();
+                }
+                holder.txtPeople.setText(displayContacts);
+            }
+            return v;
         } else {
+
             Event currentItem = getItem(position);
+            final ArrayList<String> numbers = new ArrayList<>();
+
             if (v == null) {
                 v = mInflater.inflate(R.layout.list_item_lasting_event, parent, false);
                 holder = new ViewHolder();
@@ -202,9 +217,33 @@ public class ListEventsAdapter extends BaseAdapter {
                 holder.txtEndLocalizationX.setText(currentItem.getEndLocalisationX());
                 List<PhoneContact> phoneContactList = attendanceDAO.getContacts(currentItem.getId());
                 String displayContacts = "";
-                for (PhoneContact phoneContact : phoneContactList){displayContacts += " " + phoneContact.getName();}
+                for (PhoneContact phoneContact : phoneContactList) {
+                    displayContacts += " " + phoneContact.getName();
+                    numbers.add(phoneContact.getPhoneNumber());
+                }
                 holder.txtPeople.setText(displayContacts);
             }
+
+            Button btnSendSMS = (Button) v.findViewById(R.id.btn_send_message);
+
+            btnSendSMS.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+//                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+//                    String messageText = preferences.getString("message", "DEFAULT");
+//                    SmsManager sms = SmsManager.getDefault();
+//                    List<String> messages = sms.divideMessage(messageText);
+//
+//                    for (String contactNumber : numbers) {
+//                        for (String message : messages) {
+//                            sms.sendTextMessage(contactNumber, null, message, PendingIntent.getBroadcast(
+//                                    context, 0, new Intent(""), 0), null);
+//                        }
+//                    }
+                }
+            });
+
             return v;
         }
     }

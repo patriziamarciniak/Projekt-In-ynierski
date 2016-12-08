@@ -2,6 +2,7 @@ package com.example.hp.firstapp2;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -29,23 +30,33 @@ public class ComingTrips extends AppCompatActivity {
     List<Event> eventsList;
     ListEventsAdapter listEventsAdapter;
     EventDAO eventDAO;
-    private GetEmpTask task;
-    Button btnDay, btnAll, btnWeek;
+    GetEmpTask task;
+    Button btnDay, btnAll, btnMonth, btnWeek;
     Calendar calendar = Calendar.getInstance();
-    SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-    String today = format1.format(calendar.getTime());
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    String today = dateFormat.format(calendar.getTime());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coming_trips);
+        Typeface ubuntu_font = Typeface.createFromAsset(getAssets(), "fonts/Ubuntu-B.ttf");
         eventDAO = new EventDAO(this);
         eventsListView = (ListView) findViewById(R.id.eventsListView);
         loadEvents();
 
         btnDay = (Button) findViewById(R.id.btn_day_coming);
-        btnAll = (Button) findViewById(R.id.btn_month_coming);
+        btnAll = (Button) findViewById(R.id.btn_all_coming);
+        btnMonth = (Button) findViewById(R.id.btn_month_coming);
         btnWeek = (Button) findViewById(R.id.btn_week_coming);
+        btnDay.setTypeface(ubuntu_font);
+        btnAll.setTypeface(ubuntu_font);
+        btnMonth.setTypeface(ubuntu_font);
+        btnWeek.setTypeface(ubuntu_font);
+        setButtonsUnselected();
+        btnMonth.setTypeface(null, Typeface.BOLD);
+
+
 
         AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position,
@@ -61,6 +72,9 @@ public class ComingTrips extends AppCompatActivity {
 
         btnDay.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
+
+                setButtonsUnselected();
+                btnDay.setTypeface(null, Typeface.BOLD);
                 eventsList = eventDAO.getComingEvents(today, today);
                 registerForContextMenu(eventsListView);
                 listEventsAdapter = new ListEventsAdapter(activity, eventsList, 0);
@@ -71,26 +85,55 @@ public class ComingTrips extends AppCompatActivity {
 
         btnAll.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
-                loadEvents();
-            }
-        });
 
-        btnWeek.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View arg0) {
-                eventsList = eventDAO.getComingEvents(today, findNextWeek());
+                setButtonsUnselected();
+                btnAll.setTypeface(null, Typeface.BOLD);
+
+                eventsList = eventDAO.getComingEvents(today, "3000-12-12");
                 registerForContextMenu(eventsListView);
                 listEventsAdapter = new ListEventsAdapter(activity, eventsList, 0);
                 eventsListView.setAdapter(listEventsAdapter);
                 eventsListView.deferNotifyDataSetChanged();
             }
         });
+
+        btnWeek.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                setButtonsUnselected();
+                btnWeek.setTypeface(null, Typeface.BOLD);
+                Calendar cal = Calendar.getInstance();
+                cal.add(Calendar.DATE, 6);
+                eventsList = eventDAO.getComingEvents(today, dateFormat.format(cal.getTime()));
+                registerForContextMenu(eventsListView);
+                listEventsAdapter = new ListEventsAdapter(activity, eventsList, 0);
+                eventsListView.setAdapter(listEventsAdapter);
+                eventsListView.deferNotifyDataSetChanged();
+            }
+        });
+
+        btnMonth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setButtonsUnselected();
+                btnMonth.setTypeface(null, Typeface.BOLD);
+                loadEvents();
+
+            }
+        });
+    }
+
+    private void setButtonsUnselected() {
+        btnDay.setTypeface(null, Typeface.NORMAL);
+        btnWeek.setTypeface(null, Typeface.NORMAL);
+        btnMonth.setTypeface(null, Typeface.NORMAL);
+        btnAll.setTypeface(null, Typeface.NORMAL);
     }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         if (v.getId() == R.id.eventsListView) {
             getMenuInflater().inflate(R.menu.menu_item_event, menu);
-       }
+        }
     }
 
     @Override
@@ -127,7 +170,9 @@ public class ComingTrips extends AppCompatActivity {
         @Override
         protected List<Event> doInBackground(Void... arg0) {
 
-            List<Event> eventsList = eventDAO.getComingEvents(today, "3000-01-01");
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.MONTH, 1);
+            List<Event> eventsList = eventDAO.getComingEvents(today, dateFormat.format(cal.getTime()));
             return eventsList;
         }
 
@@ -136,7 +181,7 @@ public class ComingTrips extends AppCompatActivity {
             if (activityWeakRef.get() != null
                     && !activityWeakRef.get().isFinishing()) {
                 eventsList = events;
-                if (events!= null) {
+                if (events != null) {
                     if (events.size() != 0) {
                         listEventsAdapter = new ListEventsAdapter(activity,
                                 events, 0);
@@ -157,6 +202,7 @@ public class ComingTrips extends AppCompatActivity {
     }
 
     public void loadEvents() {
+
         task = new GetEmpTask(activity);
         task.execute((Void) null);
         updateView();
@@ -166,25 +212,5 @@ public class ComingTrips extends AppCompatActivity {
         eventsListView.deferNotifyDataSetChanged();
     }
 
-    private String findNextWeek(){
-
-        int day = Integer.parseInt(today.substring(8));
-        int month = Integer.parseInt(today.substring(5,7));
-        int year = Integer.parseInt(today.substring(0,4));
-
-        if(day < 22){
-            day += 7;
-        }else{
-            if(month != 12){
-                month++;
-                day = 7 - (30 - day);
-            }else {
-                year++;
-                month = 1;
-                day = 7 - (30 - day);
-            }
-        }
-        return year + "-" + String.format("%02d", month) + "-" + String.format("%02d", day);
-    }
 }
 

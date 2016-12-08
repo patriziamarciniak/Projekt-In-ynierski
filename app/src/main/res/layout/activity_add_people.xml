@@ -9,7 +9,7 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         android:layout_width= "fill_parent"
-        android:layout_height="150dp"
+        android:layout_height="100dp"
         android:id="@+id/choosedContactsLayout">
 
         <ListView
@@ -17,7 +17,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:cacheColorHint="#ffccff"
-            android:divider="#D32F2F"
             android:dividerHeight="2sp" >
         </ListView>
 
@@ -29,21 +28,24 @@
         android:layout_height="fill_parent"
         android:layout_below="@+id/choosedContactsLayout"
         android:layout_above="@+id/btn_accept_people"
+        android:layout_marginBottom="2dp"
         android:id="@+id/allContactsLayout">
 
 
-        <View
+        <EditText
             android:layout_width="match_parent"
-            android:layout_height="3dp"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:padding="5dp"
+            android:id="@+id/searchEditText"
+            android:hint="@string/search_contact"
             android:layout_marginBottom="2dp"
-            android:layout_marginTop="2dp"
-            android:background="@android:color/black"/>
+            android:background="@drawable/search_edit_text"/>
 
         <ListView
             android:id="@+id/allContactslistView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:divider="#2196F3"
+            android:layout_height="match_parent"
             android:dividerHeight="2sp" >
 
         </ListView>
@@ -51,15 +53,13 @@
     </LinearLayout>
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
         android:text="@string/title_activity_add_people"
         android:id="@+id/btn_accept_people"
-        android:background="@drawable/roundedbuttonsblue"
-        android:textSize="20dp"
-        android:padding="10dp"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/rounded_button_primary"
         android:layout_marginTop="10dp"
-        android:textStyle="normal"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 

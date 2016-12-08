@@ -5,6 +5,7 @@ android {
     buildToolsVersion "23.0.3"
     defaultConfig {
         applicationId "com.example.hp.firstapp2"
+        useLibrary 'org.apache.http.legacy'
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
@@ -27,5 +28,10 @@ dependencies {
     compile 'com.android.support:design:23.4.0'
     compile 'com.android.support:support-v4:23.4.0'
     compile 'com.google.api-client:google-api-client:1.19.1'
-    compile 'com.google.android.gms:play-services:6.5.87'
-}
+    compile 'com.google.android.gms:play-services:8.1.0'
+    compile group: 'org.apache.httpcomponents', name: 'httpclient-android', version: '4.3.5.1'
+    compile(group: 'org.apache.httpcomponents', name: 'httpmime', version: '4.3.5') {
+        exclude module: 'org.apache.httpcomponents:httpclient'}
+
+
+    }

@@ -1,24 +1,33 @@
 package com.example.hp.sqlite.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.hp.firstapp2.R;
 import com.example.hp.sqlite.model.PhoneContact;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
-public class PhoneContactAdapter extends BaseAdapter {
+public class PhoneContactAdapter extends BaseAdapter implements Filterable {
 
     public static final String TAG = "PhoneContactAdapter";
 
     private List<PhoneContact> mItems;
+    private ArrayList<PhoneContact> filteredItems;
     private LayoutInflater mInflater;
     private int layoutType;
 
@@ -101,6 +110,44 @@ public class PhoneContactAdapter extends BaseAdapter {
     class ViewHolder {
         TextView txtName;
         TextView txtPhoneNumber;
+    }
+
+    @Override
+    public Filter getFilter() {
+
+        Filter filter = new Filter() {
+
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+
+                FilterResults filterResults = new FilterResults();
+                constraint = constraint.toString().toLowerCase();
+                filteredItems = new ArrayList<PhoneContact>();
+
+
+                for (int i = 0; i < mItems.size(); i++){
+                    String dataNames = mItems.get(i).getName();
+                    if (dataNames.toLowerCase().contains(constraint.toString())) {
+                        filteredItems.add(mItems.get(i));
+                    }
+                }
+                filterResults.count = filteredItems.size();
+                filterResults.values = filteredItems;
+                Log.e("Onlist", filterResults.values.toString());
+
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+
+                mItems = (List<PhoneContact>) results.values;
+                notifyDataSetChanged();
+            }
+        };
+
+        return filter;
+
     }
 
 }

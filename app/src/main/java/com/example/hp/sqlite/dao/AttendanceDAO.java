@@ -67,6 +67,7 @@ public class AttendanceDAO {
     }
 
 
+
     public void deleteAttendance(Attendance attendance) {
         long id = attendance.getId();
         System.out.println("the deleted attendance has the id: " + id);
@@ -104,45 +105,48 @@ public class AttendanceDAO {
         return attendance;
     }
 
+
+    public List<Attendance> getAttendancesByEventId(long eventId) {
+
+        List<Attendance> attendances = new ArrayList<Attendance>(){};
+
+        Cursor cursor = mDatabase.query(DBHelper.TABLE_ATTENDANCE, mAllColumns,
+                DBHelper.COLUMN_ATTENDANCE_EVENT_ID + " = ?",
+                new String[]{String.valueOf(eventId)}, null, null, null);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                Attendance attendance = cursorToAttendance(cursor);
+                attendances.add(attendance);
+                cursor.moveToNext();
+            }
+            cursor.close();
+        }
+        return attendances;
+    }
+
+
     protected Attendance cursorToAttendance(Cursor cursor) {
         Attendance attendance = new Attendance();
-
-        long eventId = cursor.getLong(0);
 
         attendance.setId(cursor.getLong(0));
         attendance.setEvent(cursor.getLong(1));
         attendance.setContacts(cursor.getLong(2));
 
-//        EventDAO dao= new EventDAO(mContext);
-//        Event event = dao.getEventById(eventId);
-//        if(event!=null){
-//            attendance.setEvent(event);
-//        }
-//
-//        long contactsId = cursor.getLong(1);
-////        PhoneContactsDAO dao1= new PhoneContactsDAO(mContext);
-//        ContactsDAO dao1= new ContactsDAO(mContext);
-////        PhoneContacts contacts = dao1.getContactsById(contactsId);
-//        Contacts contacts = dao1.getContactsById(contactsId);
-//        if(event!=null){
-//            attendance.setContacts(contacts);
-//        }
-
-
         return attendance;
     }
 
-    public List<PhoneContact> getContacts(long id) {
+
+    public List<PhoneContact> getContacts(long eventId) {
 
         List<PhoneContact> phoneContactList = new ArrayList<PhoneContact>(){};
         PhoneContactsDAO phoneContactsDAO = new PhoneContactsDAO(mContext);
 
         Cursor cursor = mDatabase.query(DBHelper.TABLE_ATTENDANCE, mAllColumns,
                 DBHelper.COLUMN_ATTENDANCE_EVENT_ID + " = ?",
-                new String[]{String.valueOf(id)}, null, null, null);
-        if (cursor != null) {
-            cursor.moveToFirst();
-        }
+                new String[]{String.valueOf(eventId)}, null, null, null);
+
         if (cursor != null) {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
@@ -154,5 +158,6 @@ public class AttendanceDAO {
         }
         return phoneContactList;
     }
+
 
 }

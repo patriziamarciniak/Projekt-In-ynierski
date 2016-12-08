@@ -13,35 +13,34 @@
     tools:showIn="@layout/activity_event_added">
 
     <TextView
+        android:id="@+id/txt_event_added"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/event_added"
-        android:textStyle="bold"
-        android:id="@+id/txt_event_added"
-        android:layout_margin="7dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textSize="30dp" />
+        android:layout_margin="7dp"
+        android:text="@string/event_added"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="30dp"
+        android:textStyle="bold" />
 
     <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="220dp"
         android:id="@+id/listView"
-        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
         android:layout_below="@+id/txt_event_added"
+        android:layout_centerHorizontal="true"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="15dp" />
-
+        android:layout_marginTop="20dp" />
 
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
         android:layout_below="@+id/listView"
+        android:layout_margin="15dp"
         android:gravity="center">
 
         <ImageView
@@ -51,38 +50,41 @@
             android:padding="10dp"
             android:src="@mipmap/accept"></ImageView>
 
-        </RelativeLayout>
+    </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/relativeLayout2"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_below="@+id/relativeLayout"
-            android:gravity="center">
-
-    <Button
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/event_edit"
-        android:id="@+id/btn_edit_event"
-        android:textColor="#FFFFFF"
-        android:width="150dp"
-        android:background="@drawable/roundedbuttonsblue"
-        android:padding="10dp" />
+        android:layout_below="@+id/relativeLayout"
+        android:layout_marginTop="12dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/btn_edit_event"
-        android:layout_marginLeft="10dp"
-        android:text="@string/main_menu"
-        android:id="@+id/btn_main_menu"
-        android:width="150dp"
-        android:background="@drawable/roundedbuttonsblue"
-        android:textColor="#FFFFFF"
-        android:padding="10dp" />
+        <Button
+            android:id="@+id/btn_edit_event"
+            android:layout_width="150dp"
+            android:layout_height="65dp"
+            android:background="@drawable/rounded_button_dark"
+            android:padding="10dp"
+            android:layout_marginBottom="5dp"
+            android:text="@string/event_edit"
+            android:layout_alignParentBottom="true"
+            android:textColor="#FFFFFF" />
 
-        </RelativeLayout>
+        <Button
+            android:id="@+id/btn_main_menu"
+            android:layout_width="150dp"
+            android:layout_height="65dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/btn_edit_event"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/rounded_button_primary"
+            android:padding="10dp"
+            android:layout_alignParentBottom="true"
+            android:text="@string/main_menu"
+            android:textColor="#FFFFFF" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

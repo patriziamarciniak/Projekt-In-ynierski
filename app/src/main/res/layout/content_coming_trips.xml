@@ -4,65 +4,89 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.hp.firstapp2.ComingTrips"
     tools:showIn="@layout/activity_coming_trips">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/relativeLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:gravity="center">
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal"
+        android:weightSum="4">
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/today"
-        android:id="@+id/btn_day_coming"
-        android:width="100dp"
-        android:textColor="#FFFFFF"
-        android:background="@drawable/roundedbuttons"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/week"
-        android:textColor="#FFFFFF"
-        android:id="@+id/btn_week_coming"
-        android:background="@drawable/roundedbuttons"
-        android:width="100dp"
-
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/all"
-        android:textColor="#FFFFFF"
-        android:id="@+id/btn_month_coming"
-        android:background="@drawable/roundedbuttons"
-        android:width="100dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true" />
+            <Button
+                android:id="@+id/btn_day_coming"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/colorPrimaryTheLightest"
+                android:text="@string/today"
+                android:textColor="#FFFFFF" />
 
         </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/btn_week_coming"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/colorPrimaryLighter"
+                android:text="@string/week"
+                android:textColor="#FFFFFF" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/btn_month_coming"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/colorPrimaryMiddle"
+                android:text="@string/month"
+                android:textColor="#FFFFFF" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/btn_all_coming"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/colorPrimaryDark"
+                android:text="@string/all"
+                android:textColor="#FFFFFF" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
     <ListView
+        android:id="@+id/eventsListView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/eventsListView"
+        android:layout_below="@+id/relativeLayout"
         android:layout_marginTop="20dp"
         android:divider="@android:color/transparent"
         android:dividerHeight="10.0sp"
-        android:layout_below="@+id/relativeLayout" />
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp" />
 
 </RelativeLayout>

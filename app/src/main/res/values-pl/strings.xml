@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
         <string name="app_name">Check-in</string>
-        <string name="action_settings">Ustawienia</string>
+        <string name="settings">Ustawienia</string>
         <string name="action_change_language">Zmiana języka</string>
         <string name="title_activity_add_event">Dodaj nową podróż</string>
         <string name="title_activity_my_history">Historia</string>
         <string name="title_activity_coming_trips">Nadchodzące podróże </string>
+        <string name="title_activity_add_cyclical_event">Dodaj wydarzenie cykliczne</string>
         <string name="log_in">Zaloguj się do Check-in za pomocą</string>
         <string name="lang_pl">Język polski</string>
         <string name="lang_en">English</string>
@@ -40,8 +41,9 @@
         <string name="trip_finish">Zakończ podróż</string>
         <string name="today">Dzisiaj</string>
         <string name="week">Tydzień</string>
+        <string name="month">Miesiąc</string>
         <string name="all">Wszystko</string>
-        <string name="send_sms">Wyślij SMS</string>
+        <string name="send_sms">Jestem u celu \n Wyślij SMS</string>
         <string name="ignore">Ignoruj</string>
         <string name="people_to_inform">Poinformuj osoby:</string>
         <string name="title_history">Historia Twoich podróży </string>
@@ -58,8 +60,6 @@
         <string name="title_activity">Wydarzenie</string>
         <string name="title_activity_add_contacts">Dodaj kontakty</string>
         <string name="title_activity_event_added">Dodane wydarzenie</string>
-
-
         <string name="title_activity_back">Wróć</string>
         <string name="yes">Tak</string>
         <string name="no">Nie</string>
@@ -72,4 +72,28 @@
                 <item>2km</item>
                 <item>5km</item>
         </string-array>
-    </resources>
+        <string name="search_contact">Znajdź kontakt...</string>
+        <string name="pop_up_info_no_contacts">Wybierz osoby, do których zostanie wysłana wiadomość!</string>
+        <string name="pop_up_info_wrong_dates">Czas wydarzenia jest niepoprawny!</string>
+        <string name="pop_up_info_no_days">Wybierz dni tygodnia!</string>
+        <string name="user_profile">Profil użytkownika</string>
+        <string name="message_profile">Wiadomość</string>
+        <string name="user_name_summary">Nadawca wiadomości</string>
+        <string name="user_name">Nazwa użytkownika</string>
+        <string name="user_number_summary">Wybierz numer</string>
+        <string name="user_number">Numer telefonu</string>
+        <string name="message_text_summary">Osiągnąłem cel podróży.</string>
+        <string name="message_text">Treść wiadomości</string>
+        <string name="from">Od</string>
+        <string name="to">Do</string>
+        <string name="monday">Pon.</string>
+        <string name="tuesday">Wt.</string>
+        <string name="wednesday">Śr.</string>
+        <string name="thursday">Czw.</string>
+        <string name="friday">Pt.</string>
+        <string name="saturday">Sob.</string>
+        <string name="sunday">Niedz.</string>
+        <string name="cancel">Anuluj</string>
+
+
+</resources>

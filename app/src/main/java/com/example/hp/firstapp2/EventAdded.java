@@ -44,7 +44,9 @@ public class EventAdded extends AppCompatActivity {
         eventsListView = (ListView) findViewById(R.id.listView);
 
         eventDAO = new EventDAO(this);
-        event = eventDAO.getLastEvent();
+        Bundle bundle = getIntent().getExtras();
+        event = bundle.getParcelable("event");
+
         task = new GetEmpTask(activity);
         task.execute((Void) null);
         updateView();
@@ -85,7 +87,7 @@ public class EventAdded extends AppCompatActivity {
         protected List<Event> doInBackground(Void... arg0) {
 
             List<Event> eventsList = new ArrayList<>();
-            eventsList.add(eventDAO.getLastEvent());
+            eventsList.add(event);
             return eventsList;
         }
 
@@ -110,5 +112,14 @@ public class EventAdded extends AppCompatActivity {
         task = new GetEmpTask(activity);
         task.execute((Void) null);
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent nextScreen = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(nextScreen);
+    }
+
+
+
 
 }
