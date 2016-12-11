@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/user_profile">
+        <EditTextPreference
+            android:key="userName"
+            android:summary="@string/user_name_summary"
+            android:title="@string/user_name" />
+
+        <EditTextPreference
+            android:key="userNumber"
+            android:summary="@string/user_number_summary"
+            android:title="@string/user_number" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/message_profile">
+
+        <EditTextPreference
+            android:key="message"
+            android:summary="@string/message_text_summary"
+            android:title="@string/message_text" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
